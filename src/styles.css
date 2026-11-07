@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Ringbearer";
+  src: url("./lib/ringbearer/RINGM___.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
   --bg: #090807;
@@ -124,10 +132,11 @@ h1, h2, h3, p { margin: 0; }
 }
 .brand { display: flex; gap: 14px; align-items: center; min-width: 0; }
 .brand-kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
   font-size: 0.68rem;
-  line-height: 1.45;
+  letter-spacing: 0.22em;
+  font-kerning: normal;
+  line-height: 1.25;
   color: var(--gold);
 }
 .brand-mark {
@@ -139,10 +148,12 @@ h1, h2, h3, p { margin: 0; }
   filter: invert(86%) sepia(16%) saturate(520%) hue-rotate(354deg) brightness(1.05);
 }
 h1 {
-  font-family: Cinzel, Palatino, Georgia, serif;
-  font-size: clamp(1.55rem, 3.2vw, 2.65rem);
-  letter-spacing: 0.04em;
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-size: clamp(1.95rem, 1.15rem + 2.5vw, 2.85rem);
+  letter-spacing: normal;
+  font-kerning: normal;
   line-height: 1.05;
+  margin-top: 14px;
 }
 .status {
   margin-top: 6px;
@@ -232,6 +243,20 @@ h1 {
 }
 .row.is-selected { box-shadow: inset 3px 0 0 var(--gold); }
 .card .medal, .row .medal { align-self: center; }
+.medal { position: relative; display: block; flex: none; }
+.medal-ring { position: relative; z-index: 1; display: block; }
+.medal-photo {
+  position: absolute;
+  z-index: 0;
+  left: 7.5%;
+  top: 7.5%;
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 18%;
+  pointer-events: none;
+}
 .card-top, .card-meta, .card-top-right, .chips, .tags, .detail-nav, .stat-top, .ability header {
   display: flex;
   align-items: center;
@@ -272,6 +297,17 @@ h1 {
 }
 .card-name { font-size: 1.02rem; line-height: 1.25; margin-top: 8px; }
 .epithet { color: var(--muted); font-size: 0.86rem; }
+.service-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.service-chip {
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--gold) 45%, transparent);
+  background: color-mix(in srgb, var(--gold) 10%, transparent);
+  color: var(--gold);
+  padding: 2px 7px;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  line-height: 1.3;
+}
 .card-meta { margin-top: 10px; align-items: flex-end; gap: 10px; }
 .race-chip, .meta-chip {
   border-radius: 999px;
@@ -328,16 +364,16 @@ h1 {
 }
 .close-btn { margin-left: auto; }
 .seal { position: relative; width: fit-content; margin: 8px auto 12px; padding: 12px; }
-.seal > span {
+.seal > .corner {
   position: absolute;
   width: 16px;
   height: 16px;
   border: 2px solid var(--gold);
 }
-.seal > span:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
-.seal > span:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
-.seal > span:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
-.seal > span:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+.seal > .corner:nth-child(1) { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+.seal > .corner:nth-child(2) { top: 0; right: 0; border-left: 0; border-bottom: 0; }
+.seal > .corner:nth-child(3) { bottom: 0; left: 0; border-right: 0; border-top: 0; }
+.seal > .corner:nth-child(4) { bottom: 0; right: 0; border-left: 0; border-top: 0; }
 .seal::after {
   content: "";
   position: absolute;

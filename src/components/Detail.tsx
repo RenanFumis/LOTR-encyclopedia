@@ -69,10 +69,10 @@ export function Detail({
       </div>
 
       <div className="seal">
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
-        <span aria-hidden="true" />
+        <span className="corner" aria-hidden="true" />
+        <span className="corner" aria-hidden="true" />
+        <span className="corner" aria-hidden="true" />
+        <span className="corner" aria-hidden="true" />
         <Medallion character={character} size={210} variant="detail" />
       </div>
 
@@ -84,6 +84,9 @@ export function Detail({
         <span className="race-chip" style={raceStyle(character.race)}>{character.race}</span>
         <span className="meta-chip">{character.era}</span>
         <span className="meta-chip" data-rarity={character.rarity}>{character.rarity}</span>
+        {character.services?.map((service) => (
+          <span className="service-chip" key={service}>{service}</span>
+        ))}
       </div>
 
       {character.forms && character.forms.length > 0 && (

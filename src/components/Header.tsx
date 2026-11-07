@@ -2,11 +2,12 @@ interface HeaderProps {
   total: number;
   partyCount: number;
   showParty: boolean;
+  showSound: boolean;
   sound: boolean;
   onToggleSound: () => void;
 }
 
-export function Header({ total, partyCount, showParty, sound, onToggleSound }: HeaderProps) {
+export function Header({ total, partyCount, showParty, showSound, sound, onToggleSound }: HeaderProps) {
   return (
     <header className="header">
       <div className="brand">
@@ -22,11 +23,13 @@ export function Header({ total, partyCount, showParty, sound, onToggleSound }: H
           </p>
         </div>
       </div>
-      <div className="header-actions">
-        <button className="text-btn" type="button" aria-pressed={sound} onClick={onToggleSound}>
-          {sound ? "Som ligado" : "Som mudo"}
-        </button>
-      </div>
+      {showSound && (
+        <div className="header-actions">
+          <button className="text-btn" type="button" aria-pressed={sound} onClick={onToggleSound}>
+            {sound ? "Som ligado" : "Som mudo"}
+          </button>
+        </div>
+      )}
     </header>
   );
 }
