@@ -3,7 +3,7 @@ export type Race =
   | "Elfo"
   | "Meio-elfo"
   | "Anão"
-  | "Homem"
+  | "Humano"
   | "Maia"
   | "Ent"
   | "Dragão"
@@ -109,6 +109,7 @@ export interface Character {
   strengths: string[];
   weaknesses: string[];
   related: string[];
+  services?: string[];
   anomalous?: boolean;
   forms?: CharacterForm[];
 }
@@ -127,7 +128,7 @@ export const RACES: Race[] = [
   "Elfo",
   "Meio-elfo",
   "Anão",
-  "Homem",
+  "Humano",
   "Maia",
   "Ent",
   "Dragão",

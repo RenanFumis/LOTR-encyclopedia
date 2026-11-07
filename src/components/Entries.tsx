@@ -49,6 +49,13 @@ export function DexCard({ character, selected, inParty, index, onSelect }: Entry
       <Medallion character={character} size={132} variant="card" />
       <span className="card-name">{character.name}</span>
       <span className="epithet">{character.epithet}</span>
+      {character.services && character.services.length > 0 && (
+        <span className="service-tags">
+          {character.services.map((service) => (
+            <span className="service-chip" key={service}>{service}</span>
+          ))}
+        </span>
+      )}
       <span className="card-meta">
         <span className="race-chip">{character.race}</span>
         <IndexMark character={character} />
@@ -78,6 +85,13 @@ export function DexRow({ character, selected, inParty, index, onSelect }: EntryP
           {inParty && <span className="pip" aria-label="Na comitiva" />}
         </span>
         <span className="epithet">{character.epithet}</span>
+        {character.services && character.services.length > 0 && (
+          <span className="service-tags">
+            {character.services.map((service) => (
+              <span className="service-chip" key={service}>{service}</span>
+            ))}
+          </span>
+        )}
       </span>
       <span className="race-chip">{character.race}</span>
       <span className="region">{character.region}</span>

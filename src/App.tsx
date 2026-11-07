@@ -11,6 +11,7 @@ import { readParty, readSound, readView, writeParty, writeSound, writeView } fro
 import type { Character, DexFilters, ViewMode } from "./types";
 
 const partyEnabled = false;
+const soundEnabled = false;
 
 const initialFilters: DexFilters = {
   query: "",
@@ -205,6 +206,7 @@ export function App() {
             total={characters.length}
             partyCount={party.length}
             showParty={partyEnabled}
+            showSound={soundEnabled}
             sound={sound}
             onToggleSound={() => setSound((value) => !value)}
           />

@@ -6,7 +6,7 @@ export const raceTheme: Record<Race, { glow: string; deep: string; ink: string }
   Elfo: { glow: "#79c0d2", deep: "#10242c", ink: "#d7f4fb" },
   "Meio-elfo": { glow: "#6fbfc4", deep: "#102226", ink: "#d9fbff" },
   Anão: { glow: "#d3924a", deep: "#2c1c0e", ink: "#ffe1bf" },
-  Homem: { glow: "#d15b4a", deep: "#2a1212", ink: "#ffd4cc" },
+  Humano: { glow: "#d15b4a", deep: "#2a1212", ink: "#ffd4cc" },
   Maia: { glow: "#f0d48a", deep: "#2a2416", ink: "#fff4d4" },
   Ent: { glow: "#5e9a62", deep: "#122016", ink: "#d9f5dc" },
   Dragão: { glow: "#e07a32", deep: "#2a140c", ink: "#ffd7bf" },

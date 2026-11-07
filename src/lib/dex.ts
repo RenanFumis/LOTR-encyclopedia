@@ -27,6 +27,7 @@ export function matchesQuery(character: Character, query: string): boolean {
     ...character.abilities.map((ability) => `${ability.name} ${ability.text}`),
     ...character.strengths,
     ...character.weaknesses,
+    ...(character.services ?? []),
   ]
     .map(normalize)
     .join(" ");
