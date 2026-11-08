@@ -73,7 +73,7 @@ export function Detail({
         <span className="corner" aria-hidden="true" />
         <span className="corner" aria-hidden="true" />
         <span className="corner" aria-hidden="true" />
-        <Medallion character={character} size={210} variant="detail" />
+        <Medallion character={character} size={300} variant="detail" />
       </div>
 
       <h2 ref={titleRef} tabIndex={-1}>{character.name}</h2>

@@ -1,4 +1,4 @@
-"""Regenera public/portraits a partir das pastas de origem.
+"""Regenera public/portraits a partir das pastas em pictures/.
 
 Só recria o WebP quando o arquivo original está mais novo que a cópia do site.
 """
@@ -45,7 +45,6 @@ FOLDERS = {
     "Frealaf.png": "frealaf",
     "Herumor.png": "herumor",
     "Fuinur.png": "fuinur",
-    "LuthienTinuviel.png": "luthien",
     "IdrilCelebrindal.png": "idril",
     "NienorNiniel.png": "nienor",
     "Haleth.png": "haleth",
@@ -59,6 +58,24 @@ FOLDERS = {
     "Ioreth.png": "ioreth",
     "FinduilasDeDolAmroth.png": "finduilas",
     "Lothiriel.png": "lothiriel",
+    "HurinThalion.png": "hurin",
+    "TurinTurambar.png": "turin",
+    "BerenErchamion.png": "beren",
+    "Tuor.png": "tuor",
+    "Barahir.png": "barahir",
+    "Huor.png": "huor",
+    "Aldarion.png": "aldarion",
+    "Tar-Telperien.png": "telperien",
+    "Ar-Adunakhor.png": "adunakhor",
+    "Ar-Pharazon.png": "pharazon",
+    "Amandil.png": "amandil",
+    "Elendil.png": "elendil",
+    "Isildur.png": "isildur",
+    "Anarion.png": "anarion",
+    "AragornIIElessar.png": "aragorn",
+    "Boromir.png": "boromir",
+    "Faramir.png": "faramir",
+    "DenethorII.png": "denethor",
     },
     "anoes-atualizados": {
         "Azaghal.png": "azaghal",
@@ -84,7 +101,7 @@ FOLDERS = {
         "ThrainIIAzanulbizar.png": "thrain",
         "Thror.png": "thror",
     },
-    "hobbit-atualizados": {
+    "Hobbit-atualizados": {
         "BandobrasTuk.png": "bandobras",
         "BilboBolseiro.png": "bilbo",
         "DiamonddeLongCleeve.jpg": "diamond",
@@ -105,6 +122,75 @@ FOLDERS = {
         "TedSandyman.png": "ted-sandyman",
         "WillWhitfoot.png": "will-whitfoot",
     },
+    "Aguias-atualizado": {
+        "Gwaihir.png": "gwaihir",
+        "Landroval.png": "landroval",
+        "Meneldor.png": "meneldor",
+        "Thorondor.png": "thorondor",
+    },
+    "Aranhas-atualizado": {
+        "Laracna.png": "shelob",
+        "Ungoliant.png": "ungoliant",
+    },
+    "Beorniano-atualizado": {
+        "GrimbeornOVelho.png": "grimbeorn",
+    },
+    "Dragao-atualizado": {
+        "Ancalagon.png": "ancalagon",
+        "Glaurung.png": "glaurung",
+        "Gostir.png": "gostir",
+        "Lhamthanc.png": "lhamthanc",
+        "Scatha.png": "scatha",
+        "Smaug.png": "smaug",
+    },
+    "Enigma-atualizado": {
+        "CoisasSemNome.png": "nameless-things",
+        "FrutadOuro.png": "goldberry",
+        "TomBombadil.png": "tom-bombadil",
+        "VigiaNaAgua.png": "watcher",
+    },
+    "Maia-atualizado": {
+        "Alatar.png": "alatar",
+        "Arien.png": "arien",
+        "Eonwe.png": "eonwe",
+        "FlageloDeDurin.png": "balrog",
+        "Gandalf.png": "gandalf",
+        "Gothmog.png": "gothmog",
+        "Ilmare.png": "ilmare",
+        "Melian.png": "melian",
+        "Osse.png": "osse",
+        "Pallando.png": "pallando",
+        "Radagast.png": "radagast",
+        "Salmar.png": "salmar",
+        "Saruman.png": "saruman",
+        "Sauron.png": "sauron",
+        "Tilion.png": "tilion",
+        "Uinen.png": "uinen",
+    },
+    "Mearas-atualizado": {
+        "Arod.png": "arod",
+        "Felarof.png": "felarof",
+        "Hasufel.png": "hasufel",
+        "Shadowfax.png": "shadowfax",
+    },
+    "meio-elfos-atualizado": {
+        "Arwen.png": "arwen",
+        "Dior_Eluch.png": "dior",
+        "EarendiltheMariner.png": "earendil",
+        "Elena_Kukanova_-_Elwing.png": "elwing",
+        "Elladan.png": "elladan",
+        "Elrohir.png": "elrohir",
+        "Elrond.png": "elrond",
+        "ElrosTar-Minyatur.png": "elros",
+        "Elured.png": "elured",
+        "Elurin.png": "elurin",
+        "Galador.png": "galador",
+        "Gilmith.png": "gilmith",
+        "LuthienTinuviel.png": "luthien",
+    },
+    "Nazgul-atualizado": {
+        "Nazguls.png": "nazgul-iii-ix",
+    },
 }
 
 
@@ -114,7 +200,7 @@ def main() -> None:
     missing: list[str] = []
 
     for folder, files in FOLDERS.items():
-        source_dir = ROOT / folder
+        source_dir = ROOT / "pictures" / folder
         for filename, character_id in files.items():
             convert(source_dir / filename, character_id, updated, missing)
 

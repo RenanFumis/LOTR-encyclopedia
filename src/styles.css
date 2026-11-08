@@ -244,7 +244,7 @@ h1 {
 .row.is-selected { box-shadow: inset 3px 0 0 var(--gold); }
 .card .medal, .row .medal { align-self: center; }
 .medal { position: relative; display: block; flex: none; }
-.medal-ring { position: relative; z-index: 1; display: block; }
+.medal-ring { position: relative; z-index: 1; display: block; width: 100%; height: 100%; }
 .medal-photo {
   position: absolute;
   z-index: 0;
@@ -359,8 +359,7 @@ h1 {
   z-index: 2;
   justify-content: flex-start;
   padding: 6px 0 10px;
-  background: rgba(18, 15, 12, 0.92);
-  backdrop-filter: blur(10px);
+  background: transparent;
 }
 .close-btn { margin-left: auto; }
 .seal { position: relative; width: fit-content; margin: 8px auto 12px; padding: 12px; }
@@ -384,7 +383,7 @@ h1 {
   animation: scan 1s ease-out;
   pointer-events: none;
 }
-.detail h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); text-align: center; outline: none; }
+.detail h2 { font-size: clamp(2rem, 4vw, 3rem); text-align: center; outline: none; }
 .detail-epithet, .genus { text-align: center; }
 .genus { color: var(--gold-2); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.75rem; margin-top: 4px; }
 .chips { justify-content: center; flex-wrap: wrap; margin: 12px 0; }
@@ -401,8 +400,8 @@ h1 {
   font-size: 0.95rem;
   line-height: 1.45;
 }
-.summary { font-size: 1.02rem; line-height: 1.55; }
-.lore { color: #e7dccb; line-height: 1.65; margin-top: 8px; }
+.summary { font-size: 1.12rem; line-height: 1.55; }
+.lore { color: #e7dccb; line-height: 1.65; margin-top: 8px; font-size: 1.05rem; }
 .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 14px 0; }
 .fact {
   background: #0e0c0a;
@@ -615,12 +614,13 @@ h1 {
 }
 
 @media (min-width: 1040px) {
-  .workspace.has-detail { grid-template-columns: minmax(0, 1fr) 400px; }
+  .workspace.has-detail { grid-template-columns: minmax(240px, 0.7fr) minmax(560px, 1.45fr); }
   .detail {
     position: sticky;
     top: 12px;
     max-height: calc(100vh - 130px);
     margin: 0 12px 12px 0;
+    padding: 22px 32px 40px;
     border-radius: 20px;
     border: 1px solid var(--line);
     z-index: 1;
@@ -632,6 +632,7 @@ h1 {
   .header { flex-direction: column; align-items: stretch; padding: 26px 16px 8px; }
   .party-label { display: none; }
   .facts { grid-template-columns: 1fr; }
+  .detail .medal { width: min(300px, 78vw) !important; height: min(300px, 78vw) !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
