@@ -2,10 +2,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Detail } from "./components/Detail";
 import { DexCard, DexRow } from "./components/Entries";
 import { Header } from "./components/Header";
+import { Home } from "./components/Home";
 import { PartyBar } from "./components/PartyBar";
+import { Room } from "./components/Room";
 import { Toolbar } from "./components/Toolbar";
 import { characters, getCharacter } from "./data/characters";
-import { entryIdFromHash, matchesQuery, sortCharacters } from "./lib/dex";
+import { matchesQuery, sortCharacters } from "./lib/dex";
+import { readRoute, routeHash, type PageId } from "./lib/routes";
 import { playEntrySound } from "./lib/sound";
 import { readParty, readSound, readView, writeParty, writeSound, writeView } from "./lib/storage";
 import type { Character, DexFilters, ViewMode } from "./types";
@@ -22,15 +25,17 @@ const initialFilters: DexFilters = {
   partyOnly: false,
 };
 
-function initialId(): string | null {
-  const id = entryIdFromHash(window.location.hash);
-  return id && getCharacter(id) ? id : null;
+function initialRoute() {
+  const route = readRoute(window.location.hash);
+  const entryId = route.entryId && getCharacter(route.entryId) ? route.entryId : null;
+  return { page: route.page, entryId };
 }
 
 export function App() {
   const [filters, setFilters] = useState<DexFilters>(initialFilters);
   const [view, setView] = useState<ViewMode>(() => readView());
-  const [selectedId, setSelectedId] = useState<string | null>(initialId);
+  const [page, setPage] = useState<PageId>(() => initialRoute().page);
+  const [selectedId, setSelectedId] = useState<string | null>(() => initialRoute().entryId);
   const [party, setParty] = useState<string[]>(() => readParty().filter((id) => getCharacter(id)));
   const [sound, setSound] = useState(readSound);
   const [notice, setNotice] = useState<string | null>(null);
@@ -72,8 +77,9 @@ export function App() {
   useEffect(() => {
     const onPop = () => {
       fromPop.current = true;
-      const id = entryIdFromHash(window.location.hash);
-      setSelectedId(id && getCharacter(id) ? id : null);
+      const route = readRoute(window.location.hash);
+      setPage(route.page);
+      setSelectedId(route.entryId && getCharacter(route.entryId) ? route.entryId : null);
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -84,10 +90,10 @@ export function App() {
       fromPop.current = false;
       return;
     }
-    const hash = selectedId ? `#/registro/${selectedId}` : "#/";
+    const hash = routeHash(page, page === "bestiario" ? selectedId : null);
     if (window.location.hash === hash || (hash === "#/" && window.location.hash === "")) return;
     window.history.pushState(null, "", hash);
-  }, [selectedId]);
+  }, [page, selectedId]);
 
   useEffect(() => {
     if (!soundReady.current) {
@@ -119,7 +125,7 @@ export function App() {
         target instanceof HTMLSelectElement ||
         target instanceof HTMLTextAreaElement;
 
-      if (event.key === "/" && !typing) {
+      if (event.key === "/" && !typing && page === "bestiario") {
         event.preventDefault();
         searchRef.current?.focus();
         return;
@@ -147,7 +153,17 @@ export function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [filters.query, selectedId, visible]);
+  }, [filters.query, page, selectedId, visible]);
+
+  const openPage = (next: PageId) => {
+    setSelectedId(null);
+    setPage(next);
+  };
+
+  const openEntry = (id: string) => {
+    setPage("bestiario");
+    setSelectedId(id);
+  };
 
   const patch = (partial: Partial<DexFilters>) => setFilters((current) => ({ ...current, ...partial }));
   const dirty =
@@ -194,22 +210,63 @@ export function App() {
 
   return (
     <>
-      <div className="halo" aria-hidden="true" />
-      <a className="skip" href="#registros">Ir para os registros</a>
+      {page !== "home" && <div className="halo" aria-hidden="true" />}
+      <a className="skip" href="#conteudo">Ir para o conteúdo</a>
       <div className={partyEnabled ? "page" : "page no-party"}>
-        <div className="device">
-          <span className="screw tl" aria-hidden="true" />
-          <span className="screw tr" aria-hidden="true" />
-          <span className="screw bl" aria-hidden="true" />
-          <span className="screw br" aria-hidden="true" />
+        <div className={page === "home" ? "device is-plain" : "device"}>
+          {page !== "home" && (
+            <>
+              <span className="screw tl" aria-hidden="true" />
+              <span className="screw tr" aria-hidden="true" />
+              <span className="screw bl" aria-hidden="true" />
+              <span className="screw br" aria-hidden="true" />
+            </>
+          )}
           <Header
-            total={characters.length}
-            partyCount={party.length}
-            showParty={partyEnabled}
+            page={page}
+            onOpen={openPage}
             showSound={soundEnabled}
             sound={sound}
             onToggleSound={() => setSound((value) => !value)}
           />
+          {page === "home" && <Home onOpen={openPage} onOpenEntry={openEntry} />}
+          {page === "lugares" && (
+            <Room kicker="Geografia" title="Lugares">
+              Regiões, cidades, portos e caminhos da Terra-média entram nesta sala. Ela ainda está vazia: os nomes e os caminhos vêm depois.
+            </Room>
+          )}
+          {page === "historia" && (
+            <Room kicker="As eras" title="História de Arda">
+              As eras de Arda, do começo do mundo até o fim da Terceira Era, terão uma linha própria. Por enquanto a sala só marca o lugar.
+            </Room>
+          )}
+          {page === "mapas" && (
+            <Room kicker="Cartografia" title="Mapas">
+              Os mapas do arquivo ficam nesta sala. Ainda não há folha pendurada.
+            </Room>
+          )}
+          {page === "sobre" && (
+            <Room kicker="O arquivo" title="Sobre">
+              O texto sobre esta enciclopédia entra nesta sala.
+            </Room>
+          )}
+          {page === "creditos" && (
+            <Room kicker="O arquivo" title="Créditos">
+              Os créditos do projeto entram nesta sala.
+            </Room>
+          )}
+          {page === "termos" && (
+            <Room kicker="O arquivo" title="Termos de Uso">
+              Os termos de uso entram nesta sala.
+            </Room>
+          )}
+          {page === "privacidade" && (
+            <Room kicker="O arquivo" title="Políticas de privacidade">
+              A política de privacidade entra nesta sala.
+            </Room>
+          )}
+          {page === "bestiario" && (
+          <>
           <Toolbar
             filters={filters}
             view={view}
@@ -223,7 +280,7 @@ export function App() {
             showParty={partyEnabled}
           />
           <div className={selected ? "workspace has-detail" : "workspace"}>
-            <main id="registros">
+            <main id="conteudo">
               {visible.length === 0 ? (
                 <div className="empty">
                   <p>
@@ -282,9 +339,28 @@ export function App() {
               />
             )}
           </div>
+          </>
+          )}
           <footer className="colophon">
-            <p>Desenvolvido por Meir Fumis.</p>
-            <p>Projeto de fã, com finalidade de praticar desenvolvimento web, sem nenhum vínculo com a Tolkien Estate ou a Middle-earth Enterprises.</p>
+            <div className="colophon-brand">
+              <img className="brand-mark" src="/mark.png" alt="" />
+              <div>
+                <p className="colophon-kicker">A Enciclopédia da Terra-média</p>
+                <p className="colophon-title">Lord of the Rings</p>
+              </div>
+            </div>
+            <nav className="colophon-links" aria-label="Informações do projeto">
+              <button type="button" className="colophon-link" aria-current={page === "sobre" ? "page" : undefined} onClick={() => openPage("sobre")}>Sobre</button>
+              <button type="button" className="colophon-link" aria-current={page === "creditos" ? "page" : undefined} onClick={() => openPage("creditos")}>Créditos</button>
+              <button type="button" className="colophon-link" aria-current={page === "termos" ? "page" : undefined} onClick={() => openPage("termos")}>Termos de Uso</button>
+              <button type="button" className="colophon-link" aria-current={page === "privacidade" ? "page" : undefined} onClick={() => openPage("privacidade")}>Políticas de privacidade</button>
+            </nav>
+            <p className="colophon-note">
+              Projeto de fã para fã.
+              <br />
+              Sem vínculos com a Tolkien Estate <br /> ou a Middle-earth Enterprises.
+            </p>
+            <p className="colophon-credit">Desenvolvido por Meir Fumis</p>
           </footer>
         </div>
       </div>
