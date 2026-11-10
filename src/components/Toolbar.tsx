@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { ERAS, RACES, RARITIES, type DexFilters, type ViewMode } from "../types";
+import { ERAS, RACES, RARITIES, type DexFilters, type Race, type ViewMode } from "../types";
 
 interface ToolbarProps {
   filters: DexFilters;
@@ -12,9 +12,10 @@ interface ToolbarProps {
   onView: (view: ViewMode) => void;
   onClear: () => void;
   showParty: boolean;
+  races?: readonly Race[];
 }
 
-export function Toolbar({ filters, view, count, total, dirty, searchRef, onChange, onView, onClear, showParty }: ToolbarProps) {
+export function Toolbar({ filters, view, count, total, dirty, searchRef, onChange, onView, onClear, showParty, races = RACES }: ToolbarProps) {
   return (
     <div className="toolbar">
       <div className="toolbar-row">
@@ -33,7 +34,7 @@ export function Toolbar({ filters, view, count, total, dirty, searchRef, onChang
           <span>Raça</span>
           <select value={filters.race} onChange={(event) => onChange({ race: event.target.value as DexFilters["race"] })}>
             <option value="Todas">Todas</option>
-            {RACES.map((race) => (
+            {races.map((race) => (
               <option key={race} value={race}>{race}</option>
             ))}
           </select>

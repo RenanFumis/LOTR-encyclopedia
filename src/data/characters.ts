@@ -62,7 +62,7 @@ export const characters = [
     ],
     strengths: ["Misericórdia", "Passo oculto", "Coração firme"],
     weaknesses: ["O Anel", "Ferida antiga", "Cansaço"],
-    related: ["sam", "gandalf", "gollum"],
+    related: ["sam", "gandalf", "gollum", "smeagol"],
   },
   {
     id: "sam",
@@ -170,7 +170,7 @@ export const characters = [
     ],
     strengths: ["Astúcia", "Boas maneiras", "Sortuda teimosia"],
     weaknesses: ["O Anel", "Apego", "Idade"],
-    related: ["frodo", "gandalf", "gerontius"],
+    related: ["frodo", "gandalf", "gerontius", "gollum"],
   },
   {
     id: "gandalf",
@@ -337,35 +337,62 @@ export const characters = [
     related: ["faramir", "aragorn", "frodo"],
   },
   {
-    id: "gollum",
+    id: "smeagol",
     number: 11,
     name: "Sméagol",
-    epithet: "Gollum, o Precioso",
-    genus: "Hobbit partido",
+    epithet: "Do povo do rio",
+    genus: "Hobbit do Anduin",
+    race: "Hobbit",
+    region: "Campos de Lis",
+    allegiance: "Nenhum",
+    era: "Terceira Era",
+    rarity: "comum",
+    stature: "baixa, de margem",
+    presence: "curiosa",
+    summary: "Um hobbit do povo do rio, ainda com nome, antes de séculos de conversa no escuro.",
+    lore: "Sméagol vive à beira da água, entre os seus, quando o Anel ainda é achado de rio. A ficha guarda essa época: o nome, a margem e o parente que pescava com ele. O que vem depois mora noutra ficha, com outra voz.",
+    voice: "Era meu aniversário. Eu só queria o que brilhava.",
+    sigil: "hand",
+    stats: { forca: 32, agilidade: 58, sabedoria: 44, coragem: 36, poder: 22, vontade: 70 },
+    abilities: [
+      ability("Olho de margem", "ativa", "Vê o que a água devolve antes dos outros abaixarem a mão."),
+      ability("Nome ainda inteiro", "passiva", "Enquanto a ficha é esta, ele responde por Sméagol."),
+      ability("O achado", "suprema", "O brilho do rio cabe no bolso e não volta mais para a água."),
+    ],
+    strengths: ["A margem", "O nome", "Teimosia"],
+    weaknesses: ["O Anel", "A cobiça", "Os seus o expulsam"],
+    related: ["gollum", "bilbo", "frodo"],
+  },
+  {
+    id: "gollum",
+    number: 12,
+    name: "Gollum",
+    epithet: "O Precioso",
+    genus: "O que restou no escuro",
     race: "Hobbit",
     region: "Montanhas Sombrias",
     allegiance: "Nenhum",
     era: "Terceira Era",
-    rarity: "comum",
-    stature: "encolhida",
-    presence: "instável",
-    summary: "O que restou de um hobbit depois de séculos conversando com um anel no escuro.",
-    lore: "Sméagol e Gollum dividem a mesma ficha e não assinam juntos. Ele guia porque quer o Anel de volta, e às vezes guia porque lembra o que era ter um nome. O arquivo recusa apagar qualquer um dos dois.",
-    voice: "Ele é meu, mesmo quando eu digo que não.",
-    sigil: "hand",
-    stats: { forca: 36, agilidade: 84, sabedoria: 48, coragem: 34, poder: 30, vontade: 88 },
+    rarity: "incomum",
+    stature: "encolhida e de quatro",
+    presence: "de pedra molhada",
+    summary: "Séculos depois, o mesmo hobbit já não usa o nome. Vive na pedra, fala sozinho e chama o Anel de precioso.",
+    lore: "Gollum é a ficha tardia de Sméagol: a voz que ficou quando a luz saiu. Sob as Montanhas Sombrias ele guarda o Anel, perde o Anel num jogo de charadas e, muito depois, guia dois hobbits porque quer a coisa de volta. Às vezes a voz antiga atravessa a frase. As duas épocas ficam em fichas separadas.",
+    voice: "Nós espera no escuro. O precioso volta.",
+    sigil: "ring",
+    stats: { forca: 36, agilidade: 90, sabedoria: 46, coragem: 28, poder: 24, vontade: 92 },
     abilities: [
       ability("Passo de pedra molhada", "ativa", "Sobe, escorrega e some onde bota nenhuma se firma."),
-      ability("Duas vozes", "passiva", "A ficha muda de dono no meio da frase."),
+      ability("Duas vozes", "passiva", "A frase muda de dono no meio, e a outra ainda se chama Sméagol."),
       ability("Guia torto", "suprema", "Conhece a entrada que ninguém devia conhecer."),
     ],
     strengths: ["Furtividade", "Memória do caminho", "Vontade obcecada"],
-    weaknesses: ["O Anel", "Luz", "A outra voz"],
-    related: ["frodo", "sam", "shelob"],
+    weaknesses: ["O Anel", "Luz", "A voz antiga"],
+    related: ["smeagol", "frodo", "sam", "bilbo", "shelob"],
   },
   {
     id: "galadriel",
-    number: 12,
+    number: 13,
     name: "Galadriel",
     epithet: "Dama de Lórien",
     genus: "Dama noldorin",
@@ -392,7 +419,7 @@ export const characters = [
   },
   {
     id: "elrond",
-    number: 13,
+    number: 14,
     name: "Elrond",
     epithet: "Senhor de Valfenda",
     genus: "Senhor meio-elfo",
@@ -419,7 +446,7 @@ export const characters = [
   },
   {
     id: "arwen",
-    number: 14,
+    number: 15,
     name: "Arwen",
     epithet: "Undómiel, Estrela da Tarde",
     genus: "Estrela vespertina",
@@ -446,7 +473,7 @@ export const characters = [
   },
   {
     id: "celeborn",
-    number: 15,
+    number: 16,
     name: "Celeborn",
     epithet: "Senhor de Lórien",
     genus: "Senhor sindar",
@@ -473,7 +500,7 @@ export const characters = [
   },
   {
     id: "glorfindel",
-    number: 16,
+    number: 17,
     name: "Glorfindel",
     epithet: "Senhor da Casa Dourada",
     genus: "Elfo renascido",
@@ -500,7 +527,7 @@ export const characters = [
   },
   {
     id: "saruman",
-    number: 17,
+    number: 18,
     name: "Saruman",
     epithet: "Curumo, o Branco",
     genus: "De Aulë",
@@ -528,7 +555,7 @@ export const characters = [
   },
   {
     id: "radagast",
-    number: 18,
+    number: 19,
     name: "Radagast",
     epithet: "Aiwendil, o Castanho",
     genus: "De Yavanna",
@@ -556,7 +583,7 @@ export const characters = [
   },
   {
     id: "sauron",
-    number: 19,
+    number: 20,
     name: "Sauron",
     epithet: "Mairon, o Senhor Escuro",
     genus: "De Aulë, depois de Morgoth",
@@ -584,7 +611,7 @@ export const characters = [
   },
   {
     id: "witch-king",
-    number: 20,
+    number: 21,
     name: "Rei-bruxo de Angmar",
     epithet: "Chefe dos Nazgûl",
     genus: "Rei Bruxo, Espectro do Anel",
@@ -611,7 +638,7 @@ export const characters = [
   },
   {
     id: "balrog",
-    number: 21,
+    number: 22,
     name: "Balrog de Moria",
     epithet: "Flagelo de Durin",
     genus: "Maia de fogo e sombra",
@@ -639,7 +666,7 @@ export const characters = [
   },
   {
     id: "shelob",
-    number: 22,
+    number: 23,
     name: "Laracna",
     epithet: "Guardiã do Passo",
     genus: "Aranha antiga",
@@ -666,7 +693,7 @@ export const characters = [
   },
   {
     id: "grima",
-    number: 23,
+    number: 24,
     name: "Gríma Língua de Cobra",
     epithet: "Conselheiro de Edoras",
     genus: "Voz envenenada",
@@ -693,7 +720,7 @@ export const characters = [
   },
   {
     id: "theoden",
-    number: 24,
+    number: 25,
     name: "Théoden",
     epithet: "Rei da Marca",
     genus: "Rei de Rohan",
@@ -720,7 +747,7 @@ export const characters = [
   },
   {
     id: "eowyn",
-    number: 25,
+    number: 26,
     name: "Éowyn",
     epithet: "Dama de Rohan",
     genus: "Dama escudeira",
@@ -747,7 +774,7 @@ export const characters = [
   },
   {
     id: "eomer",
-    number: 26,
+    number: 27,
     name: "Éomer",
     epithet: "Marechal da Marca",
     genus: "Marechal de Rohan",
@@ -774,7 +801,7 @@ export const characters = [
   },
   {
     id: "faramir",
-    number: 27,
+    number: 28,
     name: "Faramir",
     epithet: "Capitão de Ithilien",
     genus: "Capitão de Ithilien",
@@ -801,7 +828,7 @@ export const characters = [
   },
   {
     id: "denethor",
-    number: 28,
+    number: 29,
     name: "Denethor II",
     epithet: "Regente de Gondor",
     genus: "Regente-mor",
@@ -828,7 +855,7 @@ export const characters = [
   },
   {
     id: "treebeard",
-    number: 29,
+    number: 30,
     name: "Barbárvore",
     epithet: "Treebeard, Fangorn",
     genus: "Ent pastor",
@@ -855,7 +882,7 @@ export const characters = [
   },
   {
     id: "thorin",
-    number: 30,
+    number: 31,
     name: "Thorin Escudo-de-Carvalho",
     epithet: "Herdeiro de Durin",
     genus: "Herdeiro de Durin",
@@ -882,7 +909,7 @@ export const characters = [
   },
   {
     id: "bard",
-    number: 31,
+    number: 32,
     name: "Bard",
     epithet: "Arqueiro de Valle",
     genus: "Arqueiro de Valle",
@@ -909,7 +936,7 @@ export const characters = [
   },
   {
     id: "smaug",
-    number: 32,
+    number: 33,
     name: "Smaug",
     epithet: "O Magnífico",
     genus: "A Calamidade Dourada",
@@ -936,7 +963,7 @@ export const characters = [
   },
   {
     id: "beorn",
-    number: 33,
+    number: 34,
     name: "Beorn",
     epithet: "O Troca-Peles",
     genus: "O Cambiante, homem-urso",
@@ -977,7 +1004,7 @@ export const characters = [
   },
   {
     id: "gwaihir",
-    number: 34,
+    number: 35,
     name: "Gwaihir",
     epithet: "O Senhor dos Ventos",
     genus: "Águia do vento",
@@ -1004,7 +1031,7 @@ export const characters = [
   },
   {
     id: "shadowfax",
-    number: 35,
+    number: 36,
     name: "Scadufax",
     epithet: "O Senhor de Todos os Cavalos",
     genus: "Shadowfax, chefe dos Mearas",
@@ -1031,7 +1058,7 @@ export const characters = [
   },
   {
     id: "gil-galad",
-    number: 36,
+    number: 37,
     name: "Gil-galad",
     epithet: "Alto Rei dos Noldor",
     genus: "Alto Rei",
@@ -1058,7 +1085,7 @@ export const characters = [
   },
   {
     id: "isildur",
-    number: 37,
+    number: 38,
     name: "Isildur",
     epithet: "Herdeiro de Elendil",
     genus: "Rei da linha partida",
@@ -1085,7 +1112,7 @@ export const characters = [
   },
   {
     id: "beren",
-    number: 38,
+    number: 39,
     name: "Beren",
     epithet: "Erchamion, o Destemido",
     genus: "Mortal de Dorthonion",
@@ -1112,7 +1139,7 @@ export const characters = [
   },
   {
     id: "luthien",
-    number: 39,
+    number: 40,
     name: "Lúthien",
     epithet: "Tinúviel, a Mais Bela",
     genus: "Tinúviel",
@@ -1139,7 +1166,7 @@ export const characters = [
   },
   {
     id: "earendil",
-    number: 40,
+    number: 41,
     name: "Eärendil",
     epithet: "O Marinheiro",
     genus: "Marinheiro da estrela",
@@ -1166,7 +1193,7 @@ export const characters = [
   },
   {
     id: "elendil",
-    number: 41,
+    number: 42,
     name: "Elendil",
     epithet: "O Alto",
     genus: "Rei dos Fiéis",
@@ -1193,7 +1220,7 @@ export const characters = [
   },
   {
     id: "ungoliant",
-    number: 42,
+    number: 43,
     name: "Ungoliant",
     epithet: "Gwerlum, Wirilómë",
     genus: "Aranha primordial",
@@ -1221,7 +1248,7 @@ export const characters = [
   },
   {
     id: "maggot",
-    number: 43,
+    number: 44,
     name: "Fazendeiro Magote",
     epithet: "Senhor dos cães",
     genus: "Farmer Maggot",
@@ -1248,7 +1275,7 @@ export const characters = [
   },
   {
     id: "fredegar",
-    number: 44,
+    number: 45,
     name: "Fredegar Bolger",
     epithet: "o Gordo",
     genus: "Hobbit da conspiração",
@@ -1275,7 +1302,7 @@ export const characters = [
   },
   {
     id: "lobelia",
-    number: 45,
+    number: 46,
     name: "Lobélia Sacola-Bolseiro",
     epithet: "A do guarda-chuva",
     genus: "Sackville-Baggins",
@@ -1302,7 +1329,7 @@ export const characters = [
   },
   {
     id: "ted-sandyman",
-    number: 46,
+    number: 47,
     name: "Ted Sandyman",
     epithet: "O moleiro",
     genus: "Hobbit da roda",
@@ -1329,7 +1356,7 @@ export const characters = [
   },
   {
     id: "will-whitfoot",
-    number: 47,
+    number: 48,
     name: "Will Pé-Branco",
     epithet: "Whitfoot, prefeito",
     genus: "Prefeito do Condado",
@@ -1356,7 +1383,7 @@ export const characters = [
   },
   {
     id: "bandobras",
-    number: 48,
+    number: 49,
     name: "Bandobras Tûk",
     epithet: "o Bramador",
     genus: "Bullroarer",
@@ -1383,7 +1410,7 @@ export const characters = [
   },
   {
     id: "gerontius",
-    number: 49,
+    number: 50,
     name: "Gerontius Tûk",
     epithet: "o Velho Tûk",
     genus: "Thain antigo",
@@ -1410,7 +1437,7 @@ export const characters = [
   },
   {
     id: "drogo",
-    number: 50,
+    number: 51,
     name: "Drogo Bolseiro",
     epithet: "Pai de Frodo",
     genus: "Hobbit do barco",
@@ -1437,7 +1464,7 @@ export const characters = [
   },
   {
     id: "primula",
-    number: 51,
+    number: 52,
     name: "Prímula Brandebuque",
     epithet: "Mãe de Frodo",
     genus: "Primula Brandybuck",
@@ -1464,7 +1491,7 @@ export const characters = [
   },
   {
     id: "gorbadoc",
-    number: 52,
+    number: 53,
     name: "Gorbadoc Brandebuque",
     epithet: "Cinturão-Largo",
     genus: "Senhor do solar",
@@ -1491,7 +1518,7 @@ export const characters = [
   },
   {
     id: "paladin",
-    number: 53,
+    number: 54,
     name: "Paladin Tûk II",
     epithet: "Thain do Condado",
     genus: "Pai de Peregrin",
@@ -1518,7 +1545,7 @@ export const characters = [
   },
   {
     id: "diamond",
-    number: 54,
+    number: 55,
     name: "Diamante de Long Cleeve",
     epithet: "Diamond, esposa de Pippin",
     genus: "Hobbit de Long Cleeve",
@@ -1545,7 +1572,7 @@ export const characters = [
   },
   {
     id: "elanor",
-    number: 55,
+    number: 56,
     name: "Elanor Gamgi",
     epithet: "A flor dourada",
     genus: "Filha de Sam Gamgee",
@@ -1572,7 +1599,7 @@ export const characters = [
   },
   {
     id: "lotho",
-    number: 56,
+    number: 57,
     name: "Lotho Sacola-Bolseiro",
     epithet: "o Chefe",
     genus: "Sackville-Baggins",
@@ -1599,7 +1626,7 @@ export const characters = [
   },
   {
     id: "feanor",
-    number: 57,
+    number: 58,
     name: "Fëanor",
     epithet: "Espírito de Fogo",
     genus: "Fëanáro, Curufinwë",
@@ -1626,7 +1653,7 @@ export const characters = [
   },
   {
     id: "finrod",
-    number: 58,
+    number: 59,
     name: "Finrod Felagund",
     epithet: "Amigo dos Homens",
     genus: "Rei de Nargothrond",
@@ -1653,7 +1680,7 @@ export const characters = [
   },
   {
     id: "turgon",
-    number: 59,
+    number: 60,
     name: "Turgon",
     epithet: "Rei de Gondolin",
     genus: "Turukáno",
@@ -1680,7 +1707,7 @@ export const characters = [
   },
   {
     id: "celebrimbor",
-    number: 60,
+    number: 61,
     name: "Celebrimbor",
     epithet: "Mão de Prata",
     genus: "Senhor de Eregion",
@@ -1707,7 +1734,7 @@ export const characters = [
   },
   {
     id: "thingol",
-    number: 61,
+    number: 62,
     name: "Thingol",
     epithet: "Elu, Manto-Cinzento",
     genus: "Elwë Singollo",
@@ -1734,7 +1761,7 @@ export const characters = [
   },
   {
     id: "elros",
-    number: 62,
+    number: 63,
     name: "Elros",
     epithet: "Tar-Minyatur",
     genus: "Primeiro rei de Númenor",
@@ -1761,7 +1788,7 @@ export const characters = [
   },
   {
     id: "elwing",
-    number: 63,
+    number: 64,
     name: "Elwing",
     epithet: "Senhora da joia",
     genus: "Mãe de Elrond",
@@ -1788,7 +1815,7 @@ export const characters = [
   },
   {
     id: "dior",
-    number: 64,
+    number: 65,
     name: "Dior Eluchíl",
     epithet: "Herdeiro de Elu",
     genus: "Rei de Doriath",
@@ -1815,7 +1842,7 @@ export const characters = [
   },
   {
     id: "elladan",
-    number: 65,
+    number: 66,
     name: "Elladan",
     epithet: "Filho de Elrond",
     genus: "Gêmeo de Valfenda",
@@ -1842,7 +1869,7 @@ export const characters = [
   },
   {
     id: "elrohir",
-    number: 66,
+    number: 67,
     name: "Elrohir",
     epithet: "Filho de Elrond",
     genus: "Gêmeo de Valfenda",
@@ -1869,7 +1896,7 @@ export const characters = [
   },
   {
     id: "galador",
-    number: 67,
+    number: 68,
     name: "Galador",
     epithet: "Senhor de Dol Amroth",
     genus: "Filho de Mithrellas",
@@ -1896,7 +1923,7 @@ export const characters = [
   },
   {
     id: "gilmith",
-    number: 68,
+    number: 69,
     name: "Gilmith",
     epithet: "Filha de Mithrellas",
     genus: "Irmã de Galador",
@@ -1923,7 +1950,7 @@ export const characters = [
   },
   {
     id: "elured",
-    number: 69,
+    number: 70,
     name: "Eluréd",
     epithet: "Filho de Dior",
     genus: "Irmão de Elurín",
@@ -1950,7 +1977,7 @@ export const characters = [
   },
   {
     id: "elurin",
-    number: 70,
+    number: 71,
     name: "Elurín",
     epithet: "Filho de Dior",
     genus: "Irmão de Eluréd",
@@ -1977,7 +2004,7 @@ export const characters = [
   },
   {
     id: "durin",
-    number: 71,
+    number: 72,
     name: "Durin",
     epithet: "O Imortal",
     genus: "Durin I, Pai dos Anões",
@@ -2004,7 +2031,7 @@ export const characters = [
   },
   {
     id: "balin",
-    number: 72,
+    number: 73,
     name: "Balin",
     epithet: "Senhor de Moria",
     genus: "Irmão de Dwalin",
@@ -2031,7 +2058,7 @@ export const characters = [
   },
   {
     id: "dain",
-    number: 73,
+    number: 74,
     name: "Dáin Pé-de-Ferro",
     epithet: "Dáin II",
     genus: "Rei das Colinas de Ferro",
@@ -2058,7 +2085,7 @@ export const characters = [
   },
   {
     id: "thror",
-    number: 74,
+    number: 75,
     name: "Thrór",
     epithet: "Rei sob a Montanha",
     genus: "Avô de Thorin",
@@ -2085,7 +2112,7 @@ export const characters = [
   },
   {
     id: "thrain",
-    number: 75,
+    number: 76,
     name: "Thráin II",
     epithet: "Pai de Thorin",
     genus: "Herdeiro de Thrór",
@@ -2112,7 +2139,7 @@ export const characters = [
   },
   {
     id: "fili",
-    number: 76,
+    number: 77,
     name: "Fíli",
     epithet: "Sobrinho de Thorin",
     genus: "Irmão de Kíli",
@@ -2139,7 +2166,7 @@ export const characters = [
   },
   {
     id: "kili",
-    number: 77,
+    number: 78,
     name: "Kíli",
     epithet: "Irmão de Fíli",
     genus: "Sobrinho de Thorin",
@@ -2166,7 +2193,7 @@ export const characters = [
   },
   {
     id: "dwalin",
-    number: 78,
+    number: 79,
     name: "Dwalin",
     epithet: "Irmão de Balin",
     genus: "Guerreiro da companhia",
@@ -2193,7 +2220,7 @@ export const characters = [
   },
   {
     id: "oin",
-    number: 79,
+    number: 80,
     name: "Óin",
     epithet: "Irmão de Glóin",
     genus: "Tio de Gimli",
@@ -2220,7 +2247,7 @@ export const characters = [
   },
   {
     id: "gloin",
-    number: 80,
+    number: 81,
     name: "Glóin",
     epithet: "Pai de Gimli",
     genus: "Irmão de Óin",
@@ -2247,7 +2274,7 @@ export const characters = [
   },
   {
     id: "dori",
-    number: 81,
+    number: 82,
     name: "Dori",
     epithet: "O mais forte dos três",
     genus: "Irmão de Nori e Ori",
@@ -2274,7 +2301,7 @@ export const characters = [
   },
   {
     id: "nori",
-    number: 82,
+    number: 83,
     name: "Nori",
     epithet: "Irmão do meio",
     genus: "Irmão de Dori e Ori",
@@ -2301,7 +2328,7 @@ export const characters = [
   },
   {
     id: "ori",
-    number: 83,
+    number: 84,
     name: "Ori",
     epithet: "O que escreve",
     genus: "Irmão de Dori e Nori",
@@ -2328,7 +2355,7 @@ export const characters = [
   },
   {
     id: "bifur",
-    number: 84,
+    number: 85,
     name: "Bifur",
     epithet: "Primo de Bofur",
     genus: "Fora da linha de Durin",
@@ -2355,7 +2382,7 @@ export const characters = [
   },
   {
     id: "bofur",
-    number: 85,
+    number: 86,
     name: "Bofur",
     epithet: "Primo de Bifur",
     genus: "Irmão de Bombur",
@@ -2382,7 +2409,7 @@ export const characters = [
   },
   {
     id: "bombur",
-    number: 86,
+    number: 87,
     name: "Bombur",
     epithet: "Irmão de Bofur",
     genus: "Primo de Bifur",
@@ -2409,7 +2436,7 @@ export const characters = [
   },
   {
     id: "telchar",
-    number: 87,
+    number: 88,
     name: "Telchar",
     epithet: "Forjador de Nogrod",
     genus: "Artífice da Primeira Era",
@@ -2436,7 +2463,7 @@ export const characters = [
   },
   {
     id: "azaghal",
-    number: 88,
+    number: 89,
     name: "Azaghâl",
     epithet: "Senhor de Belegost",
     genus: "Rei de Belegost",
@@ -2463,7 +2490,7 @@ export const characters = [
   },
   {
     id: "narvi",
-    number: 89,
+    number: 90,
     name: "Narvi",
     epithet: "Das Portas de Durin",
     genus: "Artífice de Khazad-dûm",
@@ -2490,7 +2517,7 @@ export const characters = [
   },
   {
     id: "mim",
-    number: 90,
+    number: 91,
     name: "Mîm",
     epithet: "O anão-miúdo",
     genus: "Noegyth Nibin",
@@ -2517,7 +2544,7 @@ export const characters = [
   },
   {
     id: "hurin",
-    number: 91,
+    number: 92,
     name: "Húrin",
     epithet: "Thalion",
     genus: "Senhor de Dor-lómin",
@@ -2544,7 +2571,7 @@ export const characters = [
   },
   {
     id: "turin",
-    number: 92,
+    number: 93,
     name: "Túrin",
     epithet: "Turambar",
     genus: "Neithan, Mormegil",
@@ -2571,7 +2598,7 @@ export const characters = [
   },
   {
     id: "tuor",
-    number: 93,
+    number: 94,
     name: "Tuor",
     epithet: "Pai de Eärendil",
     genus: "Mensageiro de Ulmo",
@@ -2598,7 +2625,7 @@ export const characters = [
   },
   {
     id: "barahir",
-    number: 94,
+    number: 95,
     name: "Barahir",
     epithet: "Pai de Beren",
     genus: "Senhor da companhia",
@@ -2625,7 +2652,7 @@ export const characters = [
   },
   {
     id: "huor",
-    number: 95,
+    number: 96,
     name: "Huor",
     epithet: "Irmão de Húrin",
     genus: "Pai de Tuor",
@@ -2652,7 +2679,7 @@ export const characters = [
   },
   {
     id: "haleth",
-    number: 96,
+    number: 97,
     name: "Haleth",
     epithet: "Senhora dos Haladin",
     genus: "Chefe do povo da floresta",
@@ -2679,7 +2706,7 @@ export const characters = [
   },
   {
     id: "aldarion",
-    number: 97,
+    number: 98,
     name: "Tar-Aldarion",
     epithet: "O Marinheiro",
     genus: "Anardil",
@@ -2706,7 +2733,7 @@ export const characters = [
   },
   {
     id: "ancalime",
-    number: 98,
+    number: 99,
     name: "Tar-Ancalimë",
     epithet: "Primeira rainha regente",
     genus: "Filha de Aldarion",
@@ -2733,7 +2760,7 @@ export const characters = [
   },
   {
     id: "telperien",
-    number: 99,
+    number: 100,
     name: "Tar-Telperiën",
     epithet: "Rainha de Númenor",
     genus: "Segunda rainha regente",
@@ -2760,7 +2787,7 @@ export const characters = [
   },
   {
     id: "adunakhor",
-    number: 100,
+    number: 101,
     name: "Ar-Adûnakhôr",
     epithet: "Senhor do Oeste",
     genus: "Tar-Herunúmen",
@@ -2787,7 +2814,7 @@ export const characters = [
   },
   {
     id: "pharazon",
-    number: 101,
+    number: 102,
     name: "Ar-Pharazôn",
     epithet: "O Dourado",
     genus: "Tar-Calion",
@@ -2814,7 +2841,7 @@ export const characters = [
   },
   {
     id: "amandil",
-    number: 102,
+    number: 103,
     name: "Amandil",
     epithet: "Senhor de Andúnië",
     genus: "Pai de Elendil",
@@ -2841,7 +2868,7 @@ export const characters = [
   },
   {
     id: "anarion",
-    number: 103,
+    number: 104,
     name: "Anárion",
     epithet: "Filho de Elendil",
     genus: "Irmão de Isildur",
@@ -2868,7 +2895,7 @@ export const characters = [
   },
   {
     id: "earnur",
-    number: 104,
+    number: 105,
     name: "Eärnur",
     epithet: "Último rei de Gondor",
     genus: "Rei que aceitou o desafio",
@@ -2895,7 +2922,7 @@ export const characters = [
   },
   {
     id: "cirion",
-    number: 105,
+    number: 106,
     name: "Cirion",
     epithet: "Regente de Gondor",
     genus: "O do juramento com Eorl",
@@ -2922,7 +2949,7 @@ export const characters = [
   },
   {
     id: "eorl",
-    number: 106,
+    number: 107,
     name: "Eorl",
     epithet: "O Jovem",
     genus: "Senhor dos Éothéod",
@@ -2949,7 +2976,7 @@ export const characters = [
   },
   {
     id: "brego",
-    number: 107,
+    number: 108,
     name: "Brego",
     epithet: "Filho de Eorl",
     genus: "Segundo rei da Marca",
@@ -2976,7 +3003,7 @@ export const characters = [
   },
   {
     id: "helm",
-    number: 108,
+    number: 109,
     name: "Helm Mão-de-Martelo",
     epithet: "Rei da Marca",
     genus: "Rei do Inverno Longo",
@@ -3003,7 +3030,7 @@ export const characters = [
   },
   {
     id: "theodred",
-    number: 109,
+    number: 110,
     name: "Théodred",
     epithet: "Filho de Théoden",
     genus: "Segundo marechal da Marca",
@@ -3030,7 +3057,7 @@ export const characters = [
   },
   {
     id: "hama",
-    number: 110,
+    number: 111,
     name: "Háma",
     epithet: "Guarda da porta",
     genus: "Capitão da guarda de Théoden",
@@ -3057,7 +3084,7 @@ export const characters = [
   },
   {
     id: "erkenbrand",
-    number: 111,
+    number: 112,
     name: "Erkenbrand",
     epithet: "Senhor do Folde Ocidental",
     genus: "Do Abismo de Helm",
@@ -3084,7 +3111,7 @@ export const characters = [
   },
   {
     id: "deor",
-    number: 112,
+    number: 113,
     name: "Déor",
     epithet: "Rei de Rohan",
     genus: "Rei da primeira linha",
@@ -3111,7 +3138,7 @@ export const characters = [
   },
   {
     id: "beregond",
-    number: 113,
+    number: 114,
     name: "Beregond",
     epithet: "Guarda da Torre",
     genus: "Da Terceira Companhia",
@@ -3138,7 +3165,7 @@ export const characters = [
   },
   {
     id: "ghan-buri-ghan",
-    number: 114,
+    number: 115,
     name: "Ghân-buri-Ghân",
     epithet: "Chefe dos Drúedain",
     genus: "Drúadan",
@@ -3165,7 +3192,7 @@ export const characters = [
   },
   {
     id: "khamul",
-    number: 115,
+    number: 116,
     name: "Khamûl",
     epithet: "Sombra do Leste",
     genus: "Segundo dos Nazgûl",
@@ -3192,7 +3219,7 @@ export const characters = [
   },
   {
     id: "ulfang",
-    number: 116,
+    number: 117,
     name: "Ulfang",
     epithet: "O Negro",
     genus: "Chefe dos homens do Leste",
@@ -3219,7 +3246,7 @@ export const characters = [
   },
   {
     id: "hador",
-    number: 117,
+    number: 118,
     name: "Hador",
     epithet: "Lórindol",
     genus: "Cabeça Dourada",
@@ -3246,7 +3273,7 @@ export const characters = [
   },
   {
     id: "beor",
-    number: 118,
+    number: 119,
     name: "Bëor",
     epithet: "O Velho",
     genus: "Pai da primeira casa",
@@ -3273,7 +3300,7 @@ export const characters = [
   },
   {
     id: "marach",
-    number: 119,
+    number: 120,
     name: "Marach",
     epithet: "Pai da terceira casa",
     genus: "Antepassado de Hador",
@@ -3300,7 +3327,7 @@ export const characters = [
   },
   {
     id: "galdor",
-    number: 120,
+    number: 121,
     name: "Galdor",
     epithet: "de Dor-lómin",
     genus: "Pai de Húrin e Huor",
@@ -3327,7 +3354,7 @@ export const characters = [
   },
   {
     id: "baragund",
-    number: 121,
+    number: 122,
     name: "Baragund",
     epithet: "Pai de Morwen",
     genus: "Sobrinho de Barahir",
@@ -3354,7 +3381,7 @@ export const characters = [
   },
   {
     id: "andreth",
-    number: 122,
+    number: 123,
     name: "Andreth",
     epithet: "Sábia de Bëor",
     genus: "Saelind",
@@ -3381,7 +3408,7 @@ export const characters = [
   },
   {
     id: "arvedui",
-    number: 123,
+    number: 124,
     name: "Arvedui",
     epithet: "Último rei de Arthedain",
     genus: "Último rei do Norte",
@@ -3408,7 +3435,7 @@ export const characters = [
   },
   {
     id: "arathorn",
-    number: 124,
+    number: 125,
     name: "Arathorn II",
     epithet: "Pai de Aragorn",
     genus: "Chefe dos montarazes",
@@ -3435,7 +3462,7 @@ export const characters = [
   },
   {
     id: "halbarad",
-    number: 125,
+    number: 126,
     name: "Halbarad",
     epithet: "Montaraz do Norte",
     genus: "Portador do estandarte",
@@ -3462,7 +3489,7 @@ export const characters = [
   },
   {
     id: "brand",
-    number: 126,
+    number: 127,
     name: "Brand",
     epithet: "Rei de Valle",
     genus: "Neto de Bard",
@@ -3489,7 +3516,7 @@ export const characters = [
   },
   {
     id: "girion",
-    number: 127,
+    number: 128,
     name: "Girion",
     epithet: "Senhor de Valle",
     genus: "Antepassado de Bard",
@@ -3516,7 +3543,7 @@ export const characters = [
   },
   {
     id: "thengel",
-    number: 128,
+    number: 129,
     name: "Thengel",
     epithet: "Pai de Théoden",
     genus: "Rei criado em Gondor",
@@ -3543,7 +3570,7 @@ export const characters = [
   },
   {
     id: "frealaf",
-    number: 129,
+    number: 130,
     name: "Fréaláf",
     epithet: "Sobrinho de Helm",
     genus: "Rei depois do Inverno Longo",
@@ -3570,7 +3597,7 @@ export const characters = [
   },
   {
     id: "herumor",
-    number: 130,
+    number: 131,
     name: "Herumor",
     epithet: "Númenóreano negro",
     genus: "Poder no Harad",
@@ -3597,7 +3624,7 @@ export const characters = [
   },
   {
     id: "fuinur",
-    number: 131,
+    number: 132,
     name: "Fuinur",
     epithet: "Númenóreano negro",
     genus: "Poder no Harad",
@@ -3624,7 +3651,7 @@ export const characters = [
   },
   {
     id: "morwen",
-    number: 132,
+    number: 133,
     name: "Morwen",
     epithet: "Eledhwen",
     genus: "Esposa de Húrin",
@@ -3651,7 +3678,7 @@ export const characters = [
   },
   {
     id: "nienor",
-    number: 133,
+    number: 134,
     name: "Nienor",
     epithet: "Níniel",
     genus: "Irmã de Túrin",
@@ -3678,7 +3705,7 @@ export const characters = [
   },
   {
     id: "miriel",
-    number: 134,
+    number: 135,
     name: "Tar-Míriel",
     epithet: "Ar-Zimraphel",
     genus: "Herdeira de Númenor",
@@ -3705,7 +3732,7 @@ export const characters = [
   },
   {
     id: "erendis",
-    number: 135,
+    number: 136,
     name: "Erendis",
     epithet: "Senhora da terra",
     genus: "Esposa de Aldarion",
@@ -3732,7 +3759,7 @@ export const characters = [
   },
   {
     id: "vanimelde",
-    number: 136,
+    number: 137,
     name: "Tar-Vanimeldë",
     epithet: "Terceira rainha regente",
     genus: "Rainha da música",
@@ -3759,7 +3786,7 @@ export const characters = [
   },
   {
     id: "ioreth",
-    number: 137,
+    number: 138,
     name: "Ioreth",
     epithet: "Das casas de cura",
     genus: "Curandeira de Minas Tirith",
@@ -3786,7 +3813,7 @@ export const characters = [
   },
   {
     id: "finduilas",
-    number: 138,
+    number: 139,
     name: "Finduilas",
     epithet: "de Dol Amroth",
     genus: "Mãe de Boromir e Faramir",
@@ -3813,7 +3840,7 @@ export const characters = [
   },
   {
     id: "lothiriel",
-    number: 139,
+    number: 140,
     name: "Lothíriel",
     epithet: "Rainha da Marca",
     genus: "Filha de Dol Amroth",
@@ -3840,7 +3867,7 @@ export const characters = [
   },
   {
     id: "idril",
-    number: 140,
+    number: 141,
     name: "Idril",
     epithet: "Celebrindal",
     genus: "Filha de Turgon",
@@ -3867,7 +3894,7 @@ export const characters = [
   },
   {
     id: "alatar",
-    number: 141,
+    number: 142,
     name: "Alatar",
     epithet: "Mago azul",
     genus: "De Oromë",
@@ -3895,7 +3922,7 @@ export const characters = [
   },
   {
     id: "pallando",
-    number: 142,
+    number: 143,
     name: "Pallando",
     epithet: "Mago azul",
     genus: "De Oromë",
@@ -3923,7 +3950,7 @@ export const characters = [
   },
   {
     id: "gothmog",
-    number: 143,
+    number: 144,
     name: "Gothmog",
     epithet: "Senhor dos balrogs",
     genus: "Capitão de Angband",
@@ -3951,7 +3978,7 @@ export const characters = [
   },
   {
     id: "melian",
-    number: 144,
+    number: 145,
     name: "Melian",
     epithet: "Rainha de Doriath",
     genus: "De Vána e Estë",
@@ -3979,7 +4006,7 @@ export const characters = [
   },
   {
     id: "eonwe",
-    number: 145,
+    number: 146,
     name: "Eönwë",
     epithet: "Arauto de Manwë",
     genus: "Portador do estandarte",
@@ -4007,7 +4034,7 @@ export const characters = [
   },
   {
     id: "ilmare",
-    number: 146,
+    number: 147,
     name: "Ilmarë",
     epithet: "Aia de Varda",
     genus: "Da casa de Varda",
@@ -4035,7 +4062,7 @@ export const characters = [
   },
   {
     id: "osse",
-    number: 147,
+    number: 148,
     name: "Ossë",
     epithet: "Senhor da costa",
     genus: "De Ulmo",
@@ -4063,7 +4090,7 @@ export const characters = [
   },
   {
     id: "uinen",
-    number: 148,
+    number: 149,
     name: "Uinen",
     epithet: "Senhora dos mares calmos",
     genus: "De Ulmo",
@@ -4091,7 +4118,7 @@ export const characters = [
   },
   {
     id: "arien",
-    number: 149,
+    number: 150,
     name: "Arien",
     epithet: "Guia do Sol",
     genus: "De Vána",
@@ -4119,7 +4146,7 @@ export const characters = [
   },
   {
     id: "tilion",
-    number: 150,
+    number: 151,
     name: "Tilion",
     epithet: "Guia da Lua",
     genus: "Caçador de Oromë",
@@ -4147,7 +4174,7 @@ export const characters = [
   },
   {
     id: "salmar",
-    number: 151,
+    number: 152,
     name: "Salmar",
     epithet: "Das trompas do mar",
     genus: "De Ulmo",
@@ -4175,7 +4202,7 @@ export const characters = [
   },
   {
     id: "bregalad",
-    number: 152,
+    number: 153,
     name: "Bregalad",
     epithet: "Quickbeam",
     genus: "Ent das sorveiras",
@@ -4202,7 +4229,7 @@ export const characters = [
   },
   {
     id: "beechbone",
-    number: 153,
+    number: 154,
     name: "Beechbone",
     epithet: "Da faia",
     genus: "Ent da marcha",
@@ -4229,7 +4256,7 @@ export const characters = [
   },
   {
     id: "finglas",
-    number: 154,
+    number: 155,
     name: "Finglas",
     epithet: "Leaflock",
     genus: "Um dos três mais antigos",
@@ -4256,7 +4283,7 @@ export const characters = [
   },
   {
     id: "fladrif",
-    number: 155,
+    number: 156,
     name: "Fladrif",
     epithet: "Skinbark",
     genus: "Um dos três mais antigos",
@@ -4283,7 +4310,7 @@ export const characters = [
   },
   {
     id: "fimbrethil",
-    number: 156,
+    number: 157,
     name: "Fimbrethil",
     epithet: "Wandlimb",
     genus: "Entesposa",
@@ -4310,7 +4337,7 @@ export const characters = [
   },
   {
     id: "glaurung",
-    number: 157,
+    number: 158,
     name: "Glaurung",
     epithet: "O Pai dos Dragões",
     genus: "Primeiro dos dragões",
@@ -4337,7 +4364,7 @@ export const characters = [
   },
   {
     id: "ancalagon",
-    number: 158,
+    number: 159,
     name: "Ancalagon",
     epithet: "O Negro",
     genus: "O maior dos alados",
@@ -4364,7 +4391,7 @@ export const characters = [
   },
   {
     id: "scatha",
-    number: 159,
+    number: 160,
     name: "Scatha",
     epithet: "O Verme",
     genus: "Verme das Montanhas Cinzentas",
@@ -4391,7 +4418,7 @@ export const characters = [
   },
   {
     id: "gostir",
-    number: 160,
+    number: 161,
     name: "Gostir",
     epithet: "Dragão de Morgoth",
     genus: "Nome quase sem cena",
@@ -4418,7 +4445,7 @@ export const characters = [
   },
   {
     id: "lhamthanc",
-    number: 161,
+    number: 162,
     name: "Lhamthanc",
     epithet: "Tradição textual antiga",
     genus: "Nome de língua bifurcada",
@@ -4445,7 +4472,7 @@ export const characters = [
   },
   {
     id: "great-cold-drake",
-    number: 162,
+    number: 163,
     name: "O Grande Dragão Frio",
     epithet: "Great Cold-drake",
     genus: "Drake sem fogo",
@@ -4472,7 +4499,7 @@ export const characters = [
   },
   {
     id: "nazgul-iii-ix",
-    number: 163,
+    number: 164,
     name: "Nazgûl III–IX",
     epithet: "Sem nome conhecido",
     genus: "Nazgûl III, Nazgûl IV, Nazgûl V, Nazgûl VI, Nazgûl VII, Nazgûl VIII, Nazgûl IX",
@@ -4499,7 +4526,7 @@ export const characters = [
   },
   {
     id: "thorondor",
-    number: 164,
+    number: 165,
     name: "Thorondor",
     epithet: "Rei das Águias",
     genus: "A maior das águias",
@@ -4526,7 +4553,7 @@ export const characters = [
   },
   {
     id: "landroval",
-    number: 165,
+    number: 166,
     name: "Landroval",
     epithet: "Irmão de Gwaihir",
     genus: "Águia do vento",
@@ -4553,7 +4580,7 @@ export const characters = [
   },
   {
     id: "meneldor",
-    number: 166,
+    number: 167,
     name: "Meneldor",
     epithet: "O Veloz",
     genus: "Águia mais nova",
@@ -4580,7 +4607,7 @@ export const characters = [
   },
   {
     id: "felarof",
-    number: 167,
+    number: 168,
     name: "Felaróf",
     epithet: "O Pai dos Mearas",
     genus: "Felaróf",
@@ -4607,7 +4634,7 @@ export const characters = [
   },
   {
     id: "arod",
-    number: 168,
+    number: 169,
     name: "Arod",
     epithet: "Cedido a Legolas",
     genus: "Cavalo da éored de Éomer",
@@ -4634,7 +4661,7 @@ export const characters = [
   },
   {
     id: "hasufel",
-    number: 169,
+    number: 170,
     name: "Hasufel",
     epithet: "Cavalo de Aragorn",
     genus: "Cavalo da Marca",
@@ -4661,7 +4688,7 @@ export const characters = [
   },
   {
     id: "grimbeorn",
-    number: 170,
+    number: 171,
     name: "Grimbeorn, o Velho",
     epithet: "Filho de Beorn",
     genus: "Senhor dos Beornianos",
@@ -4688,7 +4715,7 @@ export const characters = [
   },
   {
     id: "goldberry",
-    number: 171,
+    number: 172,
     name: "Fruta d'Ouro",
     epithet: "Goldberry",
     genus: "Filha do Rio",
@@ -4715,7 +4742,7 @@ export const characters = [
   },
   {
     id: "watcher",
-    number: 172,
+    number: 173,
     name: "Vigia na Água",
     epithet: "Watcher in the Water",
     genus: "O que espera a porta",
@@ -4742,7 +4769,7 @@ export const characters = [
   },
   {
     id: "nameless-things",
-    number: 173,
+    number: 174,
     name: "Coisas Sem Nome",
     epithet: "Nameless Things",
     genus: "Mais fundo que o nome",

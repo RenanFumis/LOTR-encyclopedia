@@ -119,6 +119,8 @@ FOLDERS = {
         "PeregrinTook.png": "pippin",
         "Pr__mula_Brandigamo_687fbb891a779.png": "primula",
         "SamwiseGamgee.png": "sam",
+        "Gollum.png": "gollum",
+        "Smeagol.png": "smeagol",
         "TedSandyman.png": "ted-sandyman",
         "WillWhitfoot.png": "will-whitfoot",
     },
@@ -139,6 +141,7 @@ FOLDERS = {
         "Ancalagon.png": "ancalagon",
         "Glaurung.png": "glaurung",
         "Gostir.png": "gostir",
+        "GreatCold-drake.png": "great-cold-drake",
         "Lhamthanc.png": "lhamthanc",
         "Scatha.png": "scatha",
         "Smaug.png": "smaug",
@@ -190,6 +193,26 @@ FOLDERS = {
     },
     "Nazgul-atualizado": {
         "Nazguls.png": "nazgul-iii-ix",
+    },
+    "elfos-atualizados": {
+        "Celeborn.png": "celeborn",
+        "Celebrimbor.png": "celebrimbor",
+        "Feanor.png": "feanor",
+        "FinrodFelagund.png": "finrod",
+        "Galadriel.png": "galadriel",
+        "Gil-Galad.png": "gil-galad",
+        "Glorfindel.png": "glorfindel",
+        "Legolas.png": "legolas",
+        "Thingol.png": "thingol",
+        "TurgondeGondolin.png": "turgon",
+    },
+    "Ent-atualizado": {
+        "Barbarvore.png": "treebeard",
+        "Beechbone.png": "beechbone",
+        "Leaflock.png": "finglas",
+        "Quickbeam.png": "bregalad",
+        "Skinbark.png": "fladrif",
+        "Wandlimb.png": "fimbrethil",
     },
 }
 
