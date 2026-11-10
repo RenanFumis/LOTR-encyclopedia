@@ -1,20 +1,33 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Detail } from "./components/Detail";
-import { DexCard, DexRow } from "./components/Entries";
+import { DexBoard } from "./components/DexBoard";
 import { Header } from "./components/Header";
+import { BestiaryPortal } from "./components/BestiaryPortal";
 import { Home } from "./components/Home";
 import { PartyBar } from "./components/PartyBar";
 import { Room } from "./components/Room";
-import { Toolbar } from "./components/Toolbar";
 import { characters, getCharacter } from "./data/characters";
 import { matchesQuery, sortCharacters } from "./lib/dex";
 import { readRoute, routeHash, type PageId } from "./lib/routes";
 import { playEntrySound } from "./lib/sound";
 import { readParty, readSound, readView, writeParty, writeSound, writeView } from "./lib/storage";
-import type { Character, DexFilters, ViewMode } from "./types";
+import { CREATURE_RACES, PEOPLE_RACES, RACES, type Character, type DexFilters, type Race, type ViewMode } from "./types";
 
 const partyEnabled = false;
 const soundEnabled = false;
+
+function scopeRaces(page: PageId): readonly Race[] | null {
+  if (page === "racas") return PEOPLE_RACES;
+  if (page === "criaturas") return CREATURE_RACES;
+  return null;
+}
+
+function showsEntry(page: PageId) {
+  return page === "catalogo" || page === "racas" || page === "criaturas";
+}
+
+function isPlain(page: PageId) {
+  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "criaturas";
+}
 
 const initialFilters: DexFilters = {
   query: "",
@@ -43,8 +56,13 @@ export function App() {
   const fromPop = useRef(false);
   const soundReady = useRef(false);
 
+  const pool = useMemo(() => {
+    const scope = scopeRaces(page);
+    return scope ? characters.filter((character) => scope.includes(character.race)) : characters;
+  }, [page]);
+
   const visible = useMemo(() => {
-    const next = characters.filter((character) => {
+    const next = pool.filter((character) => {
       if (filters.partyOnly && !party.includes(character.id)) return false;
       if (filters.race !== "Todas" && character.race !== filters.race) return false;
       if (filters.era !== "Todas" && character.era !== filters.era) return false;
@@ -52,7 +70,7 @@ export function App() {
       return matchesQuery(character, filters.query);
     });
     return sortCharacters(next, filters.sort);
-  }, [filters, party]);
+  }, [filters, party, pool]);
 
   const selected = selectedId ? getCharacter(selectedId) ?? null : null;
 
@@ -67,6 +85,14 @@ export function App() {
   useEffect(() => {
     writeSound(sound);
   }, [sound]);
+
+  useEffect(() => {
+    const scope = scopeRaces(page);
+    if (!scope) return;
+    if (filters.race !== "Todas" && !scope.includes(filters.race)) {
+      setFilters((current) => ({ ...current, race: "Todas" }));
+    }
+  }, [page, filters.race]);
 
   useEffect(() => {
     if (!notice) return;
@@ -90,7 +116,7 @@ export function App() {
       fromPop.current = false;
       return;
     }
-    const hash = routeHash(page, page === "bestiario" ? selectedId : null);
+    const hash = routeHash(page, showsEntry(page) ? selectedId : null);
     if (window.location.hash === hash || (hash === "#/" && window.location.hash === "")) return;
     window.history.pushState(null, "", hash);
   }, [page, selectedId]);
@@ -125,7 +151,7 @@ export function App() {
         target instanceof HTMLSelectElement ||
         target instanceof HTMLTextAreaElement;
 
-      if (event.key === "/" && !typing && page === "bestiario") {
+      if (event.key === "/" && !typing && showsEntry(page)) {
         event.preventDefault();
         searchRef.current?.focus();
         return;
@@ -158,14 +184,24 @@ export function App() {
   const openPage = (next: PageId) => {
     setSelectedId(null);
     setPage(next);
+    const scope = scopeRaces(next);
+    if (scope) {
+      setFilters((current) => (
+        current.race !== "Todas" && !scope.includes(current.race)
+          ? { ...current, race: "Todas" }
+          : current
+      ));
+    }
+    window.scrollTo(0, 0);
   };
 
   const openEntry = (id: string) => {
-    setPage("bestiario");
+    setPage("catalogo");
     setSelectedId(id);
   };
 
   const patch = (partial: Partial<DexFilters>) => setFilters((current) => ({ ...current, ...partial }));
+  const toggleSelect = (id: string) => setSelectedId((current) => (current === id ? null : id));
   const dirty =
     filters.query !== "" ||
     filters.race !== "Todas" ||
@@ -202,19 +238,24 @@ export function App() {
     toggleParty(selected.id);
   };
 
-  const neighborSource = selected && visible.some((item) => item.id === selected.id) ? visible : sortCharacters([...characters], "numero");
+  const neighborSource = selected && visible.some((item) => item.id === selected.id) ? visible : sortCharacters([...pool], "numero");
   const neighborIndex = selected ? neighborSource.findIndex((item) => item.id === selected.id) : -1;
   const prev = neighborIndex > 0 ? neighborSource[neighborIndex - 1] : undefined;
   const next = neighborIndex >= 0 ? neighborSource[neighborIndex + 1] : undefined;
   const partyCharacters = party.map((id) => getCharacter(id)).filter((item): item is Character => Boolean(item));
+  const collection = page === "racas"
+    ? { title: "Raças da Terra-média", races: PEOPLE_RACES }
+    : page === "criaturas"
+      ? { title: "Criaturas da Terra-média", races: CREATURE_RACES }
+      : null;
 
   return (
     <>
-      {page !== "home" && <div className="halo" aria-hidden="true" />}
+      {!isPlain(page) && <div className="halo" aria-hidden="true" />}
       <a className="skip" href="#conteudo">Ir para o conteúdo</a>
       <div className={partyEnabled ? "page" : "page no-party"}>
-        <div className={page === "home" ? "device is-plain" : "device"}>
-          {page !== "home" && (
+        <div className={isPlain(page) ? "device is-plain" : "device"}>
+          {!isPlain(page) && (
             <>
               <span className="screw tl" aria-hidden="true" />
               <span className="screw tr" aria-hidden="true" />
@@ -230,6 +271,7 @@ export function App() {
             onToggleSound={() => setSound((value) => !value)}
           />
           {page === "home" && <Home onOpen={openPage} onOpenEntry={openEntry} />}
+          {page === "bestiario" && <BestiaryPortal onOpen={openPage} />}
           {page === "lugares" && (
             <Room kicker="Geografia" title="Lugares">
               Regiões, cidades, portos e caminhos da Terra-média entram nesta sala. Ela ainda está vazia: os nomes e os caminhos vêm depois.
@@ -265,90 +307,91 @@ export function App() {
               A política de privacidade entra nesta sala.
             </Room>
           )}
-          {page === "bestiario" && (
-          <>
-          <Toolbar
-            filters={filters}
-            view={view}
-            count={visible.length}
-            total={characters.length}
-            dirty={dirty}
-            searchRef={searchRef}
-            onChange={patch}
-            onView={setView}
-            onClear={clear}
-            showParty={partyEnabled}
-          />
-          <div className={selected ? "workspace has-detail" : "workspace"}>
-            <main id="conteudo">
-              {visible.length === 0 ? (
-                <div className="empty">
-                  <p>
-                    {filters.partyOnly && party.length === 0
-                      ? "A comitiva ainda está vazia. Abra uma ficha e convoque um viajante."
-                      : "Nenhum registro com esses filtros."}
-                  </p>
-                  {dirty && (
-                    <button type="button" className="text-btn" onClick={clear}>Limpar filtros</button>
-                  )}
+          {collection && (
+            <main id="conteudo" className="portal">
+              <div className="portal-banner" aria-hidden="true" />
+              <section className="bestiary-intro">
+                <h2>{collection.title}</h2>
+                <div className="ornamental-divider" aria-hidden="true">
+                  <span>✧</span>
                 </div>
-              ) : view === "grade" ? (
-                <div className="grid">
-                  {visible.map((character, index) => (
-                    <DexCard
-                      key={character.id}
-                      character={character}
-                      selected={character.id === selectedId}
-                      inParty={partyEnabled && party.includes(character.id)}
-                      index={index}
-                      onSelect={(id) => setSelectedId((current) => (current === id ? null : id))}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <div className="list">
-                  {visible.map((character, index) => (
-                    <DexRow
-                      key={character.id}
-                      character={character}
-                      selected={character.id === selectedId}
-                      inParty={partyEnabled && party.includes(character.id)}
-                      index={index}
-                      onSelect={(id) => setSelectedId((current) => (current === id ? null : id))}
-                    />
-                  ))}
-                </div>
-              )}
+              </section>
+              <div className="bestiary">
+                <DexBoard
+                  asMain={false}
+                  filters={filters}
+                  races={collection.races}
+                  view={view}
+                  visible={visible}
+                  total={pool.length}
+                  dirty={dirty}
+                  searchRef={searchRef}
+                  selected={selected}
+                  selectedId={selectedId}
+                  party={party}
+                  partyEnabled={partyEnabled}
+                  hasPrev={Boolean(prev)}
+                  hasNext={Boolean(next)}
+                  prevName={prev?.name}
+                  nextName={next?.name}
+                  onChange={patch}
+                  onView={setView}
+                  onClear={clear}
+                  onSelect={toggleSelect}
+                  onClose={() => setSelectedId(null)}
+                  onPrev={() => prev && setSelectedId(prev.id)}
+                  onNext={() => next && setSelectedId(next.id)}
+                  onToggleParty={() => selected && toggleParty(selected.id)}
+                  onOpen={setSelectedId}
+                />
+              </div>
             </main>
-            {selected && (
-              <Detail
-                key={selected.id}
-                character={selected}
+          )}
+          {page === "catalogo" && (
+            <div className="bestiary">
+              <header className="bestiary-head">
+                <h2>Bestiário</h2>
+                <div className="ornamental-divider" aria-hidden="true">
+                  <span>✧</span>
+                </div>
+              </header>
+              <DexBoard
+                asMain
+                filters={filters}
+                races={RACES}
+                view={view}
+                visible={visible}
+                total={pool.length}
+                dirty={dirty}
+                searchRef={searchRef}
+                selected={selected}
+                selectedId={selectedId}
+                party={party}
+                partyEnabled={partyEnabled}
                 hasPrev={Boolean(prev)}
                 hasNext={Boolean(next)}
                 prevName={prev?.name}
                 nextName={next?.name}
-                inParty={party.includes(selected.id)}
-                partyCount={party.length}
-                showParty={partyEnabled}
+                onChange={patch}
+                onView={setView}
+                onClear={clear}
+                onSelect={toggleSelect}
                 onClose={() => setSelectedId(null)}
                 onPrev={() => prev && setSelectedId(prev.id)}
                 onNext={() => next && setSelectedId(next.id)}
-                onToggleParty={() => toggleParty(selected.id)}
+                onToggleParty={() => selected && toggleParty(selected.id)}
                 onOpen={setSelectedId}
               />
-            )}
-          </div>
-          </>
+            </div>
           )}
           <footer className="colophon">
-            <div className="colophon-brand">
+            <button type="button" className="colophon-brand" onClick={() => openPage("home")}>
               <img className="brand-mark" src="/mark.png" alt="" />
-              <div>
-                <p className="colophon-kicker">A Enciclopédia da Terra-média</p>
-                <p className="colophon-title">Lord of the Rings</p>
-              </div>
-            </div>
+              <span>
+                <span className="colophon-kicker">A Enciclopédia da Terra-média</span>
+                <span className="colophon-title">Lord of the Rings</span>
+              </span>
+            </button>
             <nav className="colophon-links" aria-label="Informações do projeto">
               <button type="button" className="colophon-link" aria-current={page === "sobre" ? "page" : undefined} onClick={() => openPage("sobre")}>Sobre</button>
               <button type="button" className="colophon-link" aria-current={page === "creditos" ? "page" : undefined} onClick={() => openPage("creditos")}>Créditos</button>
@@ -356,9 +399,9 @@ export function App() {
               <button type="button" className="colophon-link" aria-current={page === "privacidade" ? "page" : undefined} onClick={() => openPage("privacidade")}>Políticas de privacidade</button>
             </nav>
             <p className="colophon-note">
-              Projeto de fã para fã.
-              <br />
-              Sem vínculos com a Tolkien Estate <br /> ou a Middle-earth Enterprises.
+              Projeto de fã para fã.{" "}
+              <br className="colophon-break" />
+              Sem vínculos com a Tolkien Estate <br className="colophon-break" /> ou a Middle-earth Enterprises.
             </p>
             <p className="colophon-credit">Desenvolvido por Meir Fumis</p>
           </footer>

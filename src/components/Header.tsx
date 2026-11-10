@@ -12,15 +12,15 @@ interface HeaderProps {
 export function Header({ page, onOpen, showSound, sound, onToggleSound }: HeaderProps) {
   return (
     <header className="header">
-      <div className="brand">
-        <img className="brand-mark" src="/mark.png" alt="" />
-        <div>
-          <p className="brand-kicker">
-            A Enciclopédia da Terra-média
-          </p>
-          <h1>Lord of the Rings</h1>
-        </div>
-      </div>
+      <h1 className="brand">
+        <button type="button" className="brand-home" onClick={() => onOpen("home")}>
+          <img className="brand-mark" src="/mark.png" alt="" />
+          <span>
+            <span className="brand-kicker">A Enciclopédia da Terra-média</span>
+            <span className="brand-name">Lord of the Rings</span>
+          </span>
+        </button>
+      </h1>
       <Nav page={page} onOpen={onOpen} />
       {showSound && (
         <div className="header-actions">

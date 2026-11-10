@@ -31,7 +31,7 @@ export function Home({
           <p>
             Uma jornada pelo mundo de Tolkien, reunindo histórias, povos, lugares e maravilhas de todas as Eras.
           </p>
-          <button type="button" className="portal-cta" onClick={() => onOpen("bestiario")}>
+          <button type="button" className="portal-cta" onClick={() => onOpen("catalogo")}>
             Explorar a Enciclopédia
             <span aria-hidden="true"> →</span>
           </button>
@@ -53,7 +53,7 @@ export function Home({
               <h3>Personagens</h3>
             </div>
             <p>Conheça os grandes e os pequenos protagonistas da Terra-média.</p>
-            <button type="button" className="portal-link" onClick={() => onOpen("bestiario")}>
+            <button type="button" className="portal-link" onClick={() => onOpen("racas")}>
               Explorar Personagens
               <span aria-hidden="true"> →</span>
             </button>
@@ -67,11 +67,11 @@ export function Home({
           <div className="portal-card-body">
             <div className="portal-card-title">
               <CardMark src="/flavicon/pata.png?v=2" />
-              <h3>Bestiário</h3>
+              <h3>Criaturas</h3>
             </div>
             <p>Descubra criaturas, povos e raças que habitam Arda.</p>
-            <button type="button" className="portal-link" onClick={() => onOpen("bestiario")}>
-              Explorar o Bestiário
+            <button type="button" className="portal-link" onClick={() => onOpen("criaturas")}>
+              Explorar o Criaturas
               <span aria-hidden="true"> →</span>
             </button>
           </div>

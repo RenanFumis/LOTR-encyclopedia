@@ -148,7 +148,22 @@ h2, h3 {
   padding: 14px 28px;
   border-bottom: 1px solid rgba(230, 208, 163, 0.28);
 }
-.brand { display: flex; gap: 12px; align-items: center; flex: 0 0 auto; }
+h1.brand { display: flex; align-items: center; flex: 0 0 auto; margin: 0; }
+.brand-home,
+.colophon-brand {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.brand-home {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.brand-name { display: block; }
 .brand-kicker {
   font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
   font-size: 0.58rem;
@@ -166,7 +181,7 @@ h2, h3 {
   object-fit: contain;
   filter: invert(86%) sepia(16%) saturate(520%) hue-rotate(354deg) brightness(1.05);
 }
-h1 {
+h1, .brand-name {
   font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
   font-weight: normal;
   font-synthesis: none;
@@ -227,8 +242,13 @@ h1 {
   flex-wrap: wrap;
   justify-content: flex-end;
   align-items: center;
-  gap: 6px 14px;
+  gap: 6px 10px;
   padding: 0;
+}
+.nav-dot {
+  color: #e5c17b;
+  font-size: 1.15rem;
+  line-height: 1;
 }
 .nav-link {
   border: 0;
@@ -427,6 +447,113 @@ h1 {
   line-height: 1;
 }
 
+.portal-banner {
+  height: 460px;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background: #090807;
+  box-shadow: inset 0 0 0 1px rgba(155, 118, 61, 0.35);
+}
+.bestiary-intro {
+  padding: 48px 40px 8px;
+  text-align: center;
+}
+.bestiary-intro h2 { margin: 0; }
+.bestiary-intro > .ornamental-divider {
+  width: 100%;
+  max-width: 28rem;
+  margin: 8px auto 0;
+  gap: 10px;
+}
+.bestiary-intro > .ornamental-divider::before,
+.bestiary-intro > .ornamental-divider::after {
+  height: 1px;
+}
+.bestiary-intro > .ornamental-divider span {
+  font-size: 22px;
+  line-height: 1;
+}
+.bestiary-lead {
+  max-width: 40rem;
+  margin: 18px auto 0;
+  color: #f3eadc;
+  font-size: 1.14rem;
+  line-height: 1.7;
+}
+.bestiary-copy {
+  max-width: 44rem;
+  margin: 28px auto 0;
+  text-align: left;
+}
+.bestiary-copy p {
+  margin: 0;
+  color: #e7dccb;
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+.bestiary-copy p + p { margin-top: 1.15em; }
+.bestiary-copy .bestiary-close {
+  margin-top: 1.7em;
+  text-align: center;
+  color: #e5c17b;
+  font-style: italic;
+}
+.portal-cards.bestiary-gates {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 920px;
+  margin-inline: auto;
+  padding-top: 28px;
+  padding-bottom: 8px;
+}
+.bestiary-portal > .quote-divider { margin-top: 64px; }
+.bestiary-gate {
+  align-items: center;
+  justify-content: center;
+  min-height: 148px;
+  text-align: center;
+  padding: 28px 24px;
+}
+.bestiary-gate.has-art { padding: 0 0 28px; }
+.bestiary-gate .portal-card-art {
+  width: 100%;
+  height: 220px;
+  margin-bottom: 18px;
+}
+.bestiary-gate .portal-card-art img { object-position: center 32%; }
+.bestiary-gate .portal-card-art img.is-watcher { object-position: center 62%; }
+.bestiary-gate.has-art .portal-card-title,
+.bestiary-gate.has-art > p,
+.bestiary-gate-hit > p { padding-inline: 24px; }
+.bestiary-gate .portal-card-title { justify-content: center; }
+.bestiary-gate h3 { margin: 0; }
+.bestiary-gate-hit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+}
+.bestiary-gate:has(.bestiary-gate-hit):hover { border-color: #e5c17b; }
+.bestiary-gate-title {
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-weight: normal;
+  font-synthesis: none;
+  font-size: 1.17em;
+  line-height: 1.2;
+}
+.bestiary-gate p {
+  margin: 10px 0 0;
+  color: #e7dccb;
+  font-family: Lora, Georgia, serif;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
 .portal-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -632,13 +759,29 @@ h1 {
   color: var(--gold);
 }
 
+.bestiary-head {
+  padding: 28px 40px 0;
+  text-align: center;
+}
+.bestiary-head h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 1.2rem + 1vw, 2.15rem);
+}
+.bestiary-head .ornamental-divider {
+  max-width: 28rem;
+  margin: 12px auto 4px;
+}
+.bestiary .toolbar { padding: 8px 40px 16px; }
+.bestiary .grid,
+.bestiary .list { padding: 4px 40px 28px; }
+
 .toolbar { display: flex; flex-direction: column; gap: 12px; padding: 8px 22px 14px; }
 .toolbar-row, .toolbar-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .search { position: relative; flex: 1 1 240px; }
 .search input {
   width: 100%;
   background: #0e0c0a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='6' fill='none' stroke='%23e6d0a3' stroke-width='1.6'/%3E%3C/svg%3E") 12px 50% / 16px no-repeat;
-  border: 1px solid var(--line);
+  border: 1px solid #9b763d;
   border-radius: 999px;
   padding: 11px 16px 11px 38px;
 }
@@ -657,7 +800,7 @@ h1 {
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 14px 14px;
-  border: 1px solid var(--line);
+  border: 1px solid #9b763d;
   border-radius: 999px;
   padding: 9px 38px 9px 16px;
   line-height: 1.2;
@@ -680,18 +823,19 @@ h1 {
 .card, .row {
   position: relative;
   width: 100%;
-  background:
-    linear-gradient(180deg, rgba(255, 244, 220, 0.04), transparent 42%),
-    #14110e;
-  border: 1px solid var(--line);
-  border-radius: 18px;
+  background: #101914;
+  border: 1px solid #9b763d;
+  border-radius: 10px;
   color: inherit;
   text-align: left;
+  box-shadow:
+    inset 0 0 12px rgba(197, 158, 87, 0.05),
+    0 0 8px rgba(0, 0, 0, 0.3);
   animation: rise 0.45s ease both;
   transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
 }
 .card { display: flex; flex-direction: column; align-items: flex-start; padding: 14px 14px 16px; }
-.card:hover, .row:hover { transform: translateY(-3px); border-color: rgba(230, 208, 163, 0.55); }
+.card:hover, .row:hover { transform: translateY(-2px); border-color: #e5c17b; }
 .card.is-selected, .row.is-selected {
   border-color: var(--gold);
   background: #1c1813;
@@ -967,8 +1111,14 @@ h1 {
   gap: 14px;
   text-align: left;
 }
+.colophon-brand > span {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .colophon-brand .brand-mark { height: 72.45px; }
 .colophon-kicker {
+  display: block;
   font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
   font-weight: normal;
   font-synthesis: none;
@@ -978,6 +1128,7 @@ h1 {
   margin: 0;
 }
 .colophon-title {
+  display: block;
   font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
   font-weight: normal;
   font-synthesis: none;
@@ -1003,7 +1154,7 @@ h1 {
 .colophon-link[aria-current="page"] { color: var(--ink); }
 .colophon-note,
 .colophon-credit { margin: 0; }
-.colophon-note { max-width: 26rem; line-height: 1.5; }
+.colophon-note { max-width: 26rem; line-height: 1.5; font-size: 0.75rem; }
 .colophon-credit { color: var(--muted); }
 
 .party {
@@ -1167,7 +1318,17 @@ h1 {
     object-position: 70% center;
   }
   .portal-hero::after { display: none; }
-  .portal-cards { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+  .portal-banner { height: 240px; }
+  .bestiary-intro { padding: 28px 16px 4px; }
+  .bestiary-lead { font-size: 1.05rem; }
+  .bestiary-copy { margin-top: 22px; }
+  .bestiary-copy p { font-size: 1rem; }
+  .portal-cards,
+  .portal-cards.bestiary-gates { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+  .bestiary-head { padding: 20px 16px 0; }
+  .bestiary .toolbar,
+  .bestiary .grid,
+  .bestiary .list { padding-left: 16px; padding-right: 16px; }
   .portal-lower {
     grid-template-columns: 1fr;
     row-gap: 28px;
@@ -1177,6 +1338,12 @@ h1 {
   }
   .portal-parchment { display: none; }
   .portal-rule { display: none; }
+  .colophon-note {
+    max-width: none;
+    white-space: nowrap;
+    font-size: clamp(0.52rem, 2.05vw, 0.75rem);
+  }
+  .colophon-break { display: none; }
   .portal-about {
     display: grid;
     grid-template-columns: 0.7fr 1.3fr;
@@ -1279,11 +1446,12 @@ h1 {
   .nav-bar.is-open .site-nav { display: flex; }
   .nav-link {
     font-size: 1.265rem;
-    text-align: left;
+    text-align: center;
     padding: 14px 2px;
     border-bottom: 1px solid rgba(230, 208, 163, 0.12);
   }
   .nav-link:last-child { border-bottom: 0; }
+  .nav-dot { display: none; }
 }
 
 @media (max-width: 520px) {
@@ -1292,8 +1460,8 @@ h1 {
   .brand { flex: 1 1 auto; min-width: 0; }
   .brand-mark { height: 75px; }
   .colophon-brand .brand-mark { height: 63.25px; }
-  .brand-kicker, h1 { white-space: nowrap; }
-  h1 { font-size: 1.389rem; }
+  .brand-kicker, h1, .brand-name { white-space: nowrap; }
+  h1, .brand-name { font-size: 1.389rem; }
   .portal-lower { grid-template-columns: 1fr; }
   .portal-about { grid-column: auto; }
   .portal-rule { display: none; }

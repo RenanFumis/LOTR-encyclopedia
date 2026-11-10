@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useRef, useState } from "react";
 import type { PageId } from "../lib/routes";
 
 const links: { id: PageId; label: string }[] = [
@@ -54,19 +54,21 @@ export function Nav({ page, onOpen }: { page: PageId; onOpen: (page: PageId) => 
         <span className="nav-toggle-icon" aria-hidden="true" />
       </button>
       <nav id={menuId} className="site-nav" aria-label="Salas do arquivo">
-        {links.map((link) => (
-          <button
-            key={link.id}
-            type="button"
-            className="nav-link"
-            aria-current={page === link.id ? "page" : undefined}
-            onClick={() => {
-              setOpen(false);
-              onOpen(link.id);
-            }}
-          >
-            {link.label}
-          </button>
+        {links.map((link, index) => (
+          <Fragment key={link.id}>
+            {index > 0 && <span className="nav-dot" aria-hidden="true">·</span>}
+            <button
+              type="button"
+              className="nav-link"
+              aria-current={page === link.id || (link.id === "bestiario" && (page === "racas" || page === "criaturas")) ? "page" : undefined}
+              onClick={() => {
+                setOpen(false);
+                onOpen(link.id);
+              }}
+            >
+              {link.label}
+            </button>
+          </Fragment>
         ))}
       </nav>
     </div>

@@ -140,6 +140,25 @@ export const RACES: Race[] = [
   "Enigma",
 ];
 
+export const PEOPLE_RACES: Race[] = [
+  "Elfo",
+  "Meio-elfo",
+  "Anão",
+  "Humano",
+  "Maia",
+  "Ent",
+  "Beorniano",
+];
+
+export const CREATURE_RACES: Race[] = [
+  "Dragão",
+  "Aranha",
+  "Nazgûl",
+  "Águia",
+  "Mearas",
+  "Enigma",
+];
+
 export const ERAS: Era[] = ["Terceira Era", "Segunda Era", "Primeira Era", "Fora do tempo"];
 
 export const RARITIES: Rarity[] = ["comum", "incomum", "raro", "lendário", "mítico"];
