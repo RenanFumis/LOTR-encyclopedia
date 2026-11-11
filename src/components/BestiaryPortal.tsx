@@ -7,7 +7,10 @@ function CardMark({ src }: { src: string }) {
 
 export function BestiaryPortal({ onOpen }: { onOpen: (page: PageId) => void }) {
   return (
-    <main id="conteudo" className="portal bestiary-portal">      <div className="portal-banner" aria-hidden="true" />
+    <main id="conteudo" className="portal bestiary-portal">
+      <div className="portal-banner">
+        <img src="/banner/banner-bestiario.png" alt="Clarão entre as raízes de uma floresta antiga." />
+      </div>
 
       <section className="bestiary-intro">
         <h2>O Bestiário de Arda</h2>

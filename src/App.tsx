@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { DexBoard } from "./components/DexBoard";
 import { Header } from "./components/Header";
 import { BestiaryPortal } from "./components/BestiaryPortal";
+import { About } from "./components/About";
 import { Home } from "./components/Home";
 import { PartyBar } from "./components/PartyBar";
 import { Room } from "./components/Room";
@@ -26,7 +27,7 @@ function showsEntry(page: PageId) {
 }
 
 function isPlain(page: PageId) {
-  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "criaturas";
+  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "criaturas" || page === "sobre";
 }
 
 const initialFilters: DexFilters = {
@@ -130,17 +131,9 @@ export function App() {
   }, [selected, selectedId, sound]);
 
   useEffect(() => {
-    if (!selectedId || !window.matchMedia("(min-width: 1040px)").matches) return;
-    document.getElementById(`entry-${selectedId}`)?.scrollIntoView({ block: "nearest" });
+    if (!selectedId) return;
+    document.querySelector(".detail")?.scrollIntoView({ block: "start" });
   }, [selectedId]);
-
-  useEffect(() => {
-    const narrow = window.matchMedia("(max-width: 1039px)").matches;
-    document.body.style.overflow = selected && narrow ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [selected]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -244,9 +237,9 @@ export function App() {
   const next = neighborIndex >= 0 ? neighborSource[neighborIndex + 1] : undefined;
   const partyCharacters = party.map((id) => getCharacter(id)).filter((item): item is Character => Boolean(item));
   const collection = page === "racas"
-    ? { title: "Raças da Terra-média", races: PEOPLE_RACES }
+    ? { title: "Raças da Terra-média", races: PEOPLE_RACES, banner: "/banner/exercito-antes-da-batalha.png?v=2", bannerAlt: "Hoste a cavalo reunida no campo, sob estandartes verdes.", bannerClass: "is-host" }
     : page === "criaturas"
-      ? { title: "Criaturas da Terra-média", races: CREATURE_RACES }
+      ? { title: "Criaturas da Terra-média", races: CREATURE_RACES, banner: "/banner/nazgul-cacador.png", bannerAlt: "Cavaleiro sombrio e uma besta alada sob um céu de nuvens.", bannerClass: "is-hunt" }
       : null;
 
   return (
@@ -287,11 +280,7 @@ export function App() {
               Os mapas do arquivo ficam nesta sala. Ainda não há folha pendurada.
             </Room>
           )}
-          {page === "sobre" && (
-            <Room kicker="O arquivo" title="Sobre">
-              O texto sobre esta enciclopédia entra nesta sala.
-            </Room>
-          )}
+          {page === "sobre" && <About />}
           {page === "creditos" && (
             <Room kicker="O arquivo" title="Créditos">
               Os créditos do projeto entram nesta sala.
@@ -309,7 +298,11 @@ export function App() {
           )}
           {collection && (
             <main id="conteudo" className="portal">
-              <div className="portal-banner" aria-hidden="true" />
+              <div className="portal-banner" aria-hidden={collection.banner ? undefined : true}>
+                {collection.banner && (
+                  <img className={collection.bannerClass} src={collection.banner} alt={collection.bannerAlt} />
+                )}
+              </div>
               <section className="bestiary-intro">
                 <h2>{collection.title}</h2>
                 <div className="ornamental-divider" aria-hidden="true">
