@@ -3,6 +3,7 @@ import { DexBoard } from "./components/DexBoard";
 import { Header } from "./components/Header";
 import { BestiaryPortal } from "./components/BestiaryPortal";
 import { About } from "./components/About";
+import { Places } from "./components/Places";
 import { Home } from "./components/Home";
 import { PartyBar } from "./components/PartyBar";
 import { Room } from "./components/Room";
@@ -27,7 +28,7 @@ function showsEntry(page: PageId) {
 }
 
 function isPlain(page: PageId) {
-  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "criaturas" || page === "sobre";
+  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "criaturas" || page === "sobre" || page === "lugares";
 }
 
 const initialFilters: DexFilters = {
@@ -42,7 +43,7 @@ const initialFilters: DexFilters = {
 function initialRoute() {
   const route = readRoute(window.location.hash);
   const entryId = route.entryId && getCharacter(route.entryId) ? route.entryId : null;
-  return { page: route.page, entryId };
+  return { page: route.page, entryId, placeId: route.placeId };
 }
 
 export function App() {
@@ -50,6 +51,7 @@ export function App() {
   const [view, setView] = useState<ViewMode>(() => readView());
   const [page, setPage] = useState<PageId>(() => initialRoute().page);
   const [selectedId, setSelectedId] = useState<string | null>(() => initialRoute().entryId);
+  const [placeId, setPlaceId] = useState<string | null>(() => initialRoute().placeId);
   const [party, setParty] = useState<string[]>(() => readParty().filter((id) => getCharacter(id)));
   const [sound, setSound] = useState(readSound);
   const [notice, setNotice] = useState<string | null>(null);
@@ -106,6 +108,7 @@ export function App() {
       fromPop.current = true;
       const route = readRoute(window.location.hash);
       setPage(route.page);
+      setPlaceId(route.placeId);
       setSelectedId(route.entryId && getCharacter(route.entryId) ? route.entryId : null);
     };
     window.addEventListener("popstate", onPop);
@@ -117,10 +120,10 @@ export function App() {
       fromPop.current = false;
       return;
     }
-    const hash = routeHash(page, showsEntry(page) ? selectedId : null);
+    const hash = routeHash(page, showsEntry(page) ? selectedId : null, page === "lugares" ? placeId : null);
     if (window.location.hash === hash || (hash === "#/" && window.location.hash === "")) return;
     window.history.pushState(null, "", hash);
-  }, [page, selectedId]);
+  }, [page, selectedId, placeId]);
 
   useEffect(() => {
     if (!soundReady.current) {
@@ -176,6 +179,7 @@ export function App() {
 
   const openPage = (next: PageId) => {
     setSelectedId(null);
+    setPlaceId(null);
     setPage(next);
     const scope = scopeRaces(next);
     if (scope) {
@@ -185,6 +189,13 @@ export function App() {
           : current
       ));
     }
+    window.scrollTo(0, 0);
+  };
+
+  const openPlace = (id: string | null) => {
+    setSelectedId(null);
+    setPage("lugares");
+    setPlaceId(id);
     window.scrollTo(0, 0);
   };
 
@@ -265,11 +276,7 @@ export function App() {
           />
           {page === "home" && <Home onOpen={openPage} onOpenEntry={openEntry} />}
           {page === "bestiario" && <BestiaryPortal onOpen={openPage} />}
-          {page === "lugares" && (
-            <Room kicker="Geografia" title="Lugares">
-              Regiões, cidades, portos e caminhos da Terra-média entram nesta sala. Ela ainda está vazia: os nomes e os caminhos vêm depois.
-            </Room>
-          )}
+          {page === "lugares" && <Places section={placeId} onOpen={openPlace} />}
           {page === "historia" && (
             <Room kicker="As eras" title="História de Arda">
               As eras de Arda, do começo do mundo até o fim da Terceira Era, terão uma linha própria. Por enquanto a sala só marca o lugar.
