@@ -1,4 +1,4 @@
-export const pages = ["home", "bestiario", "racas", "criaturas", "catalogo", "lugares", "historia", "mapas", "sobre", "creditos", "termos", "privacidade"] as const;
+export const pages = ["home", "bestiario", "racas", "personagens", "catalogo", "lugares", "historia", "mapas", "sobre", "creditos", "termos", "privacidade"] as const;
 
 export type PageId = (typeof pages)[number];
 
@@ -12,12 +12,12 @@ export function readRoute(hash: string): Route {
   const path = hash.replace(/^#/, "") || "/";
   const entry = path.match(/^\/registro\/([a-z0-9-]+)$/);
   if (entry) return { page: "catalogo", entryId: entry[1], placeId: null };
-  const raceEntry = path.match(/^\/racas\/([a-z0-9-]+)$/);
-  if (raceEntry) return { page: "racas", entryId: raceEntry[1], placeId: null };
-  if (path === "/racas") return { page: "racas", entryId: null, placeId: null };
-  const creatureEntry = path.match(/^\/criaturas\/([a-z0-9-]+)$/);
-  if (creatureEntry) return { page: "criaturas", entryId: creatureEntry[1], placeId: null };
-  if (path === "/criaturas") return { page: "criaturas", entryId: null, placeId: null };
+  const personagem = path.match(/^\/personagens\/([a-z0-9-]+)$/);
+  if (personagem) return { page: "personagens", entryId: personagem[1], placeId: null };
+  if (path === "/personagens") return { page: "personagens", entryId: null, placeId: null };
+  const legacyEntry = path.match(/^\/(?:racas|criaturas)\/([a-z0-9-]+)$/);
+  if (legacyEntry) return { page: "personagens", entryId: legacyEntry[1], placeId: null };
+  if (path === "/racas" || path === "/criaturas") return { page: "racas", entryId: null, placeId: null };
   if (path === "/bestiario") return { page: "bestiario", entryId: null, placeId: null };
   if (path === "/catalogo") return { page: "catalogo", entryId: null, placeId: null };
   const place = path.match(/^\/lugares(?:\/([a-z]+)(?:\/([a-z]+))?)?$/);
@@ -36,8 +36,8 @@ export function readRoute(hash: string): Route {
 
 export function routeHash(page: PageId, entryId: string | null, placeId: string | null = null): string {
   if (page === "catalogo") return entryId ? `#/registro/${entryId}` : "#/catalogo";
-  if (page === "racas") return entryId ? `#/racas/${entryId}` : "#/racas";
-  if (page === "criaturas") return entryId ? `#/criaturas/${entryId}` : "#/criaturas";
+  if (page === "personagens") return entryId ? `#/personagens/${entryId}` : "#/personagens";
+  if (page === "racas") return "#/racas";
   if (page === "bestiario") return "#/bestiario";
   if (page === "lugares") return placeId ? `#/lugares/${placeId}` : "#/lugares";
   if (page === "home") return "#/";

@@ -60,7 +60,7 @@ export function Nav({ page, onOpen }: { page: PageId; onOpen: (page: PageId) => 
             <button
               type="button"
               className="nav-link"
-              aria-current={page === link.id || (link.id === "bestiario" && (page === "racas" || page === "criaturas")) ? "page" : undefined}
+              aria-current={page === link.id || (link.id === "bestiario" && (page === "racas" || page === "personagens")) ? "page" : undefined}
               onClick={() => {
                 setOpen(false);
                 onOpen(link.id);

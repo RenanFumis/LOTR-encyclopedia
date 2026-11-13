@@ -31,8 +31,8 @@ export function Home({
           <p>
             Uma jornada pelo mundo de Tolkien, reunindo histórias, povos, lugares e maravilhas de todas as Eras.
           </p>
-          <button type="button" className="portal-cta" onClick={() => onOpen("catalogo")}>
-            Explorar a Enciclopédia
+          <button type="button" className="portal-cta" onClick={() => onOpen("mapas")}>
+            Explore o mundo de Arda
             <span aria-hidden="true"> →</span>
           </button>
         </div>
@@ -53,7 +53,7 @@ export function Home({
               <h3>Personagens</h3>
             </div>
             <p>Conheça os grandes e os pequenos protagonistas da Terra-média.</p>
-            <button type="button" className="portal-link" onClick={() => onOpen("racas")}>
+            <button type="button" className="portal-link" onClick={() => onOpen("personagens")}>
               Explorar Personagens
               <span aria-hidden="true"> →</span>
             </button>
@@ -70,7 +70,7 @@ export function Home({
               <h3>Criaturas</h3>
             </div>
             <p>Descubra criaturas, povos e raças que habitam Arda.</p>
-            <button type="button" className="portal-link" onClick={() => onOpen("criaturas")}>
+            <button type="button" className="portal-link" onClick={() => onOpen("racas")}>
               Explorar o Criaturas
               <span aria-hidden="true"> →</span>
             </button>

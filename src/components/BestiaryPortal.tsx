@@ -40,26 +40,26 @@ export function BestiaryPortal({ onOpen }: { onOpen: (page: PageId) => void }) {
         <article className="portal-card bestiary-gate has-art">
           <button type="button" className="bestiary-gate-hit" onClick={() => onOpen("racas")}>
             <div className="portal-card-art">
-              <img src="/Azaghal.png" alt="" />
-            </div>
-            <div className="portal-card-title">
-              <CardMark src="/flavicon/business-people.png?v=2" />
-              <span className="bestiary-gate-title">Raças da Terra-média</span>
-            </div>
-            <p>Dos imortais Elfos aos pequenos Hobbits, conheça os povos que moldaram a história de Arda através das Eras.</p>
-          </button>
-        </article>
-
-        <article className="portal-card bestiary-gate has-art">
-          <button type="button" className="bestiary-gate-hit" onClick={() => onOpen("criaturas")}>
-            <div className="portal-card-art">
               <img className="is-watcher" src="/VigiaNaAgua.png" alt="" />
             </div>
             <div className="portal-card-title">
               <CardMark src="/flavicon/pata.png?v=2" />
-              <span className="bestiary-gate-title">Criaturas da Terra-média</span>
+              <span className="bestiary-gate-title">Criaturas de Arda</span>
             </div>
-            <p>Dragões, grandes Águias, aranhas sombrias e criaturas ancestrais que habitam os recantos mais misteriosos de Arda.</p>
+            <p>Dos imortais Elfos aos pequenos Hobbits, dos poderosos Dragões às criaturas mais misteriosas, descubra a diversidade de povos e seres que habitam Arda e enriquecem sua história ao longo das Eras.</p>
+          </button>
+        </article>
+
+        <article className="portal-card bestiary-gate has-art">
+          <button type="button" className="bestiary-gate-hit" onClick={() => onOpen("personagens")}>
+            <div className="portal-card-art">
+              <img src="/Azaghal.png" alt="" />
+            </div>
+            <div className="portal-card-title">
+              <CardMark src="/flavicon/business-people.png?v=2" />
+              <span className="bestiary-gate-title">Personagens do Mundo de Arda</span>
+            </div>
+            <p>De grandes reis e lendários heróis a temíveis dragões e seres ancestrais, descubra os personagens que moldaram o destino de Arda ao longo das Eras.</p>
           </button>
         </article>
       </section>

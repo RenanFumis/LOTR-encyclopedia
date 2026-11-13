@@ -1,264 +1,579 @@
-# Lorthdex
+# Lord of the Rings — A Enciclopédia da Terra-média
 
-Enciclopédia de fã da Terra-média, no formato de um catálogo consultável. O pacote se chama `lorthdex`. Na interface, o título visível é **Lord of the Rings** / **A Enciclopédia da Terra-média**.
+Enciclopédia digital, navegável e interconectada sobre o legendarium de J.R.R. Tolkien. O pacote npm se chama `lorthdex`; na interface, o título visível é **Lord of the Rings** / **A Enciclopédia da Terra-média**.
 
-Projeto independente, sem vínculo com a Tolkien Estate ou a Middle-earth Enterprises. Os textos das fichas e das páginas são originais, escritos para este arquivo.
+O projeto reúne personagens, povos, criaturas, lugares e mapas. O objetivo é permitir que leitores explorem não apenas fichas individuais, mas também as relações entre personagens, linhagens, povos, regiões e acontecimentos.
 
-## Stack
+Projeto independente, de fã para fã, sem vínculo com a Tolkien Estate ou a Middle-earth Enterprises. Os textos das fichas e das páginas são originais, escritos para este arquivo. Artigos longos de povos e criaturas colados pelo autor entram como estão.
 
-| Peça | Versão no projeto |
+> **Princípio editorial:** precisão antes de completude. Não inventar nomes, genealogias, classificações ou explicações quando Tolkien não as forneceu. Diferenciar claramente o que é confirmado, o que vem de textos alternativos ou inacabados e o que pertence às adaptações.
+
+---
+
+## 1. Objetivos
+
+- Reunir informações sobre Arda e a Terra-média em uma estrutura pesquisável.
+- Conectar personagens a povos, famílias, lugares e objetos quando houver fundamento textual.
+- Apresentar a história organizada por Eras (e, no futuro, em cronologia dedicada).
+- Diferenciar fatos confirmados, interpretações, versões alternativas e adaptações.
+- Oferecer busca, filtros, mapas e salas temáticas.
+- Permitir que a base cresça sem perder consistência editorial.
+
+### O que já existe na aplicação
+
+| Área | Estado |
 | --- | --- |
-| [Vite](https://vite.dev/) | 6 |
-| [React](https://react.dev/) | 19 |
-| [TypeScript](https://www.typescriptlang.org/) | 5.7 |
-| Node | módulos ES (`"type": "module"`) |
+| Home, Sobre | Ativos |
+| Bestiário → Criaturas e Personagens | Ativos |
+| Catálogo completo (175 fichas) | Ativo |
+| Lugares (100 cards em salas por Era) | Ativo |
+| Mapas (16 folhas) | Ativo |
+| História de Arda | Sala reservada, ainda vazia |
+| Artefatos, idiomas, genealogias visuais | Planejados |
+| Créditos, Termos, Privacidade | Salas reservadas, ainda vazias |
 
-Não há roteador, biblioteca de estado nem framework de CSS. O estado da interface vive em `src/App.tsx`. O visual inteiro está em `src/styles.css`.
+---
 
-TypeScript roda em modo estrito, com `noUnusedLocals` e `noUnusedParameters`. O alvo é `ES2022` e o JSX é `react-jsx`. `tsc` só checa tipos (`noEmit`); o bundle é do Vite.
+## 2. Princípios editoriais e fontes
 
-## Scripts
+O legendarium foi desenvolvido ao longo de décadas e contém revisões, versões e textos publicados postumamente. Cada registro deve indicar suas fontes e, quando necessário, o grau de certeza da informação.
+
+### 2.1 Categorias de fontes
+
+1. **Obras publicadas em vida:** *O Hobbit*, *O Senhor dos Anéis* e outros textos publicados pelo próprio Tolkien.
+2. **Obras publicadas postumamente:** como *O Silmarillion*, *Contos Inacabados* e *A História da Terra-média*.
+3. **Textos alternativos ou inacabados:** versões, notas e concepções que não representam necessariamente a versão final do legendarium.
+4. **Adaptações:** filmes, séries, jogos e outras interpretações, que não devem ser confundidas com o cânone literário.
+
+### 2.2 Regras de precisão
+
+- Não criar nomes para personagens ou integrantes de grupos que Tolkien deixou anônimos.
+- Não apresentar hipóteses ou interpretações como fatos.
+- Não misturar informações de adaptações com informações dos livros sem identificar sua origem.
+- Quando houver versões conflitantes, registrar as versões e suas respectivas fontes.
+- Não presumir que seres semelhantes pertençam à mesma espécie.
+- Usar os conceitos **natureza**, **espécie**, **povo**, **grupo**, **linhagem**, **ordem** e **origem** conforme o caso. Evitar usar “raça” como classificação universal quando a natureza for desconhecida.
+- Quando a natureza de um ser for desconhecida, registrar isso explicitamente em vez de forçar uma classificação.
+- Em fichas de lugares e mapas, nomear guerras e acontecimentos em traço largo, sem narrar o campo.
+- Cenas sensíveis (mortes, violência, destino de crianças) permanecem em nível alto; não descrever métodos.
+
+### 2.3 Etiquetas editoriais
+
+- **Confirmado:** declarado diretamente em uma fonte identificada.
+- **Versão alternativa:** presente em uma versão ou concepção diferente.
+- **Texto inacabado:** encontrado em material não concluído.
+- **Interpretação:** conclusão editorial fundamentada, mas não declarada diretamente por Tolkien.
+- **Adaptação:** informação exclusiva de filme, série, jogo ou outra adaptação.
+- **Desconhecido:** informação não esclarecida nas fontes consultadas.
+
+As etiquetas devem ser aplicadas à informação específica, não necessariamente à ficha inteira. Nas cartas de Criaturas, as **Observações de precisão canônica** e as **Fontes bibliográficas** cumprem esse papel na interface atual.
+
+### 2.4 Exemplos de decisões editoriais
+
+- **Glómund / Lhamthanc** são nomes antigos de Glaurung, não dragões separados.
+- **Tom Bombadil** deve ter sua natureza registrada como desconhecida, sem classificá-lo definitivamente como Maia ou Vala.
+- **Ungoliant** tem origem e natureza misteriosas; não deve ser classificada como Maia sem evidência textual.
+- **Khamûl** é um Nazgûl nomeado. Não inventar nomes para os demais Nazgûl (no catálogo, **Nazgûl III–IX** é convenção editorial).
+- **Arod** e **Hasufel** são cavalos importantes, mas não devem ser classificados como Mearas sem confirmação.
+- **Beornianos** são um povo de Homens associado a Beorn (troca-peles), não a mesma natureza dos lobisomens de Morgoth.
+- **Huorns** devem ser diferenciados dos Ents.
+- O tenente Gothmog de Minas Morgul não aponta para o Balrog `gothmog`.
+- **Chrysophylax Dives**, de *Farmer Giles of Ham*, não pertence ao universo de Arda/Terra-média.
+
+### 2.5 Escopo e limites
+
+A enciclopédia deixa claro que “Terra-média” é usada de maneira ampla no projeto, mas que o universo de Tolkien abrange Arda e regiões além da própria Terra-média.
+
+Separar claramente:
+
+- O legendarium de Arda.
+- Outros textos ficcionais de Tolkien que não pertencem a Arda.
+- Adaptações cinematográficas e televisivas.
+- Jogos e outras obras derivadas.
+
+---
+
+## 3. Tecnologias aplicadas
+
+### 3.1 Visão geral da stack
+
+| Camada | Tecnologia | Versão no projeto | Papel |
+| --- | --- | --- | --- |
+| Runtime da UI | [React](https://react.dev/) + `react-dom` | 19 | Componentes, estado local, eventos |
+| Linguagem | [TypeScript](https://www.typescriptlang.org/) | 5.7 | Tipos estritos em `src/` |
+| Build / dev server | [Vite](https://vite.dev/) | 6 | HMR, bundle ES, servir `public/` |
+| Plugin React | `@vitejs/plugin-react` | 4.3 | JSX/TSX e Fast Refresh |
+| Módulos | Node ESM (`"type": "module"`) | — | Imports nativos |
+| Estilos | CSS puro (`src/styles.css`) | — | Layout, tema, responsivo |
+| Tipografia web | Google Fonts (Cinzel, Inter, Lora) | — | Controles e texto |
+| Tipografia de marca | Ringbearer (`RINGM___.TTF`) | — | Títulos da enciclopédia |
+| Roteamento | Hash próprio (`src/lib/routes.ts`) | — | Sem React Router |
+| Estado global | `useState` / `useEffect` em `App.tsx` | — | Sem Redux, Zustand etc. |
+| Persistência leve | `localStorage` / `sessionStorage` | — | Vista, comitiva, som, capas |
+| Áudio (opcional) | Web Audio API | — | Tons curtos ao abrir ficha |
+| Retratos | Python 3 + [Pillow](https://python-pillow.org/) | — | PNG → WebP 400×400 |
+| Empacotamento | npm | — | Dependências e scripts |
+
+**O que deliberadamente não entra na stack atual:** React Router, biblioteca de estado, framework CSS (Tailwind, Bootstrap), ORM, backend, CMS, banco de dados. O conteúdo vive em módulos TypeScript em `src/data/`.
+
+### 3.2 TypeScript
+
+Configuração em `tsconfig.json`:
+
+- `target` / `lib`: **ES2022** + DOM
+- `module`: **ESNext**, resolução **bundler**
+- `jsx`: **react-jsx** (sem importar React só para JSX)
+- `strict`: ligado
+- `noUnusedLocals` / `noUnusedParameters`: ligados
+- `noEmit`: `tsc` só checa tipos; o Vite gera o bundle
+- `include`: apenas `src`
+
+Tipos de domínio em `src/types.ts` (`Character`, `Race`, `Era`, `Rarity`, filtros). Rotas tipadas em `src/lib/routes.ts` (`PageId`, `Route`). Dados de lugares, mapas e criaturas têm interfaces próprias nos respectivos arquivos de dados.
+
+### 3.3 Vite e React
+
+- `vite.config.ts`: plugin React e servidor fixo na porta **5173**.
+- Se a 5173 estiver ocupada, o Vite sobe em outra porta — o navegador na instância antiga deixa de ver as alterações.
+- Entrada: `index.html` → `#root` → `src/main.tsx` → `<App />` em `StrictMode`.
+- `import.meta.env.DEV` liga a checagem `assertDex` do catálogo só em desenvolvimento.
+- Tudo em `public/` é servido na raiz (`/banner/...`, `/portraits/...`, `/lugares/...`, `/mapas/...`, `/criaturas-raca/...`).
+- Arte de origem em `pictures/` **não** entra no bundle; precisa ser copiada para `public/` (exceto o fluxo automatizado de retratos).
+
+### 3.4 Interface e CSS
+
+- Um único stylesheet: `src/styles.css`.
+- Variáveis de cor por raça em `src/theme.ts` (`--race`, `--race-ink`, `--race-deep`).
+- Layout responsivo com pontos de quebra documentados abaixo.
+- Invólucro liso (`.device.is-plain`) nas salas principais; `Room` (couro/parafusos/halo) nas salas ainda vazias.
+- `ResizeObserver` mede cards e monta o encaixe da ficha na grade (`.grid.is-wrapped` / `.place-grid.is-wrapped`).
+- Texto rico nas cartas de Criaturas: parser leve de `**negrito**` e `*itálico*` em `KindredPortal`.
+
+### 3.5 Roteamento e navegação
+
+Não há React Router. O endereço é o **hash** da URL:
+
+1. `readRoute(hash)` interpreta a página, o id de personagem e o id de lugar.
+2. `routeHash(page, entryId, placeId)` monta o hash.
+3. `App` escuta `popstate` e sincroniza o estado.
+4. Trocar de página zera ficha/lugar abertos e volta o scroll ao topo.
+
+Seleção de carta em Criaturas e de folha em Mapas fica em **estado local** do componente — não entra no hash.
+
+### 3.6 Dados e “backend” atual
+
+| Fonte | Arquivo | Conteúdo |
+| --- | --- | --- |
+| Personagens | `src/data/characters.ts` | 175 fichas + `assertDex` |
+| Retratos | `src/data/portraits.ts` | id → URL WebP |
+| Criaturas / povos | `src/data/kindred.ts` | 16 cartas + artigos |
+| Lugares (cards) | `src/data/places.ts` | salas e capas |
+| Lugares (ficha) | `place-lore*.ts` | relato longo + aliases |
+| Mapas | `src/data/maps.ts` | 16 folhas |
+
+Modelo atual: arrays e objetos tipados no cliente. O documento conceitual de tabelas (`entities`, `entity_relationships`, `sources` etc.) permanece como **visão futura** se o projeto migrar para CMS ou banco; hoje as relações são `related` (personagens) e `entryId` (figuras nas cartas de Criaturas).
+
+### 3.7 Armazenamento no navegador
+
+| Chave | API | Conteúdo |
+| --- | --- | --- |
+| `lorthdex-view` | `localStorage` | `grade` ou `lista` |
+| `lorthdex-party` | `localStorage` | até 6 ids da comitiva |
+| `lorthdex-sound` | `localStorage` | `on` / `off` |
+| `lorthdex-place-covers` | `sessionStorage` | capas sorteadas dos portões de Lugares |
+
+### 3.8 Pipeline de imagens
+
+```bash
+npm run portraits   # python scripts/update-portraits.py
+```
+
+Exige Python e Pillow. Lê pastas em `pictures/`, reduz a no máximo 400×400 e grava `public/portraits/{id}.webp` (qualidade 68), só quando o original é mais novo. Banners, lugares, mapas e cartas de criaturas são copiados à mão para `public/`. Query `?v=` fura cache quando o arquivo muda no mesmo URL (`gollum.webp?v=2`, por exemplo).
+
+### 3.9 Scripts npm
 
 ```bash
 npm install
 npm run dev       # http://localhost:5173
 npm run build     # tsc --noEmit && vite build
-npm run preview   # serve o resultado de dist/
-npm run portraits # regenera os retratos WebP
+npm run preview   # serve dist/
+npm run portraits # regenera retratos WebP
 ```
 
-O servidor de desenvolvimento está fixo na porta `5173` em `vite.config.ts`. Se essa porta já estiver ocupada, o Vite sobe em outra e o navegador deixa de ver as alterações feitas na instância antiga.
+### 3.10 Acessibilidade e idioma
 
-`npm run portraits` exige Python e [Pillow](https://python-pillow.org/).
+- Página em `pt-BR`.
+- Link “Ir para o conteúdo”, `aria-current` no menu, rótulos em botões de carta.
+- Navegação por teclado nas fichas (`Esc`, setas; `/` foca a busca em Personagens e Catálogo).
+- Contraste e hierarquia pensados para leitura longa (Lora no corpo, Inter nos controles).
 
-## Como a aplicação sobe
+---
 
-`index.html` monta `#root` e carrega `src/main.tsx`. Esse arquivo renderiza `<App />` em `StrictMode` e importa `src/styles.css`.
+## 4. Identidade visual
 
-`index.html` também pede, pelo Google Fonts, **Lora** (texto), **Inter** (controles) e **Cinzel** (reserva dos títulos). A fonte de título de fato é a **Ringbearer**, registrada em CSS a partir de `src/lib/ringbearer/RINGM___.TTF`. Títulos usam `font-weight: normal` e `font-synthesis: none`, porque essa fonte não tem negrito.
+A interface deve lembrar uma biblioteca antiga ou um manuscrito histórico, sem prejudicar a legibilidade.
 
-Idioma da página: `pt-BR`.
+**Paleta:** pergaminho e papel envelhecido, verde-musgo, dourado envelhecido, marrom-escuro, neutros para texto e divisórias.
 
-## Rotas
+**Tipografia:**
 
-Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/routes.ts`. `App` escuta `popstate` e mantém o hash alinhado ao estado. Trocar de página zera a ficha aberta, zera o lugar aberto e volta o scroll ao topo. O terceiro argumento de `routeHash` só entra no endereço quando a página é Lugares.
+| Fonte | Uso |
+| --- | --- |
+| **Ringbearer** | Títulos de marca (peso normal; sem síntese de negrito) |
+| **Cinzel** | Reserva de títulos / destaque |
+| **Lora** | Textos longos e leitura editorial |
+| **Inter** | Navegação, filtros, botões |
+
+Princípios: legibilidade e hierarquia; ornamentos com moderação; diferenciar citações, fontes e notas; não depender só de cor para status; padrões consistentes entre salas.
+
+---
+
+## 5. Navegação principal
+
+Menu superior atual:
+
+1. Início (`#/`)
+2. Bestiário (`#/bestiario`) — permanece marcado também em Criaturas e Personagens
+3. Lugares (`#/lugares`)
+4. História de Arda (`#/historia`) — sala ainda vazia
+5. Mapas (`#/mapas`)
+
+Rodapé: Sobre, Créditos, Termos de Uso, Políticas de privacidade.
+
+Visão editorial mais ampla (ainda não toda implementada como itens de menu): Personagens, Povos e Criaturas, Lugares, História, Artefatos e Relíquias, Idiomas e Escritas, Mapas. Na prática, Personagens e Criaturas entram pelo Bestiário; Artefatos e Idiomas são fases futuras.
+
+### 5.1 Início
+
+Hero com Minas Tirith, CTA para Mapas, cards para Personagens, Criaturas e Lugares, bloco Sobre e destaques.
+
+### 5.2 Bestiário
+
+Portão com texto introdutório. À esquerda, **Criaturas de Arda** → `#/racas`. À direita, **Personagens do Mundo de Arda** → `#/personagens`.
+
+### 5.3 Personagens
+
+Catálogo Dex com busca, filtros (era, povo/raça, raridade), ordem e fichas com atributos, habilidades, vínculos `related` e formas alternativas.
+
+### 5.4 Povos e Criaturas
+
+Cartas editoriais em `#/racas` (`KindredPortal`). Povos e criaturas compartilham a mesma sala; a distinção fica no texto e nas observações canônicas de cada carta.
+
+### 5.5 Lugares
+
+Organizados por Aman e Valinor, Primeira Era, Segunda Era e Terceira Era (esta última com portões para lugares gerais e especiais/misteriosos).
+
+### 5.6 Mapas
+
+Folhas regionais com era, epíteto, relato, livros, região e acontecimentos. Sem camadas interativas por enquanto.
+
+### 5.7 História / Artefatos / Idiomas
+
+Planejados. História já tem rota; Artefatos (Anéis, Silmarils, Palantíri, armas etc.) e Idiomas (Quenya, Sindarin, Khuzdul, Tengwar, Cirth etc.) ainda não têm salas.
+
+---
+
+## 6. Rotas (hash)
 
 | Hash | Página |
 | --- | --- |
 | `#/` | Home |
 | `#/bestiario` | Portal do bestiário |
-| `#/racas` | Raças da Terra-média |
-| `#/racas/:id` | Ficha aberta dentro de Raças |
-| `#/criaturas` | Criaturas da Terra-média |
-| `#/criaturas/:id` | Ficha aberta dentro de Criaturas |
+| `#/racas` | Criaturas da Terra-média |
+| `#/criaturas` | Redireciona para `#/racas` |
+| `#/personagens` | Personagens do Mundo de Arda |
+| `#/personagens/:id` | Ficha aberta em Personagens |
+| `#/racas/:id` | Legado → ficha em Personagens |
+| `#/criaturas/:id` | Legado → ficha em Personagens |
 | `#/catalogo` | Catálogo completo |
-| `#/registro/:id` | Ficha aberta dentro do catálogo completo |
+| `#/registro/:id` | Ficha no catálogo completo |
 | `#/lugares` | Índice de Lugares |
 | `#/lugares/aman` | Aman e Valinor |
 | `#/lugares/primeira` | Primeira Era |
 | `#/lugares/segunda` | Segunda Era |
-| `#/lugares/terceira` | Terceira Era, com dois portões |
+| `#/lugares/terceira` | Terceira Era (dois portões) |
 | `#/lugares/terceira/lugares` | Lugares na Terceira Era |
 | `#/lugares/terceira/especiais` | Lugares Especiais e Misteriosos |
 | `#/historia` | Sala ainda vazia |
-| `#/mapas` | Sala ainda vazia |
+| `#/mapas` | Mapas de Arda |
 | `#/sobre` | Sobre o projeto |
 | `#/creditos` | Sala ainda vazia |
 | `#/termos` | Sala ainda vazia |
 | `#/privacidade` | Sala ainda vazia |
 
-`:id` aceita minúsculas, dígitos e hífens (`[a-z0-9-]+`). Um id que não existe no catálogo é ignorado e a página abre sem ficha. Os trechos de `#/lugares/...` aceitam só letras (`[a-z]+`). Um id de lugar desconhecido abre o índice.
+`:id` de personagem: `[a-z0-9-]+`. Trechos de lugares: `[a-z]+`. Id inexistente abre a página sem ficha ou volta ao índice de lugares.
 
-O menu superior lista Home, Bestiário, Lugares, História de Arda e Mapas. Raças e Criaturas não entram nesse menu: o item Bestiário permanece marcado enquanto a página é `racas` ou `criaturas`. Abaixo de 900px o menu vira um botão, e os pontos dourados entre os itens somem.
+---
 
-O logotipo do cabeçalho e o do rodapé chamam a Home. Os links Sobre, Créditos, Termos de Uso e Políticas de privacidade ficam no rodapé.
+## 7. Páginas e banners
 
-## Páginas
+Home, Bestiário, Criaturas, Personagens, Catálogo, Sobre, Lugares e Mapas usam `.device.is-plain`. História, Créditos, Termos e Privacidade ainda usam `Room`.
 
-Home, Bestiário, Raças, Criaturas, Catálogo, Sobre e Lugares usam o invólucro liso (`.device.is-plain`): sem couro, parafusos nem halo. As subpáginas de Lugares continuam lisas, porque a página segue sendo `lugares`. História, Mapas, Créditos, Termos e Privacidade ainda usam o componente `Room`, com o invólucro antigo.
-
-Banners, em `public/banner/`. O Vite só publica o que está em `public/`. Arquivos novos em `pictures/` precisam ser copiados para lá. Se o arquivo for trocado no mesmo URL, acrescente `?v=` no `src` para furar o cache.
-
-| Página | Arquivo | Enquadramento |
+| Página | Banner | Enquadramento |
 | --- | --- | --- |
-| Home | `minas_tirith_banner.png` | herói, `object-position: 72% center` |
+| Home | `minas_tirith_banner.png` | herói, `72% center` |
 | Bestiário | `banner-bestiario.png` | `center 62%` |
-| Raças | `exercito-antes-da-batalha.png?v=2` | classe `is-host`, `center 30%` |
-| Criaturas | `nazgul-cacador.png` | classe `is-hunt`, `center center` |
-| Sobre | `BannerPortadeDurin.png` | classe `is-gate`, `center center` |
-| Lugares | `Banner_lugares.png` | classe `is-places`, `center 32%` |
+| Personagens | `exercito-antes-da-batalha.png?v=2` | `is-host`, `center 30%` |
+| Criaturas | `nazgul-cacador.png` | `is-hunt` |
+| Sobre | `BannerPortadeDurin.png` | `is-gate` |
+| Lugares | `Banner_lugares.png` | `is-places`, `center 32%` |
+| Mapas | `BannerMapaAntigodaTerraMedia.png?v=1` | `is-atlas` |
 
-No Sobre, o retrato `/sobre/tolkien.jpg` flutua no texto de Tolkien. A cena de Frodo (`/sobre/frodo-escrevendo.png`) fica sob o título “Muito além das páginas”. A Comitiva (`/banner/ComitivadoAnel.png?v=1`) fica sob o título “Que a jornada continue...”. A linha de agradecimento é dourada, itálica, centralizada e sublinhada.
+Banners das salas de Lugares vêm de `public/lugares/`:
 
-Os banners das salas de Lugares vêm de `public/lugares/`, não de `public/banner/`. A classe define o `object-position`.
-
-| Sala | Arquivo | Enquadramento |
+| Sala | Arquivo | Classe |
 | --- | --- | --- |
-| Aman e Valinor | `Aman_e_Valinor/Valinor.png` | `is-aman`, `center 78%` |
-| Primeira Era | `primeira_era/Falas.png` | `is-falas`, `center 88%` |
-| Segunda Era | `segunda_era/Portos_Cinzentos_Mithlond.png` | `is-mithlond`, `center 52%` |
-| Terceira Era | `terceira_era/Campos_do_Pelennor.png` | `is-pelennor`, `center 42%` |
-| Lugares na Terceira Era | `terceira_era/Bree.png` | `is-bree`, `center 48%` |
-| Lugares Especiais e Misteriosos | `terceira_era/Lugares especiais_e_misteriosos-terceira_era/CâmaradeMazarbulbanner.png?v=1` | `is-mazarbul`, `center center` |
+| Aman e Valinor | `Aman_e_Valinor/Valinor.png` | `is-aman` |
+| Primeira Era | `primeira_era/Falas.png` | `is-falas` |
+| Segunda Era | `segunda_era/Portos_Cinzentos_Mithlond.png` | `is-mithlond` |
+| Terceira Era | `terceira_era/Campos_do_Pelennor.png` | `is-pelennor` |
+| Lugares na Terceira Era | `terceira_era/Bree.png` | `is-bree` |
+| Especiais e Misteriosos | `.../CâmaradeMazarbulbanner.png?v=1` | `is-mazarbul` |
 
-O banner do portal tem 460px de altura e 240px até 800px. Ele sangra na largura da janela (`100vw`).
+Banner do portal: 460px (240px até 800px), largura `100vw`.
 
-A Home aponta “Explorar a Enciclopédia” para o catálogo completo, “Explorar Personagens” para Raças, “Explorar o Criaturas” para Criaturas, “Explorar os Lugares” para Lugares e “Saiba mais sobre o projeto” para Sobre. O texto do botão de criaturas está como foi escrito na interface.
+---
 
-## Catálogo
+## 8. Criaturas (`#/racas`)
 
-Os 175 registros estão em `src/data/characters.ts`, numerados de `0` a `174` sem furos. O tipo é `Character` em `src/types.ts`.
+`KindredPortal` + `src/data/kindred.ts`. 16 cartas: Ainur, Elfos, Meio-elfos, Homens, Hobbits, Ents, Huorns, Grandes Águias, Mearas, Dragões, Grandes Aranhas, Orcs, Trolls, Lobisomens, Bestas aladas, Seres misteriosos. Anões e Beornianos ainda sem carta (faltam imagens).
 
-Campos de cada ficha: `id`, `number`, `name`, `epithet`, `genus`, `race`, `region`, `allegiance`, `era`, `rarity`, `stature`, `presence`, `summary`, `lore`, `voice`, `sigil`, `stats`, `abilities`, `strengths`, `weaknesses`, `related`. Opcionais: `services`, `anomalous`, `forms`.
+Na grade: só imagem + nome curto. A carta aberta some da grade; a ficha envolve esquerda e fileiras de baixo.
 
-Atributos, cada um de 1 a 100: força, agilidade, sabedoria, coragem, poder e vontade. O índice exibido é a soma, sobre 600. Habilidades têm tipo `ativa`, `passiva` ou `suprema`. `related` guarda ids de outras fichas, nunca o próprio id. `forms` é uma variação da mesma ficha (Gandalf cinzento e branco, por exemplo); a primeira forma repete os atributos principais.
+Campos: `title`, `blocks` (`p` \| `h` \| `ul`), `figuresLead`, `figureGroups`, `figures`, `sources` (livros + observações). Imagens em `public/criaturas-raca/` via `kindredImageSrc`.
 
-`assertDex` roda só em desenvolvimento (`import.meta.env.DEV`). Ela recusa id repetido ou fora do padrão, número repetido, buraco na sequência `0 .. length - 1`, atributo fora de 1–100 e vínculo inexistente ou circular.
+`entryId` abre personagem (Hobbit → `#/catalogo`; demais → `#/personagens`). Sem `entryId`, o nome fica texto.
 
-### Recortes por raça
+---
 
-`PEOPLE_RACES` alimenta `#/racas`. `CREATURE_RACES` alimenta `#/criaturas`. O catálogo completo usa `RACES`, que inclui Hobbit.
+## 9. Personagens e catálogo
 
-| Raça | Onde aparece | Quantidade |
+### 9.1 Modelo de ficha de personagem (implementado)
+
+Campos em `Character`: `id`, `number`, `name`, `epithet`, `genus`, `race`, `region`, `allegiance`, `era`, `rarity`, `stature`, `presence`, `summary`, `lore`, `voice`, `sigil`, `stats`, `abilities`, `strengths`, `weaknesses`, `related`. Opcionais: `services`, `anomalous`, `forms`.
+
+Atributos 1–100: força, agilidade, sabedoria, coragem, poder, vontade (índice = soma / 600). Habilidades: `ativa`, `passiva`, `suprema`.
+
+Visão editorial ampliada (família formal, objetos, destino detalhado, etiquetas por campo) pode ser acrescentada sem abandonar esses campos.
+
+### 9.2 Recortes
+
+`PORTAL_RACES` → `#/personagens` (sem Hobbit). `RACES` → `#/catalogo` (com Hobbit).
+
+| Raça | Onde | Qtd. |
 | --- | --- | --- |
-| Humano | Raças | 60 |
-| Anão | Raças | 22 |
-| Maia | Raças | 16 |
-| Meio-elfo | Raças | 13 |
-| Elfo | Raças | 11 |
-| Ent | Raças | 6 |
-| Beorniano | Raças | 2 |
-| Hobbit | só no catálogo completo | 21 |
-| Dragão | Criaturas | 7 |
-| Enigma | Criaturas | 4 |
-| Águia | Criaturas | 4 |
-| Mearas | Criaturas | 4 |
-| Nazgûl | Criaturas | 3 |
-| Aranha | Criaturas | 2 |
+| Humano | Personagens | 60 |
+| Anão | Personagens | 22 |
+| Maia | Personagens | 16 |
+| Meio-elfo | Personagens | 13 |
+| Elfo | Personagens | 11 |
+| Ent | Personagens | 6 |
+| Beorniano | Personagens | 2 |
+| Hobbit | só catálogo | 21 |
+| Dragão | Personagens | 7 |
+| Enigma | Personagens | 4 |
+| Águia | Personagens | 4 |
+| Mearas | Personagens | 4 |
+| Nazgûl | Personagens | 3 |
+| Aranha | Personagens | 2 |
 
-Eras: Terceira, Segunda, Primeira e Fora do tempo. Raridades: comum, incomum, raro, lendário, mítico.
+Eras: Terceira, Segunda, Primeira, Fora do tempo. Raridades: comum, incomum, raro, lendário, mítico.
 
-Um vínculo aberto a partir de uma ficha troca o id na página atual. Dá para abrir, em Raças, uma ficha cujo card não está na grade daquela página. O hash fica `#/racas/:id`.
+`assertDex` (só em DEV) recusa id/número inválidos, buracos na sequência, atributos fora de faixa e vínculos quebrados ou circulares.
 
-### Busca, filtros e ordem
+### 9.3 Busca e atalhos
 
-`matchesQuery` em `src/lib/dex.ts` procura em nome, epíteto, gênero, região, aliança, raça, era, raridade, nome e texto das habilidades, resistências, fraquezas e `services`. O texto de `lore`, `summary` e `voice` não entra na busca.
+`matchesQuery` (`src/lib/dex.ts`) busca em nome, epíteto, gênero, região, aliança, raça, era, raridade, habilidades, resistências, fraquezas e `services`. **Não** busca em `lore`, `summary` nem `voice`.
 
-`normalize` tira acentos com NFD e passa a minúsculas. Hífen e apóstrofo permanecem.
+`normalize`: NFD sem diacríticos, minúsculas; hífen e apóstrofo permanecem.
 
-A ordem pode ser número, nome (`localeCompare` em `pt`) ou índice decrescente. A tecla `/` foca a busca em Raças, Criaturas e no catálogo, desde que o foco não esteja num campo. `Esc` fecha a ficha, ou limpa a busca se o campo estiver focado e houver texto. Setas esquerda e direita percorrem a lista visível com uma ficha aberta.
+Teclas: `/` foca busca; `Esc` fecha ficha ou limpa busca; setas percorrem a lista visível.
 
-Ao entrar em Raças ou Criaturas, um filtro de raça incompatível com aquele recorte volta para “Todas”.
+### 9.4 Relacionamentos
 
-## Ficha aberta
+Hoje: array `related` entre personagens e `entryId` nas figuras de Criaturas. Visão futura: tipos explícitos (`parent_of`, `member_of`, `participated_in`, `carried_by` etc.) com fonte e grau de certeza — sem transformar proximidade narrativa em parentesco.
 
-A ficha é `Detail`, um `aside.detail`. Há um único scroll, o da página. A ficha não tem barra própria.
+---
 
-Na grade, a partir de 1040px, `DexBoard` coloca a ficha como primeiro filho da grade (`.grid.is-wrapped`). Ela ocupa da coluna 2 até a última, por tantas linhas quanto a altura dela pedir. Os cards preenchem a coluna da esquerda e seguem em fileiras completas por baixo. Um `ResizeObserver` mede os cards e grava `grid-template-rows` e `--rows`. Se o card seguinte só passaria um pouco da borda de baixo, ele entra na coluna; se a sobra fosse grande, um espaçador (`.wrap-notch`) segura essa célula para a fileira de baixo começar rente à ficha.
+## 10. Lugares
 
-Na lista, a partir de 1040px, o espaço continua em duas colunas: a lista à esquerda e a ficha à direita.
+100 cards: Aman 11, Primeira Era 19, Segunda Era 15, Terceira Era 31, Especiais 24. Dados em `places.ts` + lore em `place-lore-west.ts` / `place-lore-east.ts` + aliases em `place-lore.ts`.
 
-Abaixo de 1040px a ficha ocupa a largura toda e fica acima dos cards.
+Índice com quatro portões; capas sorteadas em `sessionStorage`. Ficha: epíteto, eras, texto do card, nomes ao longo das Eras, livros, quem passou, relato.
 
-Abrir uma ficha rola `.detail` para o início da janela. A barra da ficha (`.detail-nav`) gruda no topo enquanto ela está visível.
+---
 
-A ficha de um lugar segue o mesmo encaixe. `PlaceBoard` mede `.place-card` dentro de `.place-grid.is-wrapped`. O vão dessa grade é 16px e a coluna mínima é 230px. Abaixo de 1040px a ficha do lugar também fica em largura total, acima dos cards. `Esc` fecha; as setas percorrem só os lugares daquela sala.
+## 11. Mapas
 
-## Lugares
+16 folhas em `maps.ts`: Arda, Aman e Valinor, Beleriand, Terra-média, Eriador, Condado, Arnor, Montanhas Sombrias, Rhovanion, Rohan, Rohan na Terceira Era, Gondor, Gondor nas Eras, Númenor, Harad, Rhûn.
 
-`src/components/Places.tsx` desenha o índice e as salas. Os cards estão em `src/data/places.ts`. Cada um tem `id`, `name`, `image` e `text`. A ficha longa fica em `src/data/place-lore-west.ts` e `src/data/place-lore-east.ts`, reunidas por `resolvePlaceRecord` em `src/data/place-lore.ts`. Uma imagem repetida do mesmo lugar aponta, por alias, para a ficha já escrita e mostra a imagem em que se clicou.
+Campos: `eras`, `epithet`, `text`, `books`, `region`, `events`. Imagens em `public/mapas/`. Evolução futura: camadas por Era, marcadores ligados a lugares/eventos.
 
-São 100 cards: Aman e Valinor 11, Primeira Era 19, Segunda Era 15, Terceira Era 31 e Lugares Especiais e Misteriosos 24. A Terceira Era não lista os cards na própria página. Ela abre dois portões, “Lugares na Terceira Era” e “Lugares Especiais e Misteriosos”.
+---
 
-O índice mostra quatro portões. A imagem de cada um é sorteada da própria sala e muda quando se volta a `#/lugares`. O portão da Terceira Era sorteia entre as duas salas. Os dois portões de dentro sorteiam só a própria lista. A escolha fica em `sessionStorage`, na chave `lorthdex-place-covers`, e evita repetir a imagem anterior quando há mais de uma. `placeImageSrc` codifica cada trecho do caminho.
+## 12. Ficha aberta e layout
 
-Cada sala, menos o índice, termina com um botão de voltar. As eras voltam para Lugares. As duas salas da Terceira Era voltam para a Terceira Era. Há também um atalho no topo.
-
-A ficha do lugar traz epíteto, eras, o texto curto do card, nomes ao longo das Eras, livros, quem passou por ali e o relato. As imagens ficam em `pictures/Lugares/` e são copiadas para `public/lugares/`. O card mostra a imagem inteira, sem corte.
-
-## Retratos
-
-A arte de origem fica em `pictures/`, organizada por pasta (`humanos-atualizados`, `anoes-atualizados`, `Hobbit-atualizados`, `elfos-atualizados`, `meio-elfos-atualizado`, `Maia-atualizado`, `Ent-atualizado`, `Beorniano-atualizado`, `Dragao-atualizado`, `Aranhas-atualizado`, `Aguias-atualizado`, `Mearas-atualizado`, `Nazgul-atualizado`, `Enigma-atualizado`).
-
-`scripts/update-portraits.py` lê o mapa dessas pastas, reduz cada imagem a no máximo 400×400 e grava `public/portraits/{id}.webp` (WebP, qualidade 68). Só recria o arquivo quando o original é mais novo. O mapa consultado pela interface é `src/data/portraits.ts`. Um id sem entrada usa o desenho do selo (`Sigil` / `Medallion`) no lugar da foto.
-
-`gollum` aponta para `/portraits/gollum.webp?v=2`. Os demais não levam query, salvo quando um arquivo no mesmo URL for substituído.
-
-Banners, marcas e ilustrações de página também nascem em `pictures/` e são copiados à mão para `public/`. O script de retratos não mexe neles.
-
-## Cores por raça
-
-`src/theme.ts` define, para cada raça, o brilho, o fundo e a tinta usados nos cards e nas fichas (`--race`, `--race-ink`, `--race-deep`). Os seis atributos têm cor fixa, independente da raça.
-
-## O que está desligado
-
-Dois interruptores em `App.tsx` estão em `false`:
-
-- `partyEnabled` esconde a comitiva e a barra fixa de baixo. O código de comitiva continua em `PartyBar` e no armazenamento. A comitiva guarda no máximo 6 ids.
-- `soundEnabled` esconde o controle de som. `playEntrySound` gera dois tons curtos com a Web Audio API. Nada é baixado.
-
-O `localStorage` usa três chaves, mesmo com a interface desligada:
-
-| Chave | Conteúdo |
-| --- | --- |
-| `lorthdex-view` | `grade` ou `lista` |
-| `lorthdex-party` | JSON com até 6 ids |
-| `lorthdex-sound` | `on` ou `off` |
-
-## Pontos de quebra do layout
+`Detail` / fichas de lugar, kindred e mapa: um scroll (o da página). A partir de 1040px, a ficha envolve a grade; abaixo disso, largura total acima dos cards. Lista Dex: duas colunas (≥ 1040px).
 
 | Largura | O que muda |
 | --- | --- |
-| ≥ 1040px | Ficha ao lado da lista, ou envolvida pelos cards na grade |
-| ≤ 1039px | Ficha em largura total, acima dos resultados |
-| ≤ 900px | Menu vira botão; os pontos entre os itens somem |
-| ≤ 800px | Banner do portal cai para 240px; paddings laterais diminuem |
-| ≤ 520px | Grade do catálogo fica em duas colunas fixas |
+| ≥ 1040px | Ficha ao lado / envolvida |
+| ≤ 1039px | Ficha em largura total |
+| ≤ 900px | Menu vira botão |
+| ≤ 800px | Banner 240px |
+| ≤ 520px | Grade do catálogo em 2 colunas |
 
-A grade solta usa `repeat(auto-fill, minmax(190px, 1fr))`, com vão de 12px.
+Grade solta: `repeat(auto-fill, minmax(190px, 1fr))`, vão 12px. Grade de lugares/mapas/criaturas: vão 16px, coluna mín. 230px.
 
-## Mapa dos arquivos
+---
+
+## 13. Retratos e tema
+
+Pastas de origem em `pictures/` (`humanos-atualizados`, `anoes-atualizados`, `Hobbit-atualizados`, etc.). Sem retrato → selo (`Sigil` / `Medallion`). Cores por raça em `src/theme.ts`.
+
+---
+
+## 14. O que está desligado
+
+Em `App.tsx`:
+
+- `partyEnabled = false` — comitiva e barra inferior ocultas (código e `localStorage` permanecem; máx. 6 ids).
+- `soundEnabled = false` — controle de som oculto (`playEntrySound` via Web Audio API).
+
+---
+
+## 15. Mapa dos arquivos
 
 ```
 index.html              página, fontes e favicon
 vite.config.ts          plugin React e porta 5173
+tsconfig.json           TypeScript estrito, noEmit
+package.json            dependências e scripts
 src/main.tsx            entrada
 src/App.tsx             estado, páginas e rodapé
 src/styles.css          todo o visual
 src/types.ts            tipos, raças, eras e raridades
 src/theme.ts            cores de raça e de atributo
-src/data/characters.ts  as 175 fichas e a checagem assertDex
+src/data/characters.ts  175 fichas + assertDex
 src/data/portraits.ts   id → URL do WebP
+src/data/kindred.ts     cartas e artigos de Criaturas
+src/data/maps.ts        folhas de Mapas
 src/data/places.ts      cards e salas de Lugares
 src/data/place-lore.ts  ficha do lugar e aliases
 src/data/place-lore-west.ts
 src/data/place-lore-east.ts
 src/lib/routes.ts       hash
-src/lib/dex.ts          busca, ordem, índice e número formatado
+src/lib/dex.ts          busca, ordem, índice
 src/lib/storage.ts      localStorage
 src/lib/sound.ts        tom de abertura
-src/components/         Home, About, BestiaryPortal, DexBoard,
-                        Detail, Entries, Header, Nav, Toolbar, Room,
-                        Medallion, Sigil, PartyBar, Places, PlaceDetail
+src/components/         Home, About, BestiaryPortal, KindredPortal,
+                        Maps, DexBoard, Detail, Entries, Header, Nav,
+                        Toolbar, Room, Medallion, Sigil, PartyBar,
+                        Places, PlaceDetail
 scripts/update-portraits.py
-pictures/               arte de origem, fora do bundle
-pictures/Lugares/       imagens das salas de lugares
-public/                 o que o Vite entrega em /
-public/lugares/         cópia servida das imagens de lugares
+pictures/               arte de origem (fora do bundle)
+pictures/Lugares/
+pictures/criaturas-raca/
+pictures/mapas-lotr/
+public/                 servido em /
+public/lugares/
+public/criaturas-raca/
+public/mapas/
+public/portraits/
 ```
 
-## Acrescentar uma ficha
+---
 
-1. Inclua o objeto no array `characters`, com `number` igual ao tamanho atual da lista. Não reutilize id nem número.
-2. Aponte `related` só para ids que já existem.
-3. Coloque o PNG na pasta correspondente de `pictures/` e registre o par arquivo → id em `scripts/update-portraits.py`.
-4. Rode `npm run portraits`.
-5. Acrescente a URL em `src/data/portraits.ts`.
-6. Suba `npm run dev` e confira o console: `assertDex` quebra a renderização se o catálogo estiver inconsistente.
+## 16. Como acrescentar conteúdo
 
-## Acrescentar um lugar
+### Personagem
 
-1. Inclua o card na lista da sala em `src/data/places.ts`. O `image` é o caminho dentro de `pictures/Lugares/`, com barras.
-2. Copie o PNG para o mesmo caminho em `public/lugares/`.
-3. Escreva a ficha em `place-lore-west.ts` ou `place-lore-east.ts`, com a mesma `id`. Se a imagem for outra vista de um lugar que já tem ficha, registre o alias em `place-lore.ts` em vez de duplicar o texto.
-4. Um id desconhecido em `#/lugares/...` não abre sala nova: `resolvePlace` volta ao índice.
+1. Objeto em `characters` com `number` = tamanho atual da lista.
+2. `related` só para ids existentes.
+3. PNG na pasta de `pictures/` + mapa em `scripts/update-portraits.py`.
+4. `npm run portraits` e entrada em `portraits.ts`.
+5. Conferir o console em DEV (`assertDex`).
+
+### Lugar
+
+1. Card em `places.ts`.
+2. Copiar PNG para `public/lugares/` no mesmo caminho.
+3. Lore em `place-lore-west.ts` ou `place-lore-east.ts`, ou alias em `place-lore.ts`.
+
+### Carta de Criaturas
+
+1. Objeto em `kindred.ts`.
+2. PNG em `pictures/criaturas-raca/` e `public/criaturas-raca/`.
+3. `entryId` só com personagem existente; artigos longos em `blocks` / `sources` sem reescrever o texto colado.
+
+### Mapa
+
+1. Objeto em `maps.ts`.
+2. PNG em `pictures/mapas-lotr/` e `public/mapas/`.
+3. `events` em traço largo.
+
+### Regras antes de publicar
+
+1. Confirmar nome e grafia na fonte.
+2. Identificar obra, capítulo ou seção.
+3. Separar fatos de interpretações.
+4. Verificar se o registro já existe com outro nome.
+5. Não criar fichas individuais para membros anônimos de um grupo.
+6. Não tratar nomes alternativos como personagens diferentes.
+7. Indicar versão alternativa ou adaptação.
+8. Revisar relações, cronologia e localização.
+9. Ligar registros relacionados quando houver fundamento.
+10. Registrar dúvidas e lacunas em vez de preencher com suposições.
+
+---
+
+## 17. Roadmap
+
+### Feito (fundação + conteúdo conectado inicial)
+
+- Identidade visual e layout principal
+- Menu, Home, Sobre
+- Catálogo de personagens com busca e filtros
+- Bestiário, cartas de Criaturas, Personagens
+- Lugares por Era
+- Mapas regionais
+- Fontes e observações canônicas nas cartas de povos/criaturas
+- Relacionamentos básicos (`related`, `entryId`)
+
+### Próximo
+
+- Preencher História de Arda (cronologia por Eras)
+- Cartas faltantes (Anões, Beornianos) quando houver arte
+- Expandir vínculos e linhagens com tipos explícitos
+- Artefatos e relíquias
+- Idiomas e escritas
+- Créditos, Termos e Privacidade
+
+### Depois
+
+- Mapas com camadas / marcadores
+- Genealogias e árvores visuais
+- Linha do tempo interativa
+- Favoritos e coleções (comitiva já existe no código, desligada)
+- Comparador de registros
+- Busca avançada por conexões
+- CMS ou banco, se o volume exigir painel editorial
+
+**Meta:** enciclopédia funcional com busca, categorias, fichas, relacionamentos e fontes confiáveis. Mapas avançados, genealogias gráficas e recursos comunitários entram em versões posteriores.
+
+---
+
+## 18. Modelo de dados sugerido (futuro)
+
+Visão conceitual, caso o projeto saia dos módulos TypeScript:
+
+| Tabela | Responsabilidade |
+| --- | --- |
+| `entities` | Núcleo de personagens, lugares, criaturas, artefatos |
+| `categories` / `entity_categories` | Taxonomia |
+| `entity_names` | Nomes alternativos e epítetos |
+| `entity_relationships` | Relações tipadas + certeza + fonte |
+| `peoples` / `locations` / `artifacts` / `languages` | Dados específicos |
+| `eras` / `events` / `event_participants` | Cronologia |
+| `sources` / `entity_sources` | Bibliografia |
+| `images` | Créditos e licenças |
+
+Hoje isso está materializado de forma enxuta em `characters`, `kindred`, `places`, `place-lore*` e `maps`.

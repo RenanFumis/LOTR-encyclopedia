@@ -472,6 +472,7 @@ h1, .brand-name {
 .portal-banner img.is-pelennor { object-position: center 42%; }
 .portal-banner img.is-bree { object-position: center 48%; }
 .portal-banner img.is-mazarbul { object-position: center center; }
+.portal-banner img.is-atlas { object-position: center center; }
 .bestiary-intro {
   padding: 48px 40px 8px;
   text-align: center;
@@ -773,6 +774,11 @@ h1, .brand-name {
   font-size: 0.95rem;
   line-height: 1.55;
 }
+.map-era {
+  color: var(--gold);
+  font-size: 0.82rem;
+  letter-spacing: 0.03em;
+}
 .place-detail { margin-top: 18px; border: 1px solid var(--line); border-radius: 16px; }
 .place-detail .seal { width: min(100%, 720px); }
 .place-detail .seal::after { display: none; }
@@ -887,6 +893,61 @@ h1, .brand-name {
   margin: 0;
   color: #e7dccb;
   font-size: 0.95rem;
+  line-height: 1.55;
+}
+.kindred-figures {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.kindred-figures li {
+  color: #e7dccb;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.kindred-name,
+.kindred-link {
+  color: var(--gold);
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-weight: normal;
+  font-synthesis: none;
+}
+.kindred-link {
+  border: 0;
+  background: none;
+  padding: 0;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.kindred-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.kindred-figures li span:last-child { display: block; }
+.place-detail .summary strong,
+.place-detail .lore strong,
+.place-detail .kindred-sources strong { color: var(--gold); font-weight: 600; }
+.kindred-book {
+  margin: 12px 0 6px;
+  color: var(--gold);
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+.kindred-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding-left: 1.15rem;
+  color: #e7dccb;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.kindred-note {
+  margin: 4px 0 0;
+  color: var(--muted, #b7aa96);
+  font-size: 0.92rem;
   line-height: 1.55;
 }
 .portal-link {
@@ -1250,6 +1311,7 @@ h1, .brand-name {
   pointer-events: none;
 }
 .detail h2 { font-size: clamp(2rem, 4vw, 3rem); text-align: center; outline: none; }
+.detail h2.kindred-title { font-size: clamp(1.55rem, 2.6vw, 2.15rem); line-height: 1.25; }
 .detail-epithet, .genus { text-align: center; }
 .genus { color: var(--gold-2); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.75rem; margin-top: 4px; }
 .chips { justify-content: center; flex-wrap: wrap; margin: 12px 0; }
