@@ -287,7 +287,7 @@ export function App() {
           />
           {page === "home" && <Home onOpen={openPage} onOpenEntry={openEntry} />}
           {page === "bestiario" && <BestiaryPortal onOpen={openPage} />}
-          {page === "lugares" && <Places section={placeId} onOpen={openPlace} />}
+          {page === "lugares" && <Places section={placeId} onOpen={openPlace} onOpenEntry={openCharacter} />}
           {page === "historia" && (
             <Room kicker="As eras" title="História de Arda">
               As eras de Arda, do começo do mundo até o fim da Terceira Era, terão uma linha própria. Por enquanto a sala só marca o lugar.
