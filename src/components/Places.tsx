@@ -64,7 +64,7 @@ function PlaceBack({ label, onClick, atEnd = false }: { label: string; onClick: 
     </button>
   );
 }
-function PlaceBoard({ places }: { places: PlaceCard[] }) {
+function PlaceBoard({ places, onOpenEntry }: { places: PlaceCard[]; onOpenEntry?: (id: string) => void }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const index = places.findIndex((place) => place.id === selectedId);
@@ -197,6 +197,7 @@ function PlaceBoard({ places }: { places: PlaceCard[] }) {
             onPrev={() => setSelectedId(places[index - 1].id)}
             onNext={() => setSelectedId(places[index + 1].id)}
             onClose={() => setSelectedId(null)}
+            onOpenEntry={onOpenEntry}
           />
         )}
         {places.map((place) => (
@@ -299,7 +300,15 @@ function GroupGates({ groups, onOpen }: { groups: PlaceGroup[]; onOpen: (id: str
   );
 }
 
-export function Places({ section, onOpen }: { section: string | null; onOpen: (id: string | null) => void }) {
+export function Places({
+  section,
+  onOpen,
+  onOpenEntry,
+}: {
+  section: string | null;
+  onOpen: (id: string | null) => void;
+  onOpenEntry?: (id: string) => void;
+}) {
   const view = resolvePlace(section);
   const eraBanner = view.kind === "era" ? eraBanners[view.era.id] : undefined;
   const groupBanner = view.kind === "group" ? groupBanners[view.group.id] : undefined;
@@ -348,7 +357,7 @@ export function Places({ section, onOpen }: { section: string | null; onOpen: (i
               ))}
             </div>
           </section>
-          {view.era.places && <PlaceBoard places={view.era.places} />}
+          {view.era.places && <PlaceBoard places={view.era.places} onOpenEntry={onOpenEntry} />}
           {view.era.groups && <GroupGates groups={view.era.groups} onOpen={onOpen} />}
           <PlaceBack atEnd label="Voltar para Lugares" onClick={() => onOpen(null)} />
         </>
@@ -369,7 +378,7 @@ export function Places({ section, onOpen }: { section: string | null; onOpen: (i
             </div>
             <p className="bestiary-lead">{view.group.text}</p>
           </section>
-          <PlaceBoard places={view.group.places} />
+          <PlaceBoard places={view.group.places} onOpenEntry={onOpenEntry} />
           <PlaceBack atEnd label={`Voltar para ${view.era.title}`} onClick={() => onOpen(view.era.id)} />
         </>
       )}
