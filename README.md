@@ -2,7 +2,7 @@
 
 Enciclopédia de fã da Terra-média, no formato de um catálogo consultável. O pacote se chama `lorthdex`. Na interface, o título visível é **Lord of the Rings** / **A Enciclopédia da Terra-média**.
 
-Projeto independente, sem vínculo com a Tolkien Estate ou a Middle-earth Enterprises. Os textos das fichas e das páginas são originais, escritos para este arquivo.
+Projeto independente, sem vínculo com a Tolkien Estate ou a Middle-earth Enterprises. Os textos das fichas e das páginas são originais, escritos para este arquivo. Artigos longos de povos e criaturas colados pelo autor do projeto entram como estão.
 
 ## Stack
 
@@ -47,10 +47,12 @@ Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/rou
 | --- | --- |
 | `#/` | Home |
 | `#/bestiario` | Portal do bestiário |
-| `#/racas` | Raças da Terra-média |
-| `#/racas/:id` | Ficha aberta dentro de Raças |
-| `#/criaturas` | Criaturas da Terra-média |
-| `#/criaturas/:id` | Ficha aberta dentro de Criaturas |
+| `#/racas` | Criaturas da Terra-média (cartas de povos e espécies) |
+| `#/criaturas` | Redireciona para `#/racas` |
+| `#/personagens` | Personagens do Mundo de Arda (catálogo Dex) |
+| `#/personagens/:id` | Ficha aberta dentro de Personagens |
+| `#/racas/:id` | Legado → abre a ficha em Personagens |
+| `#/criaturas/:id` | Legado → abre a ficha em Personagens |
 | `#/catalogo` | Catálogo completo |
 | `#/registro/:id` | Ficha aberta dentro do catálogo completo |
 | `#/lugares` | Índice de Lugares |
@@ -61,21 +63,23 @@ Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/rou
 | `#/lugares/terceira/lugares` | Lugares na Terceira Era |
 | `#/lugares/terceira/especiais` | Lugares Especiais e Misteriosos |
 | `#/historia` | Sala ainda vazia |
-| `#/mapas` | Sala ainda vazia |
+| `#/mapas` | Mapas de Arda |
 | `#/sobre` | Sobre o projeto |
 | `#/creditos` | Sala ainda vazia |
 | `#/termos` | Sala ainda vazia |
 | `#/privacidade` | Sala ainda vazia |
 
-`:id` aceita minúsculas, dígitos e hífens (`[a-z0-9-]+`). Um id que não existe no catálogo é ignorado e a página abre sem ficha. Os trechos de `#/lugares/...` aceitam só letras (`[a-z]+`). Um id de lugar desconhecido abre o índice.
+`:id` de personagem aceita minúsculas, dígitos e hífens (`[a-z0-9-]+`). Um id que não existe no catálogo é ignorado e a página abre sem ficha. Os trechos de `#/lugares/...` aceitam só letras (`[a-z]+`). Um id de lugar desconhecido abre o índice.
 
-O menu superior lista Home, Bestiário, Lugares, História de Arda e Mapas. Raças e Criaturas não entram nesse menu: o item Bestiário permanece marcado enquanto a página é `racas` ou `criaturas`. Abaixo de 900px o menu vira um botão, e os pontos dourados entre os itens somem.
+A carta selecionada em Criaturas (`#/racas`) e o mapa selecionado em Mapas **não** entram no hash: a escolha fica só no estado local do componente.
+
+O menu superior lista Home, Bestiário, Lugares, História de Arda e Mapas. Criaturas e Personagens não entram nesse menu: o item Bestiário permanece marcado enquanto a página é `racas` ou `personagens`. Abaixo de 900px o menu vira um botão, e os pontos dourados entre os itens somem.
 
 O logotipo do cabeçalho e o do rodapé chamam a Home. Os links Sobre, Créditos, Termos de Uso e Políticas de privacidade ficam no rodapé.
 
 ## Páginas
 
-Home, Bestiário, Raças, Criaturas, Catálogo, Sobre e Lugares usam o invólucro liso (`.device.is-plain`): sem couro, parafusos nem halo. As subpáginas de Lugares continuam lisas, porque a página segue sendo `lugares`. História, Mapas, Créditos, Termos e Privacidade ainda usam o componente `Room`, com o invólucro antigo.
+Home, Bestiário, Criaturas (`racas`), Personagens, Catálogo, Sobre, Lugares e Mapas usam o invólucro liso (`.device.is-plain`): sem couro, parafusos nem halo. As subpáginas de Lugares continuam lisas, porque a página segue sendo `lugares`. História, Créditos, Termos e Privacidade ainda usam o componente `Room`, com o invólucro antigo.
 
 Banners, em `public/banner/`. O Vite só publica o que está em `public/`. Arquivos novos em `pictures/` precisam ser copiados para lá. Se o arquivo for trocado no mesmo URL, acrescente `?v=` no `src` para furar o cache.
 
@@ -83,10 +87,11 @@ Banners, em `public/banner/`. O Vite só publica o que está em `public/`. Arqui
 | --- | --- | --- |
 | Home | `minas_tirith_banner.png` | herói, `object-position: 72% center` |
 | Bestiário | `banner-bestiario.png` | `center 62%` |
-| Raças | `exercito-antes-da-batalha.png?v=2` | classe `is-host`, `center 30%` |
+| Personagens | `exercito-antes-da-batalha.png?v=2` | classe `is-host`, `center 30%` |
 | Criaturas | `nazgul-cacador.png` | classe `is-hunt`, `center center` |
 | Sobre | `BannerPortadeDurin.png` | classe `is-gate`, `center center` |
 | Lugares | `Banner_lugares.png` | classe `is-places`, `center 32%` |
+| Mapas | `BannerMapaAntigodaTerraMedia.png?v=1` | classe `is-atlas` |
 
 No Sobre, o retrato `/sobre/tolkien.jpg` flutua no texto de Tolkien. A cena de Frodo (`/sobre/frodo-escrevendo.png`) fica sob o título “Muito além das páginas”. A Comitiva (`/banner/ComitivadoAnel.png?v=1`) fica sob o título “Que a jornada continue...”. A linha de agradecimento é dourada, itálica, centralizada e sublinhada.
 
@@ -103,7 +108,27 @@ Os banners das salas de Lugares vêm de `public/lugares/`, não de `public/banne
 
 O banner do portal tem 460px de altura e 240px até 800px. Ele sangra na largura da janela (`100vw`).
 
-A Home aponta “Explorar a Enciclopédia” para o catálogo completo, “Explorar Personagens” para Raças, “Explorar o Criaturas” para Criaturas, “Explorar os Lugares” para Lugares e “Saiba mais sobre o projeto” para Sobre. O texto do botão de criaturas está como foi escrito na interface.
+A Home aponta “Explore o mundo de Arda” para Mapas, “Explorar Personagens” para Personagens, “Explorar o Criaturas” para Criaturas (`racas`), “Explorar os Lugares” para Lugares e “Saiba mais sobre o projeto” para Sobre. O texto do botão de criaturas está como foi escrito na interface.
+
+## Bestiário
+
+`BestiaryPortal` é o portão. À esquerda, **Criaturas de Arda** abre `#/racas`. À direita, **Personagens do Mundo de Arda** abre `#/personagens`. A frase de fechamento do texto fica antes dos dois cards; o `quote-divider` vem depois.
+
+## Criaturas (`#/racas`)
+
+`KindredPortal` lista 16 cartas de povo ou espécie em `src/data/kindred.ts`. Cada carta mostra só a imagem e o nome curto. A carta aberta some da grade e a ficha longa envolve a esquerda e o espaço abaixo, no mesmo padrão dos lugares e dos mapas.
+
+Imagens em `pictures/criaturas-raca/`, servidas de `public/criaturas-raca/` via `kindredImageSrc`.
+
+Cartas atuais: Ainur, Elfos, Meio-elfos, Homens, Hobbits, Ents, Huorns, Grandes Águias, Mearas, Dragões, Grandes Aranhas, Orcs, Trolls, Lobisomens, Bestas aladas e Seres misteriosos. Anões e Beornianos ainda não têm carta (faltam imagens).
+
+A ficha pode trazer `title` longo, `blocks` (parágrafos, subtítulos e listas), `figuresLead`, `figureGroups`, `figures` e `sources` (livros agrupados e observações canônicas). Texto rico aceita `**negrito**` e `*itálico*`, inclusive negrito com itálico aninhado.
+
+Nomes com `entryId` abrem a ficha do personagem: Hobbits vão para `#/catalogo`; os demais, para `#/personagens`. Nomes sem `entryId` permanecem texto. Não se inventa vínculo entre figuras homônimas (por exemplo, o tenente Gothmog de Minas Morgul não aponta para o Balrog `gothmog`).
+
+## Personagens (`#/personagens`)
+
+`DexBoard` com o título **Personagens do Mundo de Arda** e o recorte `PORTAL_RACES` (todas as raças do catálogo, menos Hobbit). Hobbits ficam só no catálogo completo (`#/catalogo`). Abrir um Hobbit a partir de um link em Criaturas chama `openCharacter`, que troca a página para `catalogo`.
 
 ## Catálogo
 
@@ -117,28 +142,28 @@ Atributos, cada um de 1 a 100: força, agilidade, sabedoria, coragem, poder e vo
 
 ### Recortes por raça
 
-`PEOPLE_RACES` alimenta `#/racas`. `CREATURE_RACES` alimenta `#/criaturas`. O catálogo completo usa `RACES`, que inclui Hobbit.
+`PORTAL_RACES` alimenta `#/personagens`. O catálogo completo usa `RACES`, que inclui Hobbit. `PEOPLE_RACES` e `CREATURE_RACES` ainda existem em `types.ts` e entram na composição de `PORTAL_RACES`.
 
 | Raça | Onde aparece | Quantidade |
 | --- | --- | --- |
-| Humano | Raças | 60 |
-| Anão | Raças | 22 |
-| Maia | Raças | 16 |
-| Meio-elfo | Raças | 13 |
-| Elfo | Raças | 11 |
-| Ent | Raças | 6 |
-| Beorniano | Raças | 2 |
+| Humano | Personagens | 60 |
+| Anão | Personagens | 22 |
+| Maia | Personagens | 16 |
+| Meio-elfo | Personagens | 13 |
+| Elfo | Personagens | 11 |
+| Ent | Personagens | 6 |
+| Beorniano | Personagens | 2 |
 | Hobbit | só no catálogo completo | 21 |
-| Dragão | Criaturas | 7 |
-| Enigma | Criaturas | 4 |
-| Águia | Criaturas | 4 |
-| Mearas | Criaturas | 4 |
-| Nazgûl | Criaturas | 3 |
-| Aranha | Criaturas | 2 |
+| Dragão | Personagens | 7 |
+| Enigma | Personagens | 4 |
+| Águia | Personagens | 4 |
+| Mearas | Personagens | 4 |
+| Nazgûl | Personagens | 3 |
+| Aranha | Personagens | 2 |
 
 Eras: Terceira, Segunda, Primeira e Fora do tempo. Raridades: comum, incomum, raro, lendário, mítico.
 
-Um vínculo aberto a partir de uma ficha troca o id na página atual. Dá para abrir, em Raças, uma ficha cujo card não está na grade daquela página. O hash fica `#/racas/:id`.
+Um vínculo aberto a partir de uma ficha troca o id na página atual. Dá para abrir, em Personagens, uma ficha cujo card não está na grade daquela página. O hash fica `#/personagens/:id`.
 
 ### Busca, filtros e ordem
 
@@ -146,9 +171,7 @@ Um vínculo aberto a partir de uma ficha troca o id na página atual. Dá para a
 
 `normalize` tira acentos com NFD e passa a minúsculas. Hífen e apóstrofo permanecem.
 
-A ordem pode ser número, nome (`localeCompare` em `pt`) ou índice decrescente. A tecla `/` foca a busca em Raças, Criaturas e no catálogo, desde que o foco não esteja num campo. `Esc` fecha a ficha, ou limpa a busca se o campo estiver focado e houver texto. Setas esquerda e direita percorrem a lista visível com uma ficha aberta.
-
-Ao entrar em Raças ou Criaturas, um filtro de raça incompatível com aquele recorte volta para “Todas”.
+A ordem pode ser número, nome (`localeCompare` em `pt`) ou índice decrescente. A tecla `/` foca a busca em Personagens e no catálogo, desde que o foco não esteja num campo. `Esc` fecha a ficha, ou limpa a busca se o campo estiver focado e houver texto. Setas esquerda e direita percorrem a lista visível com uma ficha aberta.
 
 ## Ficha aberta
 
@@ -162,7 +185,7 @@ Abaixo de 1040px a ficha ocupa a largura toda e fica acima dos cards.
 
 Abrir uma ficha rola `.detail` para o início da janela. A barra da ficha (`.detail-nav`) gruda no topo enquanto ela está visível.
 
-A ficha de um lugar segue o mesmo encaixe. `PlaceBoard` mede `.place-card` dentro de `.place-grid.is-wrapped`. O vão dessa grade é 16px e a coluna mínima é 230px. Abaixo de 1040px a ficha do lugar também fica em largura total, acima dos cards. `Esc` fecha; as setas percorrem só os lugares daquela sala.
+A ficha de um lugar, de uma criatura (kindred) ou de um mapa segue o mesmo encaixe. `PlaceBoard`, `KindredBoard` e `MapBoard` medem `.place-card` dentro de `.place-grid.is-wrapped`. O vão dessa grade é 16px e a coluna mínima é 230px. Abaixo de 1040px a ficha também fica em largura total, acima dos cards. `Esc` fecha; as setas percorrem só os itens daquela sala.
 
 ## Lugares
 
@@ -175,6 +198,12 @@ O índice mostra quatro portões. A imagem de cada um é sorteada da própria sa
 Cada sala, menos o índice, termina com um botão de voltar. As eras voltam para Lugares. As duas salas da Terceira Era voltam para a Terceira Era. Há também um atalho no topo.
 
 A ficha do lugar traz epíteto, eras, o texto curto do card, nomes ao longo das Eras, livros, quem passou por ali e o relato. As imagens ficam em `pictures/Lugares/` e são copiadas para `public/lugares/`. O card mostra a imagem inteira, sem corte.
+
+## Mapas
+
+`src/components/Maps.tsx` lista as folhas em `src/data/maps.ts`. Cada mapa tem `id`, `name`, `image`, `eras`, `epithet`, `text`, `books`, `region` e `events`. As imagens ficam em `pictures/mapas-lotr/` e são copiadas para `public/mapas/`, servidas por `mapImageSrc`.
+
+São 16 mapas: Arda, Aman e Valinor, Beleriand, Terra-média, Eriador, Condado, Arnor, Montanhas Sombrias, Rhovanion, Rohan, Rohan na Terceira Era, Gondor, Gondor nas Eras, Númenor, Harad e Rhûn. A seleção também é local (sem hash). A ficha envolve a grade como nos lugares.
 
 ## Retratos
 
@@ -229,6 +258,8 @@ src/types.ts            tipos, raças, eras e raridades
 src/theme.ts            cores de raça e de atributo
 src/data/characters.ts  as 175 fichas e a checagem assertDex
 src/data/portraits.ts   id → URL do WebP
+src/data/kindred.ts     cartas e artigos de Criaturas
+src/data/maps.ts        folhas de Mapas
 src/data/places.ts      cards e salas de Lugares
 src/data/place-lore.ts  ficha do lugar e aliases
 src/data/place-lore-west.ts
@@ -237,14 +268,19 @@ src/lib/routes.ts       hash
 src/lib/dex.ts          busca, ordem, índice e número formatado
 src/lib/storage.ts      localStorage
 src/lib/sound.ts        tom de abertura
-src/components/         Home, About, BestiaryPortal, DexBoard,
-                        Detail, Entries, Header, Nav, Toolbar, Room,
-                        Medallion, Sigil, PartyBar, Places, PlaceDetail
+src/components/         Home, About, BestiaryPortal, KindredPortal,
+                        Maps, DexBoard, Detail, Entries, Header, Nav,
+                        Toolbar, Room, Medallion, Sigil, PartyBar,
+                        Places, PlaceDetail
 scripts/update-portraits.py
 pictures/               arte de origem, fora do bundle
 pictures/Lugares/       imagens das salas de lugares
+pictures/criaturas-raca/ imagens das cartas de Criaturas
+pictures/mapas-lotr/    imagens das folhas de Mapas
 public/                 o que o Vite entrega em /
 public/lugares/         cópia servida das imagens de lugares
+public/criaturas-raca/  cópia servida das cartas de Criaturas
+public/mapas/           cópia servida dos mapas
 ```
 
 ## Acrescentar uma ficha
@@ -262,3 +298,16 @@ public/lugares/         cópia servida das imagens de lugares
 2. Copie o PNG para o mesmo caminho em `public/lugares/`.
 3. Escreva a ficha em `place-lore-west.ts` ou `place-lore-east.ts`, com a mesma `id`. Se a imagem for outra vista de um lugar que já tem ficha, registre o alias em `place-lore.ts` em vez de duplicar o texto.
 4. Um id desconhecido em `#/lugares/...` não abre sala nova: `resolvePlace` volta ao índice.
+
+## Acrescentar uma carta de Criaturas
+
+1. Inclua o objeto em `src/data/kindred.ts`, com `id`, `name`, `image`, `alt`, `about` e `figures`.
+2. Copie o PNG para `pictures/criaturas-raca/` e para `public/criaturas-raca/`.
+3. Use `entryId` só quando o personagem existir no catálogo. Hobbits abrem o catálogo completo.
+4. Artigos longos entram em `blocks`, `figureGroups` e `sources` sem reescrever o texto colado.
+
+## Acrescentar um mapa
+
+1. Inclua o objeto em `src/data/maps.ts`.
+2. Copie o PNG para `pictures/mapas-lotr/` e para `public/mapas/` com o mesmo nome de arquivo.
+3. Mantenha `events` em traço largo: nomeie a guerra, sem narrar o campo.
