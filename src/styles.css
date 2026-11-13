@@ -465,6 +465,13 @@ h1, .brand-name {
 .portal-banner img.is-host { object-position: center 30%; }
 .portal-banner img.is-hunt,
 .portal-banner img.is-gate { object-position: center center; }
+.portal-banner img.is-places { object-position: center 32%; }
+.portal-banner img.is-aman { object-position: center 78%; }
+.portal-banner img.is-falas { object-position: center 88%; }
+.portal-banner img.is-mithlond { object-position: center 52%; }
+.portal-banner img.is-pelennor { object-position: center 42%; }
+.portal-banner img.is-bree { object-position: center 48%; }
+.portal-banner img.is-mazarbul { object-position: center center; }
 .bestiary-intro {
   padding: 48px 40px 8px;
   text-align: center;
@@ -713,6 +720,174 @@ h1, .brand-name {
   background: #e5c17b;
   -webkit-mask: var(--mark) center / contain no-repeat;
   mask: var(--mark) center / contain no-repeat;
+}
+.portal-cards.place-gates {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 980px;
+  margin-inline: auto;
+  padding-top: 28px;
+  padding-bottom: 56px;
+}
+.place-gates .portal-card-art img { object-position: center center; }
+.place-back {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 16px;
+}
+.place-back-end {
+  display: block;
+  width: fit-content;
+  margin: 8px auto 56px;
+}
+.place-sheet { padding: 8px 40px 56px; }
+.place-sheet.is-open { padding-bottom: 28px; }
+.place-card.is-selected { border-color: #e5c17b; box-shadow: 0 0 0 1px #e5c17b; }
+.place-card-hit {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+.place-card-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 14px 16px;
+}
+.place-card-name {
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-weight: normal;
+  font-synthesis: none;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.place-card-text {
+  color: #e7dccb;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.place-detail { margin-top: 18px; border: 1px solid var(--line); border-radius: 16px; }
+.place-detail .seal { width: min(100%, 720px); }
+.place-detail .seal::after { display: none; }
+.place-detail .seal img {
+  display: block;
+  width: min(100%, 680px);
+  height: auto;
+  border-radius: 8px;
+}
+.place-detail .lore + .lore { margin-top: 0.85em; }
+@media (min-width: 1040px) {
+  .place-grid.is-wrapped .place-detail {
+    grid-column: 2 / -1;
+    grid-row: 1 / span var(--rows, 6);
+    align-self: start;
+    justify-self: stretch;
+    width: auto;
+    height: auto;
+    margin: 0;
+  }
+}
+@media (max-width: 1039px) {
+  .place-grid.is-wrapped .place-detail { grid-column: 1 / -1; }
+}
+.place-card h3 {
+  margin: 0;
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-weight: normal;
+  font-synthesis: none;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.place-eras {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px 40px 56px;
+}
+.place-era,
+.place-group {
+  border: 1px solid #9b763d;
+  border-radius: 14px;
+  background: #101914;
+  box-shadow:
+    inset 0 0 12px rgba(197, 158, 87, 0.05),
+    0 0 8px rgba(0, 0, 0, 0.3);
+}
+.place-era { padding: 28px 22px 26px; }
+.place-era > h3,
+.place-group > h4 {
+  margin: 0;
+  text-align: center;
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-weight: normal;
+  font-synthesis: none;
+}
+.place-era > h3 { font-size: clamp(1.35rem, 1.1rem + 0.6vw, 1.85rem); }
+.place-era > p,
+.place-group > p {
+  max-width: 46rem;
+  margin: 14px auto 0;
+  color: #e7dccb;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: center;
+}
+.place-era > p + p { margin-top: 0.9em; }
+.place-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 26px;
+}
+.place-group { padding: 22px 16px 18px; background: rgba(0, 0, 0, 0.22); }
+.place-group > h4 { font-size: 1.2rem; }
+.place-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  margin-top: 22px;
+}
+.place-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(155, 118, 61, 0.7);
+  border-radius: 10px;
+  background: #0c1410;
+}
+.place-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.place-card div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 14px 16px;
+}
+.place-card h4 {
+  margin: 0;
+  font-family: "Ringbearer", Cinzel, Palatino, Georgia, serif;
+  font-weight: normal;
+  font-synthesis: none;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.place-card p {
+  margin: 0;
+  color: #e7dccb;
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 .portal-link {
   margin-top: 6px;
@@ -1431,7 +1606,10 @@ h1, .brand-name {
   .about-essay p { font-size: 1rem; }
   .about-kicker { font-size: 1.05rem; }
   .portal-cards,
-  .portal-cards.bestiary-gates { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+  .portal-cards.bestiary-gates,
+  .portal-cards.place-gates { grid-template-columns: 1fr; padding-left: 16px; padding-right: 16px; }
+  .place-eras,
+  .place-sheet { padding-left: 16px; padding-right: 16px; }
   .bestiary-head { padding: 20px 16px 0; }
   .bestiary .toolbar,
   .bestiary .grid,

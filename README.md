@@ -41,7 +41,7 @@ Idioma da página: `pt-BR`.
 
 ## Rotas
 
-Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/routes.ts`. `App` escuta `popstate` e mantém o hash alinhado ao estado. Trocar de página zera a ficha aberta e volta o scroll ao topo.
+Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/routes.ts`. `App` escuta `popstate` e mantém o hash alinhado ao estado. Trocar de página zera a ficha aberta, zera o lugar aberto e volta o scroll ao topo. O terceiro argumento de `routeHash` só entra no endereço quando a página é Lugares.
 
 | Hash | Página |
 | --- | --- |
@@ -53,7 +53,13 @@ Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/rou
 | `#/criaturas/:id` | Ficha aberta dentro de Criaturas |
 | `#/catalogo` | Catálogo completo |
 | `#/registro/:id` | Ficha aberta dentro do catálogo completo |
-| `#/lugares` | Sala ainda vazia |
+| `#/lugares` | Índice de Lugares |
+| `#/lugares/aman` | Aman e Valinor |
+| `#/lugares/primeira` | Primeira Era |
+| `#/lugares/segunda` | Segunda Era |
+| `#/lugares/terceira` | Terceira Era, com dois portões |
+| `#/lugares/terceira/lugares` | Lugares na Terceira Era |
+| `#/lugares/terceira/especiais` | Lugares Especiais e Misteriosos |
 | `#/historia` | Sala ainda vazia |
 | `#/mapas` | Sala ainda vazia |
 | `#/sobre` | Sobre o projeto |
@@ -61,7 +67,7 @@ Não existe React Router. O endereço é o hash, lido e escrito por `src/lib/rou
 | `#/termos` | Sala ainda vazia |
 | `#/privacidade` | Sala ainda vazia |
 
-`:id` aceita minúsculas, dígitos e hífens (`[a-z0-9-]+`). Um id que não existe no catálogo é ignorado e a página abre sem ficha.
+`:id` aceita minúsculas, dígitos e hífens (`[a-z0-9-]+`). Um id que não existe no catálogo é ignorado e a página abre sem ficha. Os trechos de `#/lugares/...` aceitam só letras (`[a-z]+`). Um id de lugar desconhecido abre o índice.
 
 O menu superior lista Home, Bestiário, Lugares, História de Arda e Mapas. Raças e Criaturas não entram nesse menu: o item Bestiário permanece marcado enquanto a página é `racas` ou `criaturas`. Abaixo de 900px o menu vira um botão, e os pontos dourados entre os itens somem.
 
@@ -69,7 +75,7 @@ O logotipo do cabeçalho e o do rodapé chamam a Home. Os links Sobre, Créditos
 
 ## Páginas
 
-Home, Bestiário, Raças, Criaturas, Catálogo e Sobre usam o invólucro liso (`.device.is-plain`): sem couro, parafusos nem halo. Lugares, História, Mapas, Créditos, Termos e Privacidade ainda usam o componente `Room`, com o invólucro antigo.
+Home, Bestiário, Raças, Criaturas, Catálogo, Sobre e Lugares usam o invólucro liso (`.device.is-plain`): sem couro, parafusos nem halo. As subpáginas de Lugares continuam lisas, porque a página segue sendo `lugares`. História, Mapas, Créditos, Termos e Privacidade ainda usam o componente `Room`, com o invólucro antigo.
 
 Banners, em `public/banner/`. O Vite só publica o que está em `public/`. Arquivos novos em `pictures/` precisam ser copiados para lá. Se o arquivo for trocado no mesmo URL, acrescente `?v=` no `src` para furar o cache.
 
@@ -80,6 +86,20 @@ Banners, em `public/banner/`. O Vite só publica o que está em `public/`. Arqui
 | Raças | `exercito-antes-da-batalha.png?v=2` | classe `is-host`, `center 30%` |
 | Criaturas | `nazgul-cacador.png` | classe `is-hunt`, `center center` |
 | Sobre | `BannerPortadeDurin.png` | classe `is-gate`, `center center` |
+| Lugares | `Banner_lugares.png` | classe `is-places`, `center 32%` |
+
+No Sobre, o retrato `/sobre/tolkien.jpg` flutua no texto de Tolkien. A cena de Frodo (`/sobre/frodo-escrevendo.png`) fica sob o título “Muito além das páginas”. A Comitiva (`/banner/ComitivadoAnel.png?v=1`) fica sob o título “Que a jornada continue...”. A linha de agradecimento é dourada, itálica, centralizada e sublinhada.
+
+Os banners das salas de Lugares vêm de `public/lugares/`, não de `public/banner/`. A classe define o `object-position`.
+
+| Sala | Arquivo | Enquadramento |
+| --- | --- | --- |
+| Aman e Valinor | `Aman_e_Valinor/Valinor.png` | `is-aman`, `center 78%` |
+| Primeira Era | `primeira_era/Falas.png` | `is-falas`, `center 88%` |
+| Segunda Era | `segunda_era/Portos_Cinzentos_Mithlond.png` | `is-mithlond`, `center 52%` |
+| Terceira Era | `terceira_era/Campos_do_Pelennor.png` | `is-pelennor`, `center 42%` |
+| Lugares na Terceira Era | `terceira_era/Bree.png` | `is-bree`, `center 48%` |
+| Lugares Especiais e Misteriosos | `terceira_era/Lugares especiais_e_misteriosos-terceira_era/CâmaradeMazarbulbanner.png?v=1` | `is-mazarbul`, `center center` |
 
 O banner do portal tem 460px de altura e 240px até 800px. Ele sangra na largura da janela (`100vw`).
 
@@ -142,6 +162,20 @@ Abaixo de 1040px a ficha ocupa a largura toda e fica acima dos cards.
 
 Abrir uma ficha rola `.detail` para o início da janela. A barra da ficha (`.detail-nav`) gruda no topo enquanto ela está visível.
 
+A ficha de um lugar segue o mesmo encaixe. `PlaceBoard` mede `.place-card` dentro de `.place-grid.is-wrapped`. O vão dessa grade é 16px e a coluna mínima é 230px. Abaixo de 1040px a ficha do lugar também fica em largura total, acima dos cards. `Esc` fecha; as setas percorrem só os lugares daquela sala.
+
+## Lugares
+
+`src/components/Places.tsx` desenha o índice e as salas. Os cards estão em `src/data/places.ts`. Cada um tem `id`, `name`, `image` e `text`. A ficha longa fica em `src/data/place-lore-west.ts` e `src/data/place-lore-east.ts`, reunidas por `resolvePlaceRecord` em `src/data/place-lore.ts`. Uma imagem repetida do mesmo lugar aponta, por alias, para a ficha já escrita e mostra a imagem em que se clicou.
+
+São 100 cards: Aman e Valinor 11, Primeira Era 19, Segunda Era 15, Terceira Era 31 e Lugares Especiais e Misteriosos 24. A Terceira Era não lista os cards na própria página. Ela abre dois portões, “Lugares na Terceira Era” e “Lugares Especiais e Misteriosos”.
+
+O índice mostra quatro portões. A imagem de cada um é sorteada da própria sala e muda quando se volta a `#/lugares`. O portão da Terceira Era sorteia entre as duas salas. Os dois portões de dentro sorteiam só a própria lista. A escolha fica em `sessionStorage`, na chave `lorthdex-place-covers`, e evita repetir a imagem anterior quando há mais de uma. `placeImageSrc` codifica cada trecho do caminho.
+
+Cada sala, menos o índice, termina com um botão de voltar. As eras voltam para Lugares. As duas salas da Terceira Era voltam para a Terceira Era. Há também um atalho no topo.
+
+A ficha do lugar traz epíteto, eras, o texto curto do card, nomes ao longo das Eras, livros, quem passou por ali e o relato. As imagens ficam em `pictures/Lugares/` e são copiadas para `public/lugares/`. O card mostra a imagem inteira, sem corte.
+
 ## Retratos
 
 A arte de origem fica em `pictures/`, organizada por pasta (`humanos-atualizados`, `anoes-atualizados`, `Hobbit-atualizados`, `elfos-atualizados`, `meio-elfos-atualizado`, `Maia-atualizado`, `Ent-atualizado`, `Beorniano-atualizado`, `Dragao-atualizado`, `Aranhas-atualizado`, `Aguias-atualizado`, `Mearas-atualizado`, `Nazgul-atualizado`, `Enigma-atualizado`).
@@ -195,16 +229,22 @@ src/types.ts            tipos, raças, eras e raridades
 src/theme.ts            cores de raça e de atributo
 src/data/characters.ts  as 175 fichas e a checagem assertDex
 src/data/portraits.ts   id → URL do WebP
+src/data/places.ts      cards e salas de Lugares
+src/data/place-lore.ts  ficha do lugar e aliases
+src/data/place-lore-west.ts
+src/data/place-lore-east.ts
 src/lib/routes.ts       hash
 src/lib/dex.ts          busca, ordem, índice e número formatado
 src/lib/storage.ts      localStorage
 src/lib/sound.ts        tom de abertura
 src/components/         Home, About, BestiaryPortal, DexBoard,
                         Detail, Entries, Header, Nav, Toolbar, Room,
-                        Medallion, Sigil, PartyBar
+                        Medallion, Sigil, PartyBar, Places, PlaceDetail
 scripts/update-portraits.py
 pictures/               arte de origem, fora do bundle
+pictures/Lugares/       imagens das salas de lugares
 public/                 o que o Vite entrega em /
+public/lugares/         cópia servida das imagens de lugares
 ```
 
 ## Acrescentar uma ficha
@@ -215,3 +255,10 @@ public/                 o que o Vite entrega em /
 4. Rode `npm run portraits`.
 5. Acrescente a URL em `src/data/portraits.ts`.
 6. Suba `npm run dev` e confira o console: `assertDex` quebra a renderização se o catálogo estiver inconsistente.
+
+## Acrescentar um lugar
+
+1. Inclua o card na lista da sala em `src/data/places.ts`. O `image` é o caminho dentro de `pictures/Lugares/`, com barras.
+2. Copie o PNG para o mesmo caminho em `public/lugares/`.
+3. Escreva a ficha em `place-lore-west.ts` ou `place-lore-east.ts`, com a mesma `id`. Se a imagem for outra vista de um lugar que já tem ficha, registre o alias em `place-lore.ts` em vez de duplicar o texto.
+4. Um id desconhecido em `#/lugares/...` não abre sala nova: `resolvePlace` volta ao índice.
