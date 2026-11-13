@@ -4,31 +4,37 @@ import { Header } from "./components/Header";
 import { BestiaryPortal } from "./components/BestiaryPortal";
 import { About } from "./components/About";
 import { Places } from "./components/Places";
+import { KindredPortal } from "./components/KindredPortal";
+import { Maps } from "./components/Maps";
 import { Home } from "./components/Home";
 import { PartyBar } from "./components/PartyBar";
 import { Room } from "./components/Room";
 import { characters, getCharacter } from "./data/characters";
 import { matchesQuery, sortCharacters } from "./lib/dex";
-import { readRoute, routeHash, type PageId } from "./lib/routes";
+import { readRoute, routeHash, type PageId, type Route } from "./lib/routes";
 import { playEntrySound } from "./lib/sound";
 import { readParty, readSound, readView, writeParty, writeSound, writeView } from "./lib/storage";
-import { CREATURE_RACES, PEOPLE_RACES, RACES, type Character, type DexFilters, type Race, type ViewMode } from "./types";
+import { PORTAL_RACES, RACES, type Character, type DexFilters, type Race, type ViewMode } from "./types";
 
 const partyEnabled = false;
 const soundEnabled = false;
 
 function scopeRaces(page: PageId): readonly Race[] | null {
-  if (page === "racas") return PEOPLE_RACES;
-  if (page === "criaturas") return CREATURE_RACES;
+  if (page === "personagens") return PORTAL_RACES;
   return null;
 }
 
 function showsEntry(page: PageId) {
-  return page === "catalogo" || page === "racas" || page === "criaturas";
+  return page === "catalogo" || page === "personagens";
+}
+
+function settleRoute(route: Route) {
+  const entryId = route.entryId && getCharacter(route.entryId) ? route.entryId : null;
+  return { page: route.page, entryId, placeId: route.placeId };
 }
 
 function isPlain(page: PageId) {
-  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "criaturas" || page === "sobre" || page === "lugares";
+  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "personagens" || page === "sobre" || page === "lugares" || page === "mapas";
 }
 
 const initialFilters: DexFilters = {
@@ -41,9 +47,7 @@ const initialFilters: DexFilters = {
 };
 
 function initialRoute() {
-  const route = readRoute(window.location.hash);
-  const entryId = route.entryId && getCharacter(route.entryId) ? route.entryId : null;
-  return { page: route.page, entryId, placeId: route.placeId };
+  return settleRoute(readRoute(window.location.hash));
 }
 
 export function App() {
@@ -106,10 +110,10 @@ export function App() {
   useEffect(() => {
     const onPop = () => {
       fromPop.current = true;
-      const route = readRoute(window.location.hash);
+      const route = settleRoute(readRoute(window.location.hash));
       setPage(route.page);
       setPlaceId(route.placeId);
-      setSelectedId(route.entryId && getCharacter(route.entryId) ? route.entryId : null);
+      setSelectedId(route.entryId);
     };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
@@ -204,6 +208,15 @@ export function App() {
     setSelectedId(id);
   };
 
+  const openCharacter = (id: string) => {
+    const character = getCharacter(id);
+    if (!character) return;
+    setPlaceId(null);
+    setPage(character.race === "Hobbit" ? "catalogo" : "personagens");
+    setSelectedId(id);
+    window.scrollTo(0, 0);
+  };
+
   const patch = (partial: Partial<DexFilters>) => setFilters((current) => ({ ...current, ...partial }));
   const toggleSelect = (id: string) => setSelectedId((current) => (current === id ? null : id));
   const dirty =
@@ -247,11 +260,9 @@ export function App() {
   const prev = neighborIndex > 0 ? neighborSource[neighborIndex - 1] : undefined;
   const next = neighborIndex >= 0 ? neighborSource[neighborIndex + 1] : undefined;
   const partyCharacters = party.map((id) => getCharacter(id)).filter((item): item is Character => Boolean(item));
-  const collection = page === "racas"
-    ? { title: "Raças da Terra-média", races: PEOPLE_RACES, banner: "/banner/exercito-antes-da-batalha.png?v=2", bannerAlt: "Hoste a cavalo reunida no campo, sob estandartes verdes.", bannerClass: "is-host" }
-    : page === "criaturas"
-      ? { title: "Criaturas da Terra-média", races: CREATURE_RACES, banner: "/banner/nazgul-cacador.png", bannerAlt: "Cavaleiro sombrio e uma besta alada sob um céu de nuvens.", bannerClass: "is-hunt" }
-      : null;
+  const collection = page === "personagens"
+    ? { title: "Personagens do Mundo de Arda", races: PORTAL_RACES, banner: "/banner/exercito-antes-da-batalha.png?v=2", bannerAlt: "Hoste a cavalo reunida no campo, sob estandartes verdes.", bannerClass: "is-host" }
+    : null;
 
   return (
     <>
@@ -282,11 +293,8 @@ export function App() {
               As eras de Arda, do começo do mundo até o fim da Terceira Era, terão uma linha própria. Por enquanto a sala só marca o lugar.
             </Room>
           )}
-          {page === "mapas" && (
-            <Room kicker="Cartografia" title="Mapas">
-              Os mapas do arquivo ficam nesta sala. Ainda não há folha pendurada.
-            </Room>
-          )}
+          {page === "mapas" && <Maps />}
+          {page === "racas" && <KindredPortal onOpen={openCharacter} />}
           {page === "sobre" && <About />}
           {page === "creditos" && (
             <Room kicker="O arquivo" title="Créditos">

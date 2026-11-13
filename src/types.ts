@@ -159,6 +159,10 @@ export const CREATURE_RACES: Race[] = [
   "Enigma",
 ];
 
+export const PORTAL_RACES: Race[] = RACES.filter(
+  (race) => PEOPLE_RACES.includes(race) || CREATURE_RACES.includes(race),
+);
+
 export const ERAS: Era[] = ["Terceira Era", "Segunda Era", "Primeira Era", "Fora do tempo"];
 
 export const RARITIES: Rarity[] = ["comum", "incomum", "raro", "lendário", "mítico"];
