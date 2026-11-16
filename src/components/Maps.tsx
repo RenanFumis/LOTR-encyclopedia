@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { mapImageSrc, regionMaps, type RegionMap } from "../data/maps";
+import { toWebpSrc } from "../lib/media";
 
 function MapDetail({
   map,
@@ -214,7 +215,7 @@ function MapBoard() {
               aria-pressed={map.id === selectedId}
               onClick={() => setSelectedId((current) => (current === map.id ? null : map.id))}
             >
-              <img src={mapImageSrc(map.image)} alt="" />
+              <img src={mapImageSrc(map.image)} alt="" loading="lazy" decoding="async" />
               <span className="place-card-copy">
                 <span className="place-card-name">{map.name}</span>
                 <span className="map-era">{map.eras.join(" · ")}</span>
@@ -233,7 +234,7 @@ export function Maps() {
   return (
     <main id="conteudo" className="portal places-portal">
       <div className="portal-banner">
-        <img className="is-atlas" src="/banner/BannerMapaAntigodaTerraMedia.png?v=1" alt="Mapa antigo da Terra-média, do Condado a Mordor e a Harad." />
+        <img className="is-atlas" src={toWebpSrc("/banner/BannerMapaAntigodaTerraMedia.png?v=1")} alt="Mapa antigo da Terra-média, do Condado a Mordor e a Harad." fetchPriority="high" decoding="async" />
       </div>
       <section className="bestiary-intro">
         <h2>Mapas</h2>

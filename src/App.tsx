@@ -3,6 +3,10 @@ import { DexBoard } from "./components/DexBoard";
 import { Header } from "./components/Header";
 import { BestiaryPortal } from "./components/BestiaryPortal";
 import { About } from "./components/About";
+import { Architecture } from "./components/Architecture";
+import { Privacy } from "./components/Privacy";
+import { Terms } from "./components/Terms";
+import { Artifacts } from "./components/Artifacts";
 import { Places } from "./components/Places";
 import { KindredPortal } from "./components/KindredPortal";
 import { Maps } from "./components/Maps";
@@ -13,6 +17,7 @@ import { characters, getCharacter } from "./data/characters";
 import { matchesQuery, sortCharacters } from "./lib/dex";
 import { readRoute, routeHash, type PageId, type Route } from "./lib/routes";
 import { playEntrySound } from "./lib/sound";
+import { toWebpSrc } from "./lib/media";
 import { readParty, readSound, readView, writeParty, writeSound, writeView } from "./lib/storage";
 import { PORTAL_RACES, RACES, type Character, type DexFilters, type Race, type ViewMode } from "./types";
 
@@ -34,7 +39,7 @@ function settleRoute(route: Route) {
 }
 
 function isPlain(page: PageId) {
-  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "personagens" || page === "sobre" || page === "lugares" || page === "mapas";
+  return page === "home" || page === "bestiario" || page === "catalogo" || page === "racas" || page === "personagens" || page === "sobre" || page === "arquitetura" || page === "termos" || page === "privacidade" || page === "lugares" || page === "mapas" || page === "artefatos";
 }
 
 const initialFilters: DexFilters = {
@@ -116,7 +121,11 @@ export function App() {
       setSelectedId(route.entryId);
     };
     window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
+    window.addEventListener("hashchange", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      window.removeEventListener("hashchange", onPop);
+    };
   }, []);
 
   useEffect(() => {
@@ -203,11 +212,6 @@ export function App() {
     window.scrollTo(0, 0);
   };
 
-  const openEntry = (id: string) => {
-    setPage("catalogo");
-    setSelectedId(id);
-  };
-
   const openCharacter = (id: string) => {
     const character = getCharacter(id);
     if (!character) return;
@@ -261,7 +265,7 @@ export function App() {
   const next = neighborIndex >= 0 ? neighborSource[neighborIndex + 1] : undefined;
   const partyCharacters = party.map((id) => getCharacter(id)).filter((item): item is Character => Boolean(item));
   const collection = page === "personagens"
-    ? { title: "Personagens do Mundo de Arda", races: PORTAL_RACES, banner: "/banner/exercito-antes-da-batalha.png?v=2", bannerAlt: "Hoste a cavalo reunida no campo, sob estandartes verdes.", bannerClass: "is-host" }
+    ? { title: "Personagens do Mundo de Arda", races: PORTAL_RACES, banner: toWebpSrc("/banner/exercito-antes-da-batalha.png?v=2"), bannerAlt: "Hoste a cavalo reunida no campo, sob estandartes verdes.", bannerClass: "is-host" }
     : null;
 
   return (
@@ -285,7 +289,7 @@ export function App() {
             sound={sound}
             onToggleSound={() => setSound((value) => !value)}
           />
-          {page === "home" && <Home onOpen={openPage} onOpenEntry={openEntry} />}
+          {page === "home" && <Home onOpen={openPage} />}
           {page === "bestiario" && <BestiaryPortal onOpen={openPage} />}
           {page === "lugares" && <Places section={placeId} onOpen={openPlace} onOpenEntry={openCharacter} />}
           {page === "historia" && (
@@ -293,24 +297,13 @@ export function App() {
               As eras de Arda, do começo do mundo até o fim da Terceira Era, terão uma linha própria. Por enquanto a sala só marca o lugar.
             </Room>
           )}
+          {page === "artefatos" && <Artifacts />}
           {page === "mapas" && <Maps />}
           {page === "racas" && <KindredPortal onOpen={openCharacter} />}
           {page === "sobre" && <About />}
-          {page === "creditos" && (
-            <Room kicker="O arquivo" title="Créditos">
-              Os créditos do projeto entram nesta sala.
-            </Room>
-          )}
-          {page === "termos" && (
-            <Room kicker="O arquivo" title="Termos de Uso">
-              Os termos de uso entram nesta sala.
-            </Room>
-          )}
-          {page === "privacidade" && (
-            <Room kicker="O arquivo" title="Políticas de privacidade">
-              A política de privacidade entra nesta sala.
-            </Room>
-          )}
+          {page === "arquitetura" && <Architecture />}
+          {page === "termos" && <Terms />}
+          {page === "privacidade" && <Privacy />}
           {collection && (
             <main id="conteudo" className="portal">
               <div className="portal-banner" aria-hidden={collection.banner ? undefined : true}>
@@ -394,7 +387,7 @@ export function App() {
           )}
           <footer className="colophon">
             <button type="button" className="colophon-brand" onClick={() => openPage("home")}>
-              <img className="brand-mark" src="/mark.png" alt="" />
+              <img className="brand-mark" src={`${toWebpSrc("/mark.png")}?v=2`} alt="" />
               <span>
                 <span className="colophon-kicker">A Enciclopédia da Terra-média</span>
                 <span className="colophon-title">Lord of the Rings</span>
@@ -402,9 +395,9 @@ export function App() {
             </button>
             <nav className="colophon-links" aria-label="Informações do projeto">
               <button type="button" className="colophon-link" aria-current={page === "sobre" ? "page" : undefined} onClick={() => openPage("sobre")}>Sobre</button>
-              <button type="button" className="colophon-link" aria-current={page === "creditos" ? "page" : undefined} onClick={() => openPage("creditos")}>Créditos</button>
+              <button type="button" className="colophon-link" aria-current={page === "arquitetura" ? "page" : undefined} onClick={() => openPage("arquitetura")}>Arquitetura do Projeto</button>
               <button type="button" className="colophon-link" aria-current={page === "termos" ? "page" : undefined} onClick={() => openPage("termos")}>Termos de Uso</button>
-              <button type="button" className="colophon-link" aria-current={page === "privacidade" ? "page" : undefined} onClick={() => openPage("privacidade")}>Políticas de privacidade</button>
+              <button type="button" className="colophon-link" aria-current={page === "privacidade" ? "page" : undefined} onClick={() => openPage("privacidade")}>Política de Privacidade</button>
             </nav>
             <p className="colophon-note">
               Projeto de fã para fã.{" "}

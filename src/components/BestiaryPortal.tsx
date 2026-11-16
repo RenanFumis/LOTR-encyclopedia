@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { toWebpSrc } from "../lib/media";
 import type { PageId } from "../lib/routes";
 
 function CardMark({ src }: { src: string }) {
@@ -9,7 +10,7 @@ export function BestiaryPortal({ onOpen }: { onOpen: (page: PageId) => void }) {
   return (
     <main id="conteudo" className="portal bestiary-portal">
       <div className="portal-banner">
-        <img src="/banner/banner-bestiario.png" alt="Clarão entre as raízes de uma floresta antiga." />
+        <img src={toWebpSrc("/banner/banner-bestiario.png")} alt="Clarão entre as raízes de uma floresta antiga." fetchPriority="high" decoding="async" />
       </div>
 
       <section className="bestiary-intro">
@@ -40,7 +41,7 @@ export function BestiaryPortal({ onOpen }: { onOpen: (page: PageId) => void }) {
         <article className="portal-card bestiary-gate has-art">
           <button type="button" className="bestiary-gate-hit" onClick={() => onOpen("racas")}>
             <div className="portal-card-art">
-              <img className="is-watcher" src="/VigiaNaAgua.png" alt="" />
+              <img className="is-watcher" src={toWebpSrc("/VigiaNaAgua.png")} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="portal-card-title">
               <CardMark src="/flavicon/pata.png?v=2" />
@@ -53,7 +54,7 @@ export function BestiaryPortal({ onOpen }: { onOpen: (page: PageId) => void }) {
         <article className="portal-card bestiary-gate has-art">
           <button type="button" className="bestiary-gate-hit" onClick={() => onOpen("personagens")}>
             <div className="portal-card-art">
-              <img src="/Azaghal.png" alt="" />
+              <img src={toWebpSrc("/Azaghal.png")} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="portal-card-title">
               <CardMark src="/flavicon/business-people.png?v=2" />

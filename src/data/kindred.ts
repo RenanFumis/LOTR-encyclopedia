@@ -55,8 +55,10 @@ export interface Kindred {
   figures: KindredFigure[];
 }
 
+import { toWebpSrc } from "../lib/media";
+
 export function kindredImageSrc(file: string) {
-  return `/criaturas-raca/${encodeURIComponent(file)}`;
+  return toWebpSrc(`/criaturas-raca/${encodeURIComponent(file)}`);
 }
 
 export const kindreds: Kindred[] = [

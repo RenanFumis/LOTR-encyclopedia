@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { PlaceDetail } from "./PlaceDetail";
 import { eraPictures, placeEras, placeImageSrc, resolvePlace, type PlaceCard, type PlaceGroup } from "../data/places";
+import { toWebpSrc } from "../lib/media";
 
 const coverKey = "lorthdex-place-covers";
 
@@ -208,7 +209,7 @@ function PlaceBoard({ places, onOpenEntry }: { places: PlaceCard[]; onOpenEntry?
               aria-pressed={place.id === selectedId}
               onClick={() => setSelectedId((current) => (current === place.id ? null : place.id))}
             >
-              <img src={placeImageSrc(place.image)} alt="" />
+              <img src={placeImageSrc(place.image)} alt="" loading="lazy" decoding="async" />
               <span className="place-card-copy">
                 <span className="place-card-name">{place.name}</span>
                 <span className="place-card-text">{place.text}</span>
@@ -235,7 +236,7 @@ function GateCards({
         <article className="portal-card bestiary-gate has-art" key={item.id}>
           <button type="button" className="bestiary-gate-hit" onClick={() => onOpen(item.id)}>
             <div className="portal-card-art">
-              <img src={placeImageSrc(item.image)} alt="" />
+              <img src={placeImageSrc(item.image)} alt="" loading="lazy" decoding="async" />
             </div>
             <div className="portal-card-title">
               <span className="bestiary-gate-title">{item.title}</span>
@@ -318,7 +319,7 @@ export function Places({
       {view.kind === "index" && (
         <>
           <div className="portal-banner">
-            <img className="is-places" src="/banner/Banner_lugares.png" alt="Arco com a Árvore Branca, a cidade branca sobre o penhasco e a montanha de fogo ao longe." />
+            <img className="is-places" src={toWebpSrc("/banner/Banner_lugares.png")} alt="Arco com a Árvore Branca, a cidade branca sobre o penhasco e a montanha de fogo ao longe." fetchPriority="high" decoding="async" />
           </div>
           <section className="bestiary-intro">
             <h2>Lugares</h2>
@@ -342,7 +343,7 @@ export function Places({
         <>
           {eraBanner && (
             <div className="portal-banner">
-              <img className={eraBanner.className} src={placeImageSrc(eraBanner.image)} alt={eraBanner.alt} />
+              <img className={eraBanner.className} src={placeImageSrc(eraBanner.image)} alt={eraBanner.alt} fetchPriority="high" decoding="async" />
             </div>
           )}
           <section className="bestiary-intro">
@@ -367,7 +368,7 @@ export function Places({
         <>
           {groupBanner && (
             <div className="portal-banner">
-              <img className={groupBanner.className} src={`${placeImageSrc(groupBanner.image)}${groupBanner.version ? `?v=${groupBanner.version}` : ""}`} alt={groupBanner.alt} />
+              <img className={groupBanner.className} src={`${placeImageSrc(groupBanner.image)}${groupBanner.version ? `?v=${groupBanner.version}` : ""}`} alt={groupBanner.alt} fetchPriority="high" decoding="async" />
             </div>
           )}
           <section className="bestiary-intro">

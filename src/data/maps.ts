@@ -10,8 +10,10 @@ export type RegionMap = {
   events: string[];
 };
 
+import { toWebpSrc } from "../lib/media";
+
 export function mapImageSrc(file: string) {
-  return `/mapas/${encodeURIComponent(file)}`;
+  return toWebpSrc(`/mapas/${encodeURIComponent(file)}`);
 }
 
 export const regionMaps: RegionMap[] = [
