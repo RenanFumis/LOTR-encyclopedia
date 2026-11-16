@@ -68,10 +68,6 @@ export type PlaceRecord = {
 const records: Record<string, PlaceRecord> = { ...westRecords, ...eastRecords };
 
 const alias: Record<string, string> = {
-  "osgiliath-2": "osgiliath",
-  "pelennor-2": "pelennor",
-  "khazad-dum-2": "khazad-dum",
-  "lothlorien-distante": "lothlorien",
   "moria-especial": "khazad-dum",
   "esgaroth-especial": "esgaroth-cidade",
   "isengard-especial": "isengard-era",
