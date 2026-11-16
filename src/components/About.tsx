@@ -1,8 +1,10 @@
+import { toWebpSrc } from "../lib/media";
+
 export function About() {
   return (
     <main id="conteudo" className="portal">
       <div className="portal-banner">
-        <img className="is-gate" src="/banner/BannerPortadeDurin.png" alt="Mago diante da Porta de Durin, entre duas árvores." />
+        <img className="is-gate" src={toWebpSrc("/banner/BannerPortadeDurin.png")} alt="Mago diante da Porta de Durin, entre duas árvores." fetchPriority="high" decoding="async" />
       </div>
       <section className="bestiary-intro">
         <h2>Sobre o Projeto</h2>
@@ -25,7 +27,7 @@ export function About() {
         <section className="about-tolkien">
           <h2>J.R.R. Tolkien — O homem que deu vida a um mundo</h2>
           <p>John Ronald Reuel Tolkien nasceu em 3 de janeiro de 1892, em Bloemfontein, na atual África do Sul, e faleceu em 2 de setembro de 1973, na Inglaterra. Foi escritor, filólogo, professor universitário e um dos nomes mais importantes da literatura fantástica.</p>
-          <img className="about-portrait" src="/sobre/tolkien.jpg" alt="Retrato de J.R.R. Tolkien." />
+          <img className="about-portrait" src={toWebpSrc("/sobre/tolkien.jpg")} alt="Retrato de J.R.R. Tolkien." loading="lazy" decoding="async" />
           <p>Desde cedo, demonstrou uma profunda paixão pelas línguas, pelas histórias antigas e pelas mitologias. Seu fascínio pelos idiomas o levou a criar línguas próprias, com estruturas, sonoridades e histórias que, aos poucos, passaram a exigir povos capazes de falá-las e um mundo onde pudessem existir.</p>
           <p>Inspirado por tradições nórdicas, anglo-saxônicas e finlandesas, pela literatura medieval, por sua fé e por suas experiências pessoais, Tolkien dedicou grande parte da vida à construção de um universo de extraordinária profundidade.</p>
           <p>Entre os sonhos que alimentaram sua criação estava o desejo de construir um conjunto de lendas que pudesse dedicar à Inglaterra, sua terra tão amada. Tolkien imaginava uma mitologia própria, enraizada na linguagem, nas paisagens e nas tradições de seu país, capaz de reunir histórias sobre a criação do mundo, grandes feitos heroicos e os destinos de povos antigos.</p>
@@ -38,7 +40,7 @@ export function About() {
 
         <section>
           <h2>Muito além das páginas</h2>
-          <img className="about-scene" src="/sobre/frodo-escrevendo.png" alt="Frodo escrevendo à mesa, à luz da janela." />
+          <img className="about-scene" src={toWebpSrc("/sobre/frodo-escrevendo.png")} alt="Frodo escrevendo à mesa, à luz da janela." loading="lazy" decoding="async" />
           <p>Existem livros que lemos e, com o passar do tempo, esquecemos. Outros permanecem conosco para sempre, tornando-se parte de quem somos.</p>
           <p>Para mim, <strong>O Senhor dos Anéis pertence a essa segunda categoria.</strong></p>
           <p>A trilogia foi minha primeira experiência com livros de aventura. Foi através de suas páginas que descobri a Terra-média, seus povos, suas paisagens e personagens que, mesmo sendo fictícios, se tornaram parte da minha própria história.</p>
@@ -55,7 +57,7 @@ export function About() {
 
         <section>
           <h2>Que a jornada continue...</h2>
-          <img className="about-scene" src="/banner/ComitivadoAnel.png?v=1" alt="A Comitiva do Anel caminhando diante de montanhas nevadas, refletida num lago." />
+          <img className="about-scene" src={toWebpSrc("/banner/ComitivadoAnel.png?v=1")} alt="A Comitiva do Anel caminhando diante de montanhas nevadas, refletida num lago." loading="lazy" decoding="async" />
           <p>Vivemos em uma época de transformações constantes, na qual tantas histórias passam rapidamente diante de nossos olhos. Mas algumas merecem ser descobertas com calma, vividas página por página e guardadas para toda a vida.</p>
           <p>Assim como Tolkien encontrou alegria em compartilhar histórias com seus filhos, acredito que a literatura pode criar laços que atravessam o tempo, aproximando gerações por meio da imaginação, da descoberta e do encantamento.</p>
           <p>Deixo aqui um convite aos pais, educadores e a todos que amam a literatura: <strong>apresentem as obras de Tolkien às novas gerações</strong>.</p>

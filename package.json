@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "portraits": "python scripts/update-portraits.py",
+    "optimize-images": "python scripts/optimize-public-images.py --delete-originals",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },

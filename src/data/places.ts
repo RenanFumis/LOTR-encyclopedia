@@ -1,5 +1,7 @@
+import { toWebpSrc } from "../lib/media";
+
 export function placeImageSrc(path: string) {
-  return `/lugares/${path.split("/").map(encodeURIComponent).join("/")}`;
+  return toWebpSrc(`/lugares/${path.split("/").map(encodeURIComponent).join("/")}`);
 }
 
 export type PlaceCard = {

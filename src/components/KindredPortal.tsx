@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { kindredImageSrc, kindreds, type Kindred, type KindredBlock, type KindredFigure } from "../data/kindred";
+import { toWebpSrc } from "../lib/media";
 
 function parseRich(text: string, keyPrefix: string): ReactNode[] {
   const nodes: ReactNode[] = [];
@@ -342,7 +343,7 @@ function KindredBoard({ onOpen }: { onOpen: (id: string) => void }) {
               aria-pressed={false}
               onClick={() => setSelectedId(kindred.id)}
             >
-              <img src={kindredImageSrc(kindred.image)} alt="" />
+              <img src={kindredImageSrc(kindred.image)} alt="" loading="lazy" decoding="async" />
               <span className="place-card-copy">
                 <span className="place-card-name">{kindred.name}</span>
               </span>
@@ -359,7 +360,7 @@ export function KindredPortal({ onOpen }: { onOpen: (id: string) => void }) {
   return (
     <main id="conteudo" className="portal places-portal">
       <div className="portal-banner">
-        <img className="is-hunt" src="/banner/nazgul-cacador.png" alt="Cavaleiro sombrio e uma besta alada sob um céu de nuvens." />
+        <img className="is-hunt" src={toWebpSrc("/banner/nazgul-cacador.png")} alt="Cavaleiro sombrio e uma besta alada sob um céu de nuvens." fetchPriority="high" decoding="async" />
       </div>
       <section className="bestiary-intro">
         <h2>Criaturas da Terra-média</h2>

@@ -1,4 +1,5 @@
 import { Nav } from "./Nav";
+import { toWebpSrc } from "../lib/media";
 import type { PageId } from "../lib/routes";
 
 interface HeaderProps {
@@ -14,7 +15,7 @@ export function Header({ page, onOpen, showSound, sound, onToggleSound }: Header
     <header className="header">
       <h1 className="brand">
         <button type="button" className="brand-home" onClick={() => onOpen("home")}>
-          <img className="brand-mark" src="/mark.png" alt="" />
+          <img className="brand-mark" src={`${toWebpSrc("/mark.png")}?v=2`} alt="" />
           <span>
             <span className="brand-kicker">A Enciclopédia da Terra-média</span>
             <span className="brand-name">Lord of the Rings</span>

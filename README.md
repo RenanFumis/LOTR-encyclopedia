@@ -29,8 +29,11 @@ Projeto independente, de fã para fã, sem vínculo com a Tolkien Estate ou a Mi
 | Lugares (100 cards em salas por Era) | Ativo |
 | Mapas (16 folhas) | Ativo |
 | História de Arda | Sala reservada, ainda vazia |
-| Artefatos, idiomas, genealogias visuais | Planejados |
-| Créditos, Termos, Privacidade | Salas reservadas, ainda vazias |
+| Artefatos de Arda | Ativa (página em construção) |
+| Idiomas, genealogias visuais | Planejados |
+| Privacidade | Ativa |
+| Arquitetura do Projeto | Ativa |
+| Termos de Uso | Ativa |
 
 ---
 
@@ -193,11 +196,27 @@ Exige Python e Pillow. Lê pastas em `pictures/`, reduz a no máximo 400×400 e 
 
 ```bash
 npm install
-npm run dev       # http://localhost:5173
-npm run build     # tsc --noEmit && vite build
-npm run preview   # serve dist/
-npm run portraits # regenera retratos WebP
+npm run dev              # http://localhost:5173
+npm run portraits        # regenera retratos WebP
+npm run optimize-images  # PNG/JPG de public/ → WebP (e remove originais pesados)
+npm run build            # tsc --noEmit && vite build  → gera dist/ (pronto para HostGator)
+npm run preview          # serve dist/ localmente
 ```
+
+Antes de publicar na HostGator, rode `npm run optimize-images` (se houver imagens novas em PNG) e depois `npm run build`. O passo a passo de upload está na [seção 19](#19-publicação-na-hostgator).
+
+### 3.11 Otimização de imagens
+
+Os retratos já saem em WebP via `npm run portraits`. Lugares, mapas, banners e cartas de criaturas costumavam ser PNG grandes (~3–4 MB cada); no ar, isso deixa o site lento.
+
+`npm run optimize-images` (`scripts/optimize-public-images.py`):
+
+- Converte PNG/JPG de `public/` para WebP (qualidade 74).
+- Redimensiona com largura máxima (lugares 1400, mapas 2000, banners 1920, criaturas 1200).
+- Remove o PNG/JPG original de `public/` após gerar o WebP (os mestres em `pictures/` permanecem).
+- Ignora `public/portraits/` e `public/flavicon/`.
+
+A interface aponta para `.webp` via `toWebpSrc` / helpers (`placeImageSrc`, `mapImageSrc`, `kindredImageSrc`). Grades usam `loading="lazy"`; banners principais usam `fetchPriority="high"`.
 
 ### 3.10 Acessibilidade e idioma
 
@@ -237,7 +256,7 @@ Menu superior atual:
 4. História de Arda (`#/historia`) — sala ainda vazia
 5. Mapas (`#/mapas`)
 
-Rodapé: Sobre, Créditos, Termos de Uso, Políticas de privacidade.
+Rodapé: Sobre, Arquitetura do Projeto, Termos de Uso, Política de Privacidade.
 
 Visão editorial mais ampla (ainda não toda implementada como itens de menu): Personagens, Povos e Criaturas, Lugares, História, Artefatos e Relíquias, Idiomas e Escritas, Mapas. Na prática, Personagens e Criaturas entram pelo Bestiário; Artefatos e Idiomas são fases futuras.
 
@@ -294,10 +313,11 @@ Planejados. História já tem rota; Artefatos (Anéis, Silmarils, Palantíri, ar
 | `#/lugares/terceira/especiais` | Lugares Especiais e Misteriosos |
 | `#/historia` | Sala ainda vazia |
 | `#/mapas` | Mapas de Arda |
+| `#/artefatos` | Artefatos de Arda (em construção) |
 | `#/sobre` | Sobre o projeto |
-| `#/creditos` | Sala ainda vazia |
-| `#/termos` | Sala ainda vazia |
-| `#/privacidade` | Sala ainda vazia |
+| `#/arquitetura` | Arquitetura do Projeto (legado: `#/creditos`) |
+| `#/termos` | Termos de Uso |
+| `#/privacidade` | Política de Privacidade |
 
 `:id` de personagem: `[a-z0-9-]+`. Trechos de lugares: `[a-z]+`. Id inexistente abre a página sem ficha ou volta ao índice de lugares.
 
@@ -305,7 +325,7 @@ Planejados. História já tem rota; Artefatos (Anéis, Silmarils, Palantíri, ar
 
 ## 7. Páginas e banners
 
-Home, Bestiário, Criaturas, Personagens, Catálogo, Sobre, Lugares e Mapas usam `.device.is-plain`. História, Créditos, Termos e Privacidade ainda usam `Room`.
+Home, Bestiário, Criaturas, Personagens, Catálogo, Sobre, Arquitetura, Termos, Privacidade, Lugares e Mapas usam `.device.is-plain`. História ainda usa `Room`.
 
 | Página | Banner | Enquadramento |
 | --- | --- | --- |
@@ -545,8 +565,6 @@ public/portraits/
 - Expandir vínculos e linhagens com tipos explícitos
 - Artefatos e relíquias
 - Idiomas e escritas
-- Créditos, Termos e Privacidade
-
 ### Depois
 
 - Mapas com camadas / marcadores
@@ -577,3 +595,80 @@ Visão conceitual, caso o projeto saia dos módulos TypeScript:
 | `images` | Créditos e licenças |
 
 Hoje isso está materializado de forma enxuta em `characters`, `kindred`, `places`, `place-lore*` e `maps`.
+
+---
+
+## 19. Publicação na HostGator
+
+A aplicação é um site estático gerado pelo Vite. Na HostGator (hospedagem compartilhada com cPanel), basta gerar a pasta `dist/` e enviar o conteúdo dela para o `public_html` (ou para a pasta do subdomínio/domínio adicional).
+
+### 19.1 Preparar a página (comando)
+
+No computador, na raiz do projeto:
+
+```bash
+npm install
+npm run optimize-images
+npm run build
+```
+
+Isso:
+
+1. Converte imagens pesadas de `public/` para WebP (pule `optimize-images` se já tiver rodado e não houver PNG novos).
+2. Checa os tipos com TypeScript (`tsc --noEmit`).
+3. Gera o bundle de produção em `dist/` (`vite build`).
+
+Confira localmente, se quiser:
+
+```bash
+npm run preview
+```
+
+### 19.2 O que enviar
+
+Envie **o conteúdo interno** de `dist/` (não a pasta `dist` em si como único arquivo zip vazio), por exemplo:
+
+- `index.html`
+- `assets/` (JS e CSS gerados)
+- pastas de mídia copiadas do `public/` (`portraits/`, `lugares/`, `mapas/`, `criaturas-raca/`, `banner/`, fontes etc.)
+
+Destino típico na HostGator:
+
+| Destino | Quando usar |
+| --- | --- |
+| `public_html/` | Domínio principal |
+| `public_html/nome-da-pasta/` | Subpasta (ex.: `seusite.com/lorthdex/`) |
+| pasta do subdomínio no cPanel | Subdomínio dedicado |
+
+### 19.3 Upload
+
+1. Gere o build com `npm run build`.
+2. Abra o **Gerenciador de Arquivos** do cPanel (ou use FTP/SFTP).
+3. Entre em `public_html` (ou na pasta escolhida).
+4. Envie os arquivos de `dist/`.
+5. Abra o site no navegador e confira Home, Personagens, Lugares e Mapas.
+
+Se publicar em **subpasta** (ex.: `/lorthdex/`), configure o `base` do Vite em `vite.config.ts` antes do build:
+
+```ts
+export default defineConfig({
+  base: "/lorthdex/",
+  // ...
+});
+```
+
+Depois rode `npm run build` de novo e envie o novo `dist/`.
+
+### 19.4 Rotas e `.htaccess`
+
+Este projeto usa **hash routing** (`#/personagens`, `#/lugares`, etc.). As rotas funcionam em hospedagem estática **sem** reescrita de URL no Apache. Em geral **não é necessário** `.htaccess` só para o menu funcionar.
+
+Se no futuro o roteamento passar a ser por caminho (`/personagens` sem `#`), aí sim será preciso um `.htaccess` com fallback para `index.html`.
+
+### 19.5 Checklist rápido
+
+1. `npm install`
+2. `npm run build`
+3. (Opcional) `npm run preview`
+4. Upload do conteúdo de `dist/` para `public_html`
+5. Testar no domínio da HostGator

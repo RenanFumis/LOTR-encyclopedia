@@ -1,4 +1,4 @@
-export const pages = ["home", "bestiario", "racas", "personagens", "catalogo", "lugares", "historia", "mapas", "sobre", "creditos", "termos", "privacidade"] as const;
+export const pages = ["home", "bestiario", "racas", "personagens", "catalogo", "lugares", "historia", "mapas", "artefatos", "sobre", "arquitetura", "termos", "privacidade"] as const;
 
 export type PageId = (typeof pages)[number];
 
@@ -27,8 +27,9 @@ export function readRoute(hash: string): Route {
   }
   if (path === "/historia") return { page: "historia", entryId: null, placeId: null };
   if (path === "/mapas") return { page: "mapas", entryId: null, placeId: null };
+  if (path === "/artefatos") return { page: "artefatos", entryId: null, placeId: null };
   if (path === "/sobre") return { page: "sobre", entryId: null, placeId: null };
-  if (path === "/creditos") return { page: "creditos", entryId: null, placeId: null };
+  if (path === "/arquitetura" || path === "/creditos") return { page: "arquitetura", entryId: null, placeId: null };
   if (path === "/termos") return { page: "termos", entryId: null, placeId: null };
   if (path === "/privacidade") return { page: "privacidade", entryId: null, placeId: null };
   return { page: "home", entryId: null, placeId: null };

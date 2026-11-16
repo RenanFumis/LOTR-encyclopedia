@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { toWebpSrc } from "../lib/media";
 import type { PageId } from "../lib/routes";
 
 function CardMark({ src }: { src: string }) {
@@ -7,23 +8,22 @@ function CardMark({ src }: { src: string }) {
 
 export function Home({
   onOpen,
-  onOpenEntry,
 }: {
   onOpen: (page: PageId) => void;
-  onOpenEntry: (id: string) => void;
 }) {
   return (
     <main id="conteudo" className="portal">
       <section className="portal-hero">
         <img
           className="portal-hero-banner"
-          src="/banner/minas_tirith_banner.png"
+          src={toWebpSrc("/banner/minas_tirith_banner.png")}
           alt="Cidade branca erguida na encosta de uma montanha."
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="portal-hero-copy">
           <h2>
-            Bem-vindo à
-            <span>Enciclopédia de Terra-média</span>
+            <span>Enciclopédia da Terra-Média</span>
           </h2>
           <div className="hero-divider" aria-hidden="true">
             <span>✧</span>
@@ -45,7 +45,7 @@ export function Home({
       <section className="portal-cards" aria-label="Salas">
         <article className="portal-card">
           <div className="portal-card-art">
-            <img src="/portraits/gandalf.webp" alt="" />
+            <img src="/portraits/gandalf.webp" alt="" loading="lazy" decoding="async" />
           </div>
           <div className="portal-card-body">
             <div className="portal-card-title">
@@ -62,7 +62,7 @@ export function Home({
 
         <article className="portal-card">
           <div className="portal-card-art">
-            <img src="/portraits/ancalagon.webp" alt="" />
+            <img src="/portraits/ancalagon.webp" alt="" loading="lazy" decoding="async" />
           </div>
           <div className="portal-card-body">
             <div className="portal-card-title">
@@ -79,7 +79,7 @@ export function Home({
 
         <article className="portal-card">
           <div className="portal-card-art">
-            <img src="/Isengard-Angrenost.png" alt="" />
+            <img src={toWebpSrc("/Isengard-Angrenost.png")} alt="" loading="lazy" decoding="async" />
           </div>
           <div className="portal-card-body">
             <div className="portal-card-title">
@@ -102,7 +102,7 @@ export function Home({
             <span>✧</span>
           </div>
           <div className="portal-about-row">
-            <img src="/emblema-hobbit.png?v=2" alt="Emblema dos hobbits." />
+            <img src={toWebpSrc("/emblema-hobbit.png?v=2")} alt="Emblema dos hobbits." loading="lazy" decoding="async" />
             <div className="portal-about-copy">
               <p>
               Um projeto dedicado a preservar e compartilhar o rico universo criado por J.R.R. Tolkien, unindo conhecimento, curiosidade e admiração por sua obra.
@@ -120,12 +120,14 @@ export function Home({
         <div className="portal-highlight">
           <h2>Destaques</h2>
           <div className="portal-highlight-row">
-            <img src="/lotr.png?v=2" alt="" />
+            <img src={toWebpSrc("/lotr.png?v=2")} alt="" loading="lazy" decoding="async" />
             <div>
-              <h3>As duas Árvors de Valinor</h3>
-              <p>Símbolo de beleza e esperança, as Duas Árvores marcaram o início e o fim da Idade dos Elfos.</p>
-              <button type="button" className="portal-link" onClick={() => onOpenEntry("bilbo")}>
-                Ler mais
+              <h3>Artefatos de Arda</h3>
+              <p>
+                Dos Silmarils aos Anéis de Poder, descubra os artefatos lendários que carregam magia, poder e mistério, marcando o destino dos povos de Arda através das Eras.
+              </p>
+              <button type="button" className="portal-link" onClick={() => onOpen("artefatos")}>
+                Explorar Artefatos
                 <span aria-hidden="true"> →</span>
               </button>
             </div>
@@ -135,7 +137,7 @@ export function Home({
         <span className="portal-rule" role="presentation"></span>
 
         <figure className="portal-parchment">
-          <img src="/pergaminho.png?v=3" alt="Pergaminho com uma citação de J.R.R. Tolkien." />
+          <img src={toWebpSrc("/pergaminho.png?v=3")} alt="Pergaminho com uma citação de J.R.R. Tolkien." loading="lazy" decoding="async" />
         </figure>
       </section>
       <section className="quote-divider">
